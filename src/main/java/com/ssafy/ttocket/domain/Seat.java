@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -17,7 +15,10 @@ import javax.persistence.Enumerated;
 @Builder
 @AllArgsConstructor
 public class Seat {
-
+    // 복합키 추가 전 임시로 PK 설정
+    @Id
+    @GeneratedValue
+    private int seatId;
     @NotNull
     @ColumnDefault("'EMPTY'")
     @Enumerated(EnumType.STRING)
