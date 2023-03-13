@@ -1,9 +1,6 @@
 package com.ssafy.ttocket.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class PerformanceLike implements Serializable {
     @EmbeddedId
     private LikeId likeId;
