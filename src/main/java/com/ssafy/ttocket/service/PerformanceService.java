@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class PerformaceService {
+public class PerformanceService {
     public ResponseDto homeList() {
         // 활용할 자료구조 생성
         Map<String,Object> result = new HashMap<>();
