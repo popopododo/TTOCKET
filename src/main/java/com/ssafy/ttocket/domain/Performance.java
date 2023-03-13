@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -20,8 +17,9 @@ import java.time.LocalDate;
 public class Performance {
 
     @Id
-    @GeneratedValue
-    private String id; // id (int String)?
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="performance_id")
+    private int id;
 
     @NotNull
     @Column(name="performance_title")
@@ -55,11 +53,6 @@ public class Performance {
 
     @Column(name="performance_etc")
     private String etc;
-
-
-
-
-
 
 
 }
