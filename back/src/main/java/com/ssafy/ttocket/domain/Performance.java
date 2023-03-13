@@ -23,6 +23,10 @@ public class Performance {
     @Column(name="performance_title")
     private String title;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+
     @Column(name="performance_desc")
     private String description;
 
