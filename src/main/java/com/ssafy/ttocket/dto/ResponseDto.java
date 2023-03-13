@@ -2,15 +2,9 @@ package com.ssafy.ttocket.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Builder
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class ResponseDto<T> {
 
     @JsonProperty("status_code")
