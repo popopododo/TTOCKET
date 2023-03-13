@@ -14,9 +14,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class SeatId implements Serializable {
-    @Column(name="seat_no")
-    private int seatNo;
 
     @Column(name="performance_id")
     private int performanceId;
+    
+    @Column(name="seat_no")
+    private int seatNo;
+
 }
