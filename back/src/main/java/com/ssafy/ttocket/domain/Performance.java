@@ -1,5 +1,6 @@
 package com.ssafy.ttocket.domain;
 
+import com.ssafy.ttocket.dto.PerformanceDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -55,6 +56,5 @@ public class Performance {
 
     @Column(name="performance_etc")
     private String etc;
-
 
 }
