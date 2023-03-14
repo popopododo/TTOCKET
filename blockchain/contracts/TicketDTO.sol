@@ -27,4 +27,4 @@ interface TicketDTO {
         uint256 refundTime3;
         uint256 refundTime1; 
     }
-}
+} 

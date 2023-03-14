@@ -70,7 +70,7 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         
         PerformInfo memory p = _performInfos[performId];
         
-        require(p.price == msg.value,"not enough value");
+        require(p.price == msg.value,"wrong ticket price");
         
 
         _tokenIds.increment();
@@ -84,11 +84,6 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         _setOwnersByPerform(performId, msg.sender);
 
         return newTokenId;
-    }
-    function insertPerformBehind(uint256 performId, string memory behindAddress) public returns(uint256){
-        _performBehinds[performId].push(behindAddress);
-
-        return performId;
     }
     function cancleMyTicket(uint256 tokenId) public returns (uint256){
         require(_minters[tokenId] == msg.sender, "you're not owner of this ticket");
@@ -114,33 +109,34 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         // 환불이 성공해야 취소관련 정보 바꿈
 
         _ticketInfos[tokenId].status = 2; // 티켓상태 취소로 바꿈
-        address[] memory owners = _ownersByPerform[p.id];
-        uint256 idx;
-        for(uint256 i = 0 ; i < owners.length ; i++){ // 해당 공연 티켓소유자 배열에서 없애기
-            if(owners[i] == msg.sender) {
-                _ownersByPerform[p.id][idx] = owners[owners.length - 1];
-                _ownersByPerform[p.id].pop();
-                break;
-            }
-        }
+        deleteOneOwnersByPerform(msg.sender,p.id);
+        deleteOneTicketByAccount(msg.sender,tokenId);
         approve(address(this), tokenId); // 해당 NFT권한을 해당 컨트랙트 주소에 허용시키기
-        _refundAmountByCanceledTicket[tokenId] = p.price - refundAmount; 
+        _refundAmountByCanceledTicket[tokenId] = p.price - refundAmount;
         return refundAmount;
     }
-    function buyCanceledTicket(uint256 tokenId,uint256 performId) public payable returns (uint256){
+    function buyCanceledTicket(uint256 tokenId,uint256 performId,string memory userName) public payable returns (uint256){
         PerformInfo memory p = _performInfos[performId];
-        require(p.price == msg.value,"not enough value");
+        TicketInfo memory t = _ticketInfos[tokenId];
+        require(t.status == 2, "not canceled ticket");
+        require(p.price == msg.value, "not enough value");
 
         address beforeOwner = _minters[tokenId];
         payable(beforeOwner).transfer(_refundAmountByCanceledTicket[tokenId]); //다른애가 사주니까 수수료도 돌려주기
         _refundAmountByCanceledTicket[tokenId] = 0; // 없애기
         safeTransferFrom(beforeOwner, msg.sender, tokenId); // NFT티켓 소유권 바꾸기
-        _minters[tokenId] = msg.sender;
+        _setMinter(tokenId, msg.sender);   
         _setOwnersByPerform(p.id,msg.sender);
-
+        _setTicketsByAccount(tokenId, msg.sender);
+        t.status = 3;
+        t.userName = userName;
         return tokenId;
     }
 
+    function insertPerformBehind(uint256 performId, string memory behindAddress) public returns(uint256){
+        _performBehinds[performId].push(behindAddress);
+        return performId;
+    }
     function getBehindList(uint256 performId) public view returns(string[] memory){
         return _performBehinds[performId];
     }
@@ -191,6 +187,16 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function getTicketsByAccount(address minter) public view returns (uint256[] memory) {
         return _ticketsByAccount[minter];
     }
+    function deleteOneTicketByAccount(address owner, uint256 tokenId) public{
+        uint256 len = _ticketsByAccount[owner].length;
+        for(uint256 i = 0 ; i < len ; i++){
+            if(_ticketsByAccount[owner][i] == tokenId){
+                _ticketsByAccount[owner][i] = _ticketsByAccount[owner][len - 1];
+                _ticketsByAccount[owner].pop();
+                return; 
+            }
+        }
+    }    
     function _setPerformInfo(
             uint256 performId, 
             PerformInfo memory _performInfo
@@ -208,5 +214,15 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     }
     function getOwnersByPerform(uint256 performId) public view returns (address[] memory) {
         return _ownersByPerform[performId];
+    }
+    function deleteOneOwnersByPerform(address target, uint256 performId) public{
+        uint256 len = _ownersByPerform[performId].length;
+        for(uint256 i = 0 ; i < len ; i++){ // 해당 공연 티켓소유자 배열에서 없애기
+            if(_ownersByPerform[performId][i] == target) {
+                _ownersByPerform[performId][i] = _ownersByPerform[performId][len - 1];
+                _ownersByPerform[performId].pop();
+                return;
+            }
+        }
     }
 }
