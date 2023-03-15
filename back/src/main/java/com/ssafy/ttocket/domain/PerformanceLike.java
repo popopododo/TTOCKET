@@ -27,8 +27,7 @@ public class PerformanceLike implements Serializable {
     @MapsId("userId")
     private User user;
 
-    @ColumnDefault("0")
-    @Column(name="is_like")
+    @Column(name="is_like", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isLike;
 
 }
