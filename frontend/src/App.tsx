@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
 
 function App() {
   return (
     <div className="App">
-      <p className="text-pink-500 text-2xl"> 똑켓 시작</p>
+      <p className="text-2xl text-pink-500"> 똑켓 시작</p>
     </div>
   );
 }
