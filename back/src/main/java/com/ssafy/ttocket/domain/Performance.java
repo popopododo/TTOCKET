@@ -1,6 +1,5 @@
 package com.ssafy.ttocket.domain;
 
-import com.ssafy.ttocket.dto.PerformanceDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
