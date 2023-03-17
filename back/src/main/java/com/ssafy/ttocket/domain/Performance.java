@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -42,13 +43,13 @@ public class Performance {
     @Column(name="performance_price")
     private double price; // int 값 인지 물어봐야함
 
-    @NotNull
+   
     @Column(name="performance_start_time")
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
-    @NotNull
+
     @Column(name="performance_end_time")
-    private LocalDate endTime;
+    private LocalDateTime endTime;
 
     @NotNull
     @Column(name="performance_poster")
