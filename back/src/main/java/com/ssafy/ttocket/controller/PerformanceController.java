@@ -1,5 +1,6 @@
 package com.ssafy.ttocket.controller;
 
+import com.ssafy.ttocket.dto.PerformanceDto;
 import com.ssafy.ttocket.dto.ResponseDto;
 import com.ssafy.ttocket.service.PerformanceService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,53 @@ import org.springframework.web.bind.annotation.*;
 public class PerformanceController {
     private final PerformanceService performanceService;
 
-    @GetMapping("/home") // 파티 상세보기
-    public ResponseEntity<?> home(){
+    @GetMapping("/home/{userId}") // 파티 상세보기
+    public ResponseEntity<ResponseDto> home(@PathVariable String userId){
         log.info("home data return");
-        ResponseDto responseDto = performanceService.homeList();
+        ResponseDto responseDto = performanceService.homeList(userId);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
+    @PostMapping("/create") // 파티 만들기
+    public ResponseEntity<ResponseDto> performanceCreate(@RequestBody PerformanceDto performanceDto) {
+        log.info("request data return");
+        ResponseDto responseDto = performanceService.createPerformance(performanceDto);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{cursorId}")  // 전체 공연 목록 (cursorId 아직 미적용)
+    public ResponseEntity<ResponseDto> performanceList(@PathVariable int cursorId) {
+        log.info("request performance list return");
+        ResponseDto responseDto = performanceService.performanceList(cursorId, 3);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/likelist/{userId}/{cursorId}")  // 찜 목록 전체 보기 (cursorId 아직 미적용)
+    public ResponseEntity<ResponseDto> userlikeList(@PathVariable String userId, @PathVariable int cursorId) {
+        log.info("request userlikeList return");
+        ResponseDto responseDto = performanceService.userlikeList(userId, cursorId, 3);  // userId 매서드 나중에 입력하기
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/{performanceId}")  // 공연 설명 상세보기
+    public ResponseEntity<ResponseDto> performanceDetail(@PathVariable String userId, @PathVariable int performanceId) {
+        log.info("request performanceDetail return");
+        ResponseDto responseDto = performanceService.performanceDetail(userId, performanceId);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/like/{userId}/{performanceId}")  // 좋아요 클릭
+    public ResponseEntity<ResponseDto> clickLike(@PathVariable String userId, @PathVariable int performanceId) {
+        log.info("request clickLike return");
+        ResponseDto responseDto = performanceService.clickLike(userId, performanceId);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+    }
+
+//    @GetMapping("/reserve/{performanceId}")  // 예매하기 버튼 클릭
+//    public ResponseEntity<ResponseDto> performanceReservation(@PathVariable int performanceId) {
+//        log.info("request performance reservation return");
+//        ResponseDto responseDto = performanceService.reservationState(performanceId);
+//        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+//    }
+
 }
