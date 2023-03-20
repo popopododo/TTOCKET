@@ -1,8 +1,11 @@
 import React from 'react'
+import Ticketing from './Ticketing'
 
 function Reserve() {
   return (
-    <div>Reserve</div>
+    <div>
+      <Ticketing/>
+    </div>
   )
 }
 
