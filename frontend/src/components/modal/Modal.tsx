@@ -29,6 +29,7 @@ const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
+        {/* 취소 수수료 안내 테이블 */}
         <h2 className="text-lg font-bold mb-4">취소 수수료 안내</h2>
         <table>
           <tbody>
@@ -42,9 +43,10 @@ const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
             </tr>
           </tbody>
         </table>
-        <div>
-          <input id="default-checkbox" type="checkbox" onChange={handleIsAgree}></input>
-          <span className="mb-4 text-xs">취소 수수료 안내사항을 읽었으며, 이에 동의합니다.</span>
+        {/* 체크 박스 */}
+        <div className='my-4'>
+          <input className="w-4 h-4" id="default-checkbox" type="checkbox" onChange={handleIsAgree}></input>
+          <span className="mb-4 ml-2 text-xs">취소 수수료 안내사항을 읽었으며, 이에 동의합니다.</span>
         </div>
         <div className="flex">
           <Link className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={onClose} to="/home/reserve/progress">예매</Link>
