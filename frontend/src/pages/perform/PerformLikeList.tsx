@@ -103,7 +103,7 @@ function PerformLikeList() {
         {dummyData &&
           dummyData.map((da) => (
             <div key={da.id}>
-              <Link to={`${da.id}`} state={da.id} className="flex mb-5">
+              <Link to="/perform/detail" state={da.id} className="flex mb-5">
                 <img
                   src={da.img}
                   className="h-32 mx-3 rounded"
