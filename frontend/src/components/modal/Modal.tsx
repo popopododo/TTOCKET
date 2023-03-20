@@ -1,14 +1,17 @@
 import React from 'react';
 import { ReactNode, useState } from "react";
+import { Link } from 'react-router-dom';
 
 interface BtnProps {
   children: ReactNode;
   isOpen : boolean;
+  seatNumber : number;
   onClose : ()=>void;
 
 }
-const Modal = ({ isOpen, onClose} : BtnProps) => {
+const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
   const [isAgree, setIsAgree] = useState<boolean>(false);
+  console.log(seatNumber);
   
   const handleIsAgree = () =>{
     setIsAgree(!isAgree);
@@ -28,22 +31,24 @@ const Modal = ({ isOpen, onClose} : BtnProps) => {
         </button>
         <h2 className="text-lg font-bold mb-4">취소 수수료 안내</h2>
         <table>
-          <tr>
-            <td>기간</td>
-            <td>수수료 부과율</td>
-          </tr>
-          <tr>
-            <td>D-7</td>
-            <td>50%</td>
-          </tr>
+          <tbody>
+            <tr>
+                <td> {seatNumber} 기간</td>
+                <td>수수료 부과율</td>
+            </tr>
+            <tr>
+                <td>D-7</td>
+                <td>50%</td>
+            </tr>
+          </tbody>
         </table>
         <div>
           <input id="default-checkbox" type="checkbox" onChange={handleIsAgree}></input>
           <span className="mb-4 text-xs">취소 수수료 안내사항을 읽었으며, 이에 동의합니다.</span>
         </div>
-        <div>
-          <button className="px-4 py-2 bg-ttokPink text-white rounded-lg" onClick={onClose} disabled={!isAgree}>예매</button>
-          <button className="px-4 py-2 bg-gray-300 text-black rounded-lg" onClick={onClose}>취소</button>
+        <div className="flex">
+          <Link className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={onClose} to="/home/reserve/progress">예매</Link>
+          <button className="px-14 py-1 mx-auto bg-gray-300 text-black rounded-lg" onClick={onClose}>취소</button>
         </div>
       </div>
     </div>
