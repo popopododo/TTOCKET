@@ -13,18 +13,20 @@ interface TicketDTO {
         uint256 status; // 1 : 예매완료, 2 : 취소티켓, 3 : 취소후구매된티켓
     }
     struct PerformInfo {
-        uint256 id;
+        uint16 id;
         address organizer;
         string title;
         string description;
-        uint256 maxSeat;
+        uint16 maxSeat;
         string location;
         uint256 price;
         string poster;
         uint256 performTime;
+    }
+    struct PerformRefundInfo{
         uint256 refundTime14;
         uint256 refundTime7;
         uint256 refundTime3;
-        uint256 refundTime1; 
+        uint256 refundTime1;         
     }
 } 
