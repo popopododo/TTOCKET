@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import Modal from '../../components/modal/Modal'
 import AlreadyModal from '../../components/modal/AlreadyReserveModal'
+
 // const seat = [1,2,3,4,5,6,7,8];
 const seat = [true,false,true,false,true,true,true,true]
 
@@ -8,7 +10,9 @@ function Ticketing(){
     //모달창 노출 여부 state
     // 모달창 띄우기 false -> true
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+    const location = useLocation();
+    console.log(location.state);
+    
     // 예매할 좌석 정보
     const [seatNumber, setSeatNumber] = useState<number>(-1);
 

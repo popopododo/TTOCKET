@@ -49,7 +49,7 @@ const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
           <span className="mb-4 ml-2 text-xs">취소 수수료 안내사항을 읽었으며, 이에 동의합니다.</span>
         </div>
         <div className="flex">
-          <Link className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={onClose} to="/home/reserve/progress">예매</Link>
+          <Link className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={onClose} to="/reserve/progress">예매</Link>
           <button className="px-14 py-1 mx-auto bg-gray-300 text-black rounded-lg" onClick={onClose}>취소</button>
         </div>
       </div>

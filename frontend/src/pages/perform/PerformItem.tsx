@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface dummyType {
@@ -153,9 +154,11 @@ function PerformItem() {
             />
           </svg>
         </p>
-        <button className="bg-[#FB7185] text-white w-64 h-10 rounded font-bold">
-          예매하기
-        </button>
+        <Link to="/reserve/" state={location.state}>
+          <button className="bg-[#FB7185] text-white w-64 h-10 rounded font-bold">
+            예매하기
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -6,16 +6,18 @@ function Progress(){
 
     useEffect(()=>{
         setTimeout(()=>{
-            navigate(`/home/reserve/finish`);
+            navigate(`/reserve/finish`);
         },2000);
     });
 
     return (
-        <div className="min-h-full">
-            <img className="mx-auto mt-24 w-24" 
-            src={require('../../assets/progress.gif')}></img>
-            <p className="text-center mt-4 text-xl font-bold">예매 중</p>
-            <p className="text-center mt-4">잠시만 기다려주세요</p>
+        <div className="w-screen h-screen flex justify-center items-center">
+            <div>
+                <img className="mx-auto w-24" 
+                src={require('../../assets/progress.gif')}></img>
+                <p className="text-center mt-4 text-xl font-bold">예매 중</p>
+                <p className="text-center mt-4">잠시만 기다려주세요</p>
+            </div>
         </div>
     )
 }
