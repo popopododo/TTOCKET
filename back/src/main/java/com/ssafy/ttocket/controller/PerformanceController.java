@@ -77,7 +77,7 @@ public class PerformanceController {
     @PutMapping("/{performanceId}/{seatId}/{code}")  // 좌석 상태 변경
     public ResponseEntity<ResponseDto> performanceReservation(@PathVariable int performanceId,
                                                               @PathVariable int seatId,
-                                                              @PathVariable String code) {
+                                                              @PathVariable int code) {
         log.info("request performance reservation return");
         ResponseDto responseDto = performanceService.changeReservationState(performanceId, seatId, code);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);

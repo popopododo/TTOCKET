@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -42,11 +41,19 @@ public class PerformanceService {
         String endTimeStr = performanceDto.getEndTime();
         LocalDateTime startTime = timeService.StringToLocalDateTime(startTimeStr);
         LocalDateTime endTime = timeService.StringToLocalDateTime(endTimeStr);
+        Optional<User> byId = userRepository.findById(performanceDto.getUserId());
+        if (byId.isEmpty()) {
+            responseDto.setStatusCode(400);
+            responseDto.setMessage("유저아이디로 검색을 했을 때 유저의 닉네임을 검색할 수 없음");
+            return responseDto;
+        }
+
+        User user = byId.get();
 
         // DB
         Performance performance = Performance.builder()
-
                 .title(performanceDto.getTitle())
+                .user(user)
                 .startTime(startTime)
                 .endTime(endTime)
                 .location(performanceDto.getLocation())
@@ -129,7 +136,7 @@ public class PerformanceService {
         for (Performance p : performanceList) {
             PerformanceDto performanceDto = PerformanceDto.builder()
                     .id(p.getId())
-                    .userId(new User())
+                    .userId(String.valueOf(p.getUser()))
                     .title(p.getTitle())
                     .startTime(String.valueOf(p.getStartTime()))
                     .endTime(String.valueOf(p.getEndTime()))
@@ -145,6 +152,7 @@ public class PerformanceService {
         }
 
         // 반환 값 설정
+        result.put("cursor_id", cursorId);
         result.put("peformance_list", performanceDtoList);
         responseDto.setMessage("공연 목록 데이터 리턴");
         responseDto.setBody(result);
@@ -284,7 +292,7 @@ public class PerformanceService {
         return responseDto;
     }
 
-    public ResponseDto changeReservationState(int performanceId, int seatId, String code) {
+    public ResponseDto changeReservationState(int performanceId, int seatId, int code) {
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
 

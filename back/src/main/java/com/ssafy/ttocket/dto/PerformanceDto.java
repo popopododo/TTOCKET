@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class PerformanceDto {
     private int id;
     @JsonProperty("user_id")
-    private User userId;
+    private String userId;
     private String title;
     @JsonProperty("start_time")
     private String startTime;  // 공연 시작시간
