@@ -58,8 +58,7 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     * 새로운 티켓 정보를 가진 ERC-721 토큰을 생성
     * 
     * @ param 
-    * @ return None
-    * @ exception None
+    * @ return
     */
     function createTicket(uint256 performId, string memory userName, 
                         uint256 seatNum) public payable returns (uint256) {
