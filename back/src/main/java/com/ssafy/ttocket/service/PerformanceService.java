@@ -288,12 +288,27 @@ public class PerformanceService {
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
 
-        Seat seat = seatRepository.findByPerformanceIdAndSeatId(performanceId, seatId);
-        String status = String.valueOf(seat.getStatus());
-        System.out.println("status = " + status);
-
+        List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
+        Seat seatStatus = seats.get(seatId);
+        if (seatStatus.getStatus().equals(SeatStatus.EMPTY)){
+            seats.get(seatId).setStatus(SeatStatus.PURCHASING);
+        } else if (seatStatus.getStatus().equals(SeatStatus.PURCHASING)) { // 구매 중 성공
+            seats.get(seatId).setStatus(SeatStatus.RESERVED);
+//        } else if (seatStatus.getStatus().equals(SeatStatus.PURCHASING)) { // 구매 중 취소
+//            seats.get(seatId).setStatus(SeatStatus.PURCHASING_CANCEL);
+        } else if (seatStatus.getStatus().equals(SeatStatus.RESERVED)) { // 구매완료 후 취소
+            seats.get(seatId).setStatus(SeatStatus.PURCHASED_CANCEL);
+        } else if (seatStatus.getStatus().equals(SeatStatus.PURCHASED_CANCEL)) {
+            seats.get(seatId).setStatus(SeatStatus.EMPTY);
+        }
+        
+        seatRepository.save(seatStatus);
 
         responseDto.setMessage("좌석 상태 변경 데이터 리턴");
+        result.put("performance_id", performanceId);
+        result.put("seatId", seatId);
+        result.put("seat_status", seatStatus.getStatus());
+
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
         return responseDto;
