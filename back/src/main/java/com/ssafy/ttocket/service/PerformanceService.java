@@ -46,18 +46,6 @@ public class PerformanceService {
         // DB
         Performance performance = Performance.builder()
 
-//                // 테스트용 데이터 입력
-//                .title("test_title")
-//                .location("test_location")
-//                .max_seats(20)
-//                .description("test_description")
-//                .startTime(startTime)
-//                .endTime(endTime)  // String -> parsing : Converter / timeService(Converter 역할을하는 클래스)
-//                .price(25000)
-//                .poster("test_poster")
-//                .etc("test_etc")
-
-                // 실제로 사용할 입력
                 .title(performanceDto.getTitle())
                 .startTime(startTime)
                 .endTime(endTime)
@@ -98,7 +86,7 @@ public class PerformanceService {
         }
 
         // responseDto
-        result.put("performanceId", performance.getId());
+        result.put("performance_id", performance.getId());
         responseDto.setMessage("공연 등록 완료");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
@@ -118,9 +106,9 @@ public class PerformanceService {
         List<PerformanceLike> likePerform = performanceLikeRepository.findFirstListByUserId(userId);  // 유저가 좋아요 한 공연 리스트
 
         // 찾은 데이터 result에 입력
-        result.put("openSoon", openSoon);
-        result.put("performSoon", performSoon);
-        result.put("likePerform", likePerform);
+        result.put("open_soon", openSoon);
+        result.put("perform_soon", performSoon);
+        result.put("like_performance", likePerform);
 
         responseDto.setMessage("홈 화면 데이터 리턴");
         responseDto.setBody(result);
@@ -157,7 +145,7 @@ public class PerformanceService {
         }
 
         // 반환 값 설정
-        result.put("performanceDtoList", performanceDtoList);
+        result.put("peformance_list", performanceDtoList);
         responseDto.setMessage("공연 목록 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
@@ -185,7 +173,7 @@ public class PerformanceService {
             userlikeDtoList.add(userlikeDto);
         }
 
-        result.put("userlikeDtoList", userlikeDtoList);
+        result.put("user_like_list", userlikeDtoList);
         responseDto.setMessage("유저의 찜 목록 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
@@ -224,7 +212,7 @@ public class PerformanceService {
 
         // 찾은 데이터 result에 입력
         result.put("performance_dto", performanceDto);
-        result.put("isUser_like", performanceLike.isLike());
+        result.put("is_user_like", performanceLike.isLike());
         result.put("seats_state", seatsState);
 
         // response 형식에 맞게 메시지, result, 상태코드 리턴
@@ -260,14 +248,54 @@ public class PerformanceService {
         return responseDto;
     }
 
-//    public ResponseDto reservationState(int performanceId) {
-//        Map<String,Object> result = new HashMap<>();
-//        ResponseDto responseDto = new ResponseDto();
-//
-//        Performance performance = performanceRepository.findById(performanceId);
-//
-//
-//        return responseDto;
-//    }
+    public ResponseDto reservationState(int performanceId) {
+        Map<String,Object> result = new HashMap<>();
+        ResponseDto responseDto = new ResponseDto();
 
+        Performance performance = performanceRepository.findById(performanceId);
+        List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
+
+        String[] seatsState = new String[performance.getMax_seats()+1];
+        seatsState[0] = "Index Starts from 1";
+        for (Seat seat : seats) {
+            int seatNo = seat.getSeatId().getSeatNo();
+            seatsState[seatNo] = String.valueOf(seat.getStatus());
+        }
+
+        PerformanceDto performanceDto = PerformanceDto.builder()
+                .id(performance.getId())
+                .title(performance.getTitle())
+                .startTime(timeService.LocalDateTimeToString(performance.getStartTime()))
+                .endTime(timeService.LocalDateTimeToString(performance.getEndTime()))
+                .location(performance.getLocation())
+                .price(performance.getPrice())
+                .maxSeats(performance.getMax_seats())
+                .desc(performance.getDescription())
+                .etc(performance.getEtc())
+                .build();
+
+        // 찾은 데이터 result에 입력
+        result.put("performance", performanceDto);
+        result.put("seats_state", seatsState);
+
+        responseDto.setMessage("공연 좌석보기 데이터 리턴");
+        responseDto.setBody(result);
+        responseDto.setStatusCode(200);
+        return responseDto;
+    }
+
+    public ResponseDto changeReservationState(int performanceId, int seatId, String code) {
+        Map<String,Object> result = new HashMap<>();
+        ResponseDto responseDto = new ResponseDto();
+
+        Seat seat = seatRepository.findByPerformanceIdAndSeatId(performanceId, seatId);
+        String status = String.valueOf(seat.getStatus());
+        System.out.println("status = " + status);
+
+
+        responseDto.setMessage("좌석 상태 변경 데이터 리턴");
+        responseDto.setBody(result);
+        responseDto.setStatusCode(200);
+        return responseDto;
+    }
 }
