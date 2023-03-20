@@ -27,8 +27,8 @@ function PerformSlider({ data }: { data: dummyType[] }) {
       <Slider {...settings} className={style.sidebody}>
         {data &&
           data.map((ob) => (
-            <Link to="detail" state={ob.id}>
-              <div key={ob.id} className={style.sidelistt}>
+            <Link to="detail" state={ob.id} key={ob.id}>
+              <div className={style.sidelistt}>
                 <img src={ob.img} alt="사진" className="h-36 mt-1" />
                 {/* <p className="text-sm">{ob.name}</p> */}
               </div>

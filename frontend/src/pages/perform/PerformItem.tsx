@@ -1,3 +1,4 @@
+import { useLayoutEffect, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface dummyType {
@@ -86,10 +87,12 @@ const dummyData: dummyType[] = [
 function PerformItem() {
   const location = useLocation();
   const navigate = useNavigate();
+  // const [poster, setPoster] = useState(dummyData[location.state - 1].img);
 
   const handleGoBack = () => {
     navigate(-1);
   };
+
   return (
     <div className="flex flex-col content-center">
       <div className="flex h-14 bg-gray-100 items-center">
@@ -110,10 +113,10 @@ function PerformItem() {
         </svg>
       </div>
       <div
-        // className="bg-[url(http://ticketimage.interpark.com/Play/image/large/23/23003443_p.gif)] bg-no-repeat bg-local bg-cover flex justify-center"
+        // className="bg-[url(https://ticketimage.interpark.com/Play/image/large/23/23000721_p.gif)] bg-no-repeat bg-local bg-cover flex justify-center"
         className={`bg-[url(${
           dummyData[location.state - 1].img
-        })] bg-no-repeat bg-local bg-cover`}
+        })] bg-no-repeat bg-local bg-cover flex justify-center`}
       >
         <div className="w-full h-full backdrop-blur-sm  flex justify-center">
           <img
