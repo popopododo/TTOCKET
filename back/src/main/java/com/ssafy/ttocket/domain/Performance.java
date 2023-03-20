@@ -24,7 +24,7 @@ public class Performance {
     @Column(name="performance_title")
     private String title;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
