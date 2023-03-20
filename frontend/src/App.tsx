@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/error/NotFound";
 import Perform from "./pages/perform/Perform";
+import Reserve from "./pages/reserve/Reserve";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Login />}></Route>
           <Route path="/home/*" element={<Home />}></Route>
           <Route path="/perform/*" element={<Perform />}></Route>
+          <Route path="/reserve/*" element={<Reserve />}></Route>
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
