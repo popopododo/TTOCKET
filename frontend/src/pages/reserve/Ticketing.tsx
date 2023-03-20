@@ -32,26 +32,23 @@ function Ticketing(){
     const handleAlreadyModalClose = () =>{
         setAlreadyModalOpen(false);
     }
-    const showMsg = (msg : string) =>{
-        alert(msg);
-    }
     return (
         <div>
             {/* 헤더 */}
             <div className="m-2">
-                <p className="font-bold text-xl">콜드 플레이 내한공연</p>
+                <p className="text-xl font-bold">콜드 플레이 내한공연</p>
                 <p className="text-xs">현대카드 슈퍼콘서트 2023 S/S S</p>
-                <div className="bg-gray-200 rounded-sm mt-4 h-32 flex items-center justify-center">
-                    <p className="font-bold text-lg">STAGE</p>
+                <div className="flex items-center justify-center h-32 mt-4 bg-gray-200 rounded-sm">
+                    <p className="text-lg font-bold">STAGE</p>
                 </div>
                 <div className="mt-20">
                     <div className="grid grid-flow-col grid-cols-8">
                         {/* 좌석 섹션 */}
                         {seat.map((sId, index)=>{
                             if(sId){
-                                return <div className="bg-gray-300 rounded-sm h-10 w-10 m-1" key={index} onClick={handleAlreadyModalOpen}></div>;
+                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index} onClick={handleAlreadyModalOpen}></div>;
                             }else{
-                                return <div className="bg-ttokPink rounded-sm h-10 w-10 m-1" key={index} onClick={ ()=>{handleReserveModalOpen(index) }}></div>;
+                                return <div className="w-10 h-10 m-1 rounded-sm bg-ttokPink" key={index} onClick={ ()=>{handleReserveModalOpen(index) }}></div>;
                             }
                             
                         })}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 
 interface BtnProps {
   children: ReactNode;
@@ -14,9 +14,9 @@ const AlreadyModal = ({ isOpen, onClose} : BtnProps) => {
   return (
     <div className={modalStyles}>
       <div className={`absolute p-6 sm:p-8 lg:p-10 w-6/12 max-w-md mx-auto rounded-lg transition-all duration-300 left-1/4 top-1/4 ${contentStyles}`}>
-        <p className="text-xs font-bold mx-auto mb-4 text-center">이미 선택된 좌석입니다.</p>
+        <p className="mx-auto mb-4 text-xs font-bold text-center">이미 선택된 좌석입니다.</p>
         <div className="flex">
-          <button className="px-8 py-1 mx-auto bg-gray-300 text-black rounded-lg max-w-sm" onClick={onClose}>취소</button>
+          <button className="max-w-sm px-8 py-1 mx-auto text-black bg-gray-300 rounded-lg" onClick={onClose}>취소</button>
         </div>
       </div>
     </div>

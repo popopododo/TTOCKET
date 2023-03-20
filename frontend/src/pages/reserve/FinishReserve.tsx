@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 function FinishReserve(){
 
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <div className="flex items-center justify-center w-screen h-screen">
             <div>
-                <img className="mx-auto w-24" 
-                src={require('../../assets/success.gif')}></img>
+                <img className="w-24 mx-auto" 
+                src={require('../../assets/success.gif')} alt="이미지"></img>
             
-                <p className="text-center mt-2">예매 완료!</p>
+                <p className="mt-2 text-center">예매 완료!</p>
                 <div className="flex my-4">
-                    <Link className="px-8 py-1 mt-4 mx-auto bg-ttokPink rounded-xl text-white text-xl font-bold" to="/home">티켓 보기</Link>
+                    <Link className="px-8 py-1 mx-auto mt-4 text-xl font-bold text-white bg-ttokPink rounded-xl" to="/home">티켓 보기</Link>
                 </div>
             </div>
         </div>
