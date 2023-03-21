@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PerformBanner from "./PerformBanner";
 import PerformSlider from "./PerformSlider";
 import { Link } from "react-router-dom";
+import axiosApi from "../../services/axiosApi";
 
 interface dummyType {
   id: number;
@@ -87,6 +88,20 @@ const dummyData: dummyType[] = [
 ];
 
 function PerformHome() {
+  const performDataHandler = async () => {
+    try {
+      const res = await axiosApi.get("", {
+        headers: {},
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    performDataHandler();
+  });
   return (
     <div className="mt-10">
       <div className="mb-7">

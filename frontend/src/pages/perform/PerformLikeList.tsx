@@ -75,6 +75,10 @@ function PerformLikeList() {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  // const callback = (entires, observer) => {
+  //   console.log("콜백함수");
+  // };
   return (
     <div>
       <div className="h-10 flex items-center justify-between">

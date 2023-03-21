@@ -32,6 +32,7 @@ function PerformBanner({ data }: { data: dummyType[] }) {
               src={da.img}
               className="object-cover w-full h-40 object-top"
               alt="사진"
+              key={da.id}
             />
           ))}
       </Slider>
