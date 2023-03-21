@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactNode, useState } from "react";
-import { Link } from 'react-router-dom';
+import axiosApi from '../../services/axiosApi';
 
 interface BtnProps {
   children: ReactNode;
@@ -11,11 +11,23 @@ interface BtnProps {
 }
 const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
   const [isAgree, setIsAgree] = useState<boolean>(false);
-  console.log(seatNumber);
+  console.log(`Modal Open >> seatNumber : ${seatNumber}`);
   
   const handleIsAgree = () =>{
     setIsAgree(!isAgree);
   }
+
+  // 좌석 예약하기 로직
+  const reserveSeat = async (seat : number) =>{
+    console.log(`reserveSeat >> seatNumber : ${seat}`);
+    
+    const {data} = await axiosApi.post(`/6/2/1`);
+    console.log(data);
+    
+    
+  }
+
+
   const modalStyles = isOpen ? 'fixed inset-0 z-50 overflow-y-auto' : 'hidden';
   const overlayStyles = isOpen ? 'absolute inset-0 bg-gray-700 opacity-75' : 'hidden';
   const contentStyles = isOpen ? 'bg-white rounded-t-lg shadow-lg transform translate-y-0' : 'transform translate-y-full';
@@ -49,7 +61,7 @@ const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
           <span className="mb-4 ml-2 text-xs">취소 수수료 안내사항을 읽었으며, 이에 동의합니다.</span>
         </div>
         <div className="flex">
-          <Link className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={onClose} to="/reserve/progress">예매</Link>
+          <button className="px-14 py-1 mx-auto bg-ttokPink text-white rounded-lg" onClick={()=>{reserveSeat(seatNumber)}}>예매</button>
           <button className="px-14 py-1 mx-auto bg-gray-300 text-black rounded-lg" onClick={onClose}>취소</button>
         </div>
       </div>

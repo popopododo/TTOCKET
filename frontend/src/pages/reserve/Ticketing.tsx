@@ -1,24 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import Modal from '../../components/modal/Modal'
 import AlreadyModal from '../../components/modal/AlreadyReserveModal'
-
-// const seat = [1,2,3,4,5,6,7,8];
-const seat = [true,false,true,false,true,true,true,true]
+import axiosApi from "../../services/axiosApi";
 
 function Ticketing(){
+    const [seats_state, setSeats_state] = useState<String[]>([]);
+
+    const getSeatInfo = async ()=>{
+        const {data} = await axiosApi.get(`/reserve/${6}`); 
+        
+        // 가져온 걸 set하기
+        setSeats_state(data.body.seats_state);
+    }
+    // 공연 좌석 정보 가져오기
+    useEffect(()=>{
+        getSeatInfo();
+    }, []);
+
     //모달창 노출 여부 state
     // 모달창 띄우기 false -> true
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const location = useLocation();
-    console.log(location.state);
-    
+  
     // 예매할 좌석 정보
     const [seatNumber, setSeatNumber] = useState<number>(-1);
 
+    // 예매 확인 모달 창 띄우기
     const handleReserveModalOpen = (index: number) => {
         setSeatNumber(index);
-        setIsModalOpen(true); // 모달 창 띄우기
+        setIsModalOpen(true); 
     };
   
     const handleReserveModalClose = () => {
@@ -44,11 +54,11 @@ function Ticketing(){
                 <div className="mt-20">
                     <div className="grid grid-flow-col grid-cols-8">
                         {/* 좌석 섹션 */}
-                        {seat.map((sId, index)=>{
-                            if(sId){
-                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index} onClick={handleAlreadyModalOpen}></div>;
-                            }else{
-                                return <div className="w-10 h-10 m-1 rounded-sm bg-ttokPink" key={index} onClick={ ()=>{handleReserveModalOpen(index) }}></div>;
+                        {seats_state.map((seat, index)=>{
+                            if(seat !== 'EMPTY'|| seat !== 'PURCHASED_CANCEL'){
+                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index+1} onClick={handleAlreadyModalOpen}></div>;
+                            }else{ 
+                                return <div className="w-10 h-10 m-1 rounded-sm bg-ttokPink" key={index+1} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
                             }
                             
                         })}
