@@ -68,7 +68,7 @@ public class PerformanceController {
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/reserve/{performanceId}")  // 예매하기 버튼 클릭
+    @GetMapping("/reserve/{performanceId}")  // 공연 상세보기에서 예매하기 버튼 클릭
     public ResponseEntity<ResponseDto> performanceReservation(@PathVariable int performanceId) {
         log.info("request performance reservation return");
         ResponseDto responseDto = performanceService.reservationState(performanceId);
@@ -79,7 +79,7 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> performanceReservation(@PathVariable int performanceId,
                                                               @PathVariable int seatId,
                                                               @PathVariable int code) {
-        log.info("request performance reservation return");
+        log.info("click seatNo or cancel seat return");
         ResponseDto responseDto = performanceService.changeReservationState(performanceId, seatId, code);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
