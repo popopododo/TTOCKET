@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Box from "./box/Box";
+import Box from "./box/BoxHome";
 import Ticket from "./ticket/Ticket";
 import HeaderNav from "../components/HeaderNav";
 import BottomNav from "../components/BottomNav";

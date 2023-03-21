@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Box() {
-  return (
-    <div>Box</div>
-  )
+  return <div></div>;
 }
 
-export default Box
+export default Box;
