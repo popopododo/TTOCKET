@@ -66,3 +66,8 @@ compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }
 // querydsl 세팅 끝
+
+// 배포 설정
+jar {
+	enabled = true
+}
