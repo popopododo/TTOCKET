@@ -88,9 +88,11 @@ const dummyData: dummyType[] = [
 ];
 
 function PerformHome() {
+  const userId = "1";
+
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get("", {
+      const res = await axiosApi.get(`performance/home/${userId}`, {
         headers: {},
       });
       console.log(res);
@@ -103,7 +105,7 @@ function PerformHome() {
     performDataHandler();
   });
   return (
-    <div className="mt-10">
+    <div className="mt-20">
       <div className="mb-7">
         <PerformBanner data={dummyData} />
       </div>

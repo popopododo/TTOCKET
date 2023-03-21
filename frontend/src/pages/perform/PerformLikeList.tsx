@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface dummyType {
@@ -76,13 +75,10 @@ function PerformLikeList() {
     navigate(-1);
   };
 
-  // const callback = (entires, observer) => {
-  //   console.log("콜백함수");
-  // };
   return (
     <div>
       <div className="h-10 flex items-center justify-between">
-        <p>
+        <p className="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
