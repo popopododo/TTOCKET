@@ -89,11 +89,14 @@ const dummyData: dummyType[] = [
 
 function PerformHome() {
   const performDataHandler = async () => {
-    const res = await axiosApi.get("", {
-      headers: {
-        userId: "",
-      },
-    });
+    try {
+      const res = await axiosApi.get("", {
+        headers: {},
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
