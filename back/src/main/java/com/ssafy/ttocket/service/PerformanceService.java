@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,7 @@ public class PerformanceService {
     private final PerformanceLikeRepository performanceLikeRepository;
     private final UserRepository userRepository;
     private final TimeService timeService;
-
+    private final RedisTemplate redisTemplate;
     @Transactional
     public ResponseDto createPerformance(PerformanceDto performanceDto) {
 
@@ -106,6 +108,9 @@ public class PerformanceService {
         // 활용할 자료구조 생성
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
+//        ValueOperations valueOperations = redisTemplate.opsForValue();
+//        String key = "test";
+//        valueOperations.set(key,"is the test");
 
         // DB에서 원하는 데이터 찾아오기
         List<Performance> openSoon = performanceRepository.findOpenSoon();  // 오픈 예정 : 상단 배너

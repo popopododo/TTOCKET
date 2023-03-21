@@ -19,6 +19,7 @@ import java.util.Optional;
 public class PerformanceController {
     private final PerformanceService performanceService;
 
+
     @GetMapping("/home/{userId}") // 공연 상세보기
     public ResponseEntity<ResponseDto> home(@PathVariable String userId){
         log.info("home data return");
