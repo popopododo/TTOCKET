@@ -5,13 +5,14 @@ import axiosApi from '../../services/axiosApi';
 interface BtnProps {
   children: ReactNode;
   isOpen : boolean;
+  performId : number;
   seatNumber : number;
   onClose : ()=>void;
 
 }
-const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
+const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
   const [isAgree, setIsAgree] = useState<boolean>(false);
-  console.log(`Modal Open >> seatNumber : ${seatNumber}`);
+  console.log(`Modal Open >> performId : ${performId}, seatNumber : ${seatNumber}`);
   
   const handleIsAgree = () =>{
     setIsAgree(!isAgree);
@@ -21,7 +22,7 @@ const Modal = ({ isOpen, onClose, seatNumber} : BtnProps) => {
   const reserveSeat = async (seat : number) =>{
     console.log(`reserveSeat >> seatNumber : ${seat}`);
     
-    const {data} = await axiosApi.post(`/6/2/1`);
+    const {data} = await axiosApi.post(`/${performId}/${seatNumber}/1`);
     console.log(data);
     
     
