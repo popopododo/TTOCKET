@@ -40,7 +40,7 @@ public class PerformanceController {
         if (cursorId == null) {
             cursorId = 0;
         }
-        ResponseDto responseDto = performanceService.performanceList(cursorId, 3);  // size 설정
+        ResponseDto responseDto = performanceService.performanceList(cursorId, 6);  // size 설정
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class PerformanceController {
         if (cursorId == null) {
             cursorId  = 0;
         }
-        ResponseDto responseDto = performanceService.userlikeList(userId, cursorId, 3);  // userId 매서드 나중에 입력하기
+        ResponseDto responseDto = performanceService.userlikeList(userId, cursorId, 6);  // userId 매서드 나중에 입력하기
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
