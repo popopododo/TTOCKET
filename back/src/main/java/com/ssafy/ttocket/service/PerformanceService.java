@@ -160,7 +160,7 @@ public class PerformanceService {
 
         // 반환 값 설정
         result.put("cursor_id", cursorId);
-        result.put("peformance_list", performanceDtoList);
+        result.put("performance_list", performanceDtoList);
         responseDto.setMessage("공연 목록 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
@@ -220,11 +220,10 @@ public class PerformanceService {
                 .userId(performance.getUser().getId())
                 .build();
 
-        String[] seatsState = new String[performance.getMax_seats()+1];
-        seatsState[0] = "Index Starts from 1";
+        String[] seatsState = new String[performance.getMax_seats()];
         for (Seat seat : seats) {
             int seatNo = seat.getSeatId().getSeatNo();
-            seatsState[seatNo] = String.valueOf(seat.getStatus());
+            seatsState[seatNo-1] = String.valueOf(seat.getStatus());
         }
 
         // 찾은 데이터 result에 입력
