@@ -16,6 +16,7 @@
 
 .TicketImg{
     width: 276px;
+    max-height: 370px;
 }
 
 .TicketInfo{
