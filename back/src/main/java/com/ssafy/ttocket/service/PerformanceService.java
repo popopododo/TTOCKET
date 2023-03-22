@@ -187,7 +187,7 @@ public class PerformanceService {
 
         for (PerformanceLike p : userlikePage) {
             UserlikeDto userlikeDto = UserlikeDto.builder()
-                    .id(userId)
+                    .id(String.valueOf(p.getPerformance().getId()))
                     .title(p.getPerformance().getTitle())
                     .startTime(String.valueOf(p.getPerformance().getStartTime()))
                     .location(p.getPerformance().getLocation())
