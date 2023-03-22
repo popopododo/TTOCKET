@@ -6,16 +6,29 @@ import axiosApi from "../../services/axiosApi";
 
 function Ticketing(){
     const [seats_state, setSeats_state] = useState<String[]>([]);
+    const [performId, setPerformId] = useState<number>(0);
+    const location = useLocation();
 
-    const getSeatInfo = async ()=>{
-        const {data} = await axiosApi.get(`/reserve/${6}`); 
+    const getSeatInfo = async (performId:number)=>{
+
+
+        const {data} = await axiosApi.get(`/reserve/${performId}`); 
         
         // 가져온 걸 set하기
         setSeats_state(data.body.seats_state);
+        console.log(data.body.seats_state);
+        
     }
     // 공연 좌석 정보 가져오기
     useEffect(()=>{
-        getSeatInfo();
+        console.log(location.state);
+        
+
+        //공연 아이디
+        getSeatInfo(location.state);
+
+
+
     }, []);
 
     //모달창 노출 여부 state
@@ -55,10 +68,10 @@ function Ticketing(){
                     <div className="grid grid-flow-col grid-cols-8">
                         {/* 좌석 섹션 */}
                         {seats_state.map((seat, index)=>{
-                            if(seat !== 'EMPTY'|| seat !== 'PURCHASED_CANCEL'){
-                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index+1} onClick={handleAlreadyModalOpen}></div>;
+                            if(seat === 'EMPTY'){
+                                return <div className="w-10 h-10 m-1 bg-ttokPink rounded-sm" key={index} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
                             }else{ 
-                                return <div className="w-10 h-10 m-1 rounded-sm bg-ttokPink" key={index+1} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
+                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index} onClick={handleAlreadyModalOpen}></div>;
                             }
                             
                         })}
@@ -66,7 +79,7 @@ function Ticketing(){
                 </div>
                 
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleReserveModalClose} seatNumber={seatNumber}>
+            <Modal isOpen={isModalOpen} onClose={handleReserveModalClose} seatNumber={seatNumber} performId={performId}>
         
             </Modal>
             <AlreadyModal isOpen={AlreadyModalOpen} onClose={handleAlreadyModalClose}>

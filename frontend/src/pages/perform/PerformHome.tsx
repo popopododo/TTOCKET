@@ -92,7 +92,7 @@ function PerformHome() {
 
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get(`performance/home/${userId}`, {
+      const res = await axiosApi.get(`/home/${userId}`, {
         headers: {},
       });
       console.log(res);
