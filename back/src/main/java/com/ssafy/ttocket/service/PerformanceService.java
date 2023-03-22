@@ -68,7 +68,7 @@ public class PerformanceService {
                 .build();
 
         performanceRepository.save(performance);
-        
+
         // 사용자 수만큼 performanceLike DB 등록
         List<User> userAll = userRepository.findAll();
         for (User anUser : userAll) {
@@ -110,16 +110,17 @@ public class PerformanceService {
         // 활용할 자료구조 생성
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
-//        ValueOperations valueOperations = redisTemplate.opsForValue();
-//        String key = "test";
-//        valueOperations.set(key,"is the test");
 
         // DB에서 원하는 데이터 찾아오기
         List<Performance> openSoon = performanceRepository.findOpenSoon();  // 오픈 예정 : 상단 배너
         List<Performance> performSoon = performanceRepository.findPerformSoon();  // 공연 임박 리스트
         List<PerformanceLike> likePerform = performanceLikeRepository.findFirstListByUserId(userId);  // 유저가 좋아요 한 공연 리스트
+        User user = userRepository.findById(userId).get();
+        String nickname = user.getNickname();
+
 
         // 찾은 데이터 result에 입력
+        result.put("user_nickname", nickname);
         result.put("open_soon", openSoon);
         result.put("perform_soon", performSoon);
         result.put("like_performance", likePerform);
