@@ -118,12 +118,19 @@ public class PerformanceService {
         User user = userRepository.findById(userId).get();
         String nickname = user.getNickname();
 
+        List<PerformanceDto> likePerforms = new ArrayList<>();
+        for (PerformanceLike lp : likePerform) {
+            PerformanceDto performanceDto = PerformanceDto.builder()
+                    .title(lp.getPerformance().getTitle())
+                    .build();
+            likePerforms.add(performanceDto);
+        }
 
         // 찾은 데이터 result에 입력
         result.put("user_nickname", nickname);
         result.put("open_soon", openSoon);
         result.put("perform_soon", performSoon);
-        result.put("like_performance", likePerform);
+        result.put("like_performance", likePerforms);
 
         responseDto.setMessage("홈 화면 데이터 리턴");
         responseDto.setBody(result);
@@ -173,14 +180,18 @@ public class PerformanceService {
         ResponseDto responseDto = new ResponseDto();
 
         Pageable pageable = PageRequest.of(cursorId, size);
-        Page<PerformanceLike> userlikeList = performanceLikeRepository.findByCustom_cursorPaging(pageable, cursorId);
+//        List<PerformanceLike> userlikeList = performanceLikeRepository.findByUserId(userId);
+        Page<PerformanceLike> userlikePage = performanceLikeRepository.findByCustom_cursorPaging(pageable, cursorId, userId);
         List<UserlikeDto> userlikeDtoList = new ArrayList<>();
 
-        for (PerformanceLike p : userlikeList) {
+
+        for (PerformanceLike p : userlikePage) {
             UserlikeDto userlikeDto = UserlikeDto.builder()
                     .id(userId)
                     .title(p.getPerformance().getTitle())
                     .startTime(String.valueOf(p.getPerformance().getStartTime()))
+                    .location(p.getPerformance().getLocation())
+                    .price(p.getPerformance().getPrice())
                     .endTime(String.valueOf(p.getPerformance().getEndTime()))
                     .description(p.getPerformance().getDescription())
                     .etc(p.getPerformance().getEtc())
