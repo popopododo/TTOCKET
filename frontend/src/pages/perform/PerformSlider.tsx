@@ -5,16 +5,24 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
-interface dummyType {
+interface soonDataType {
+  description: string;
+  endTime: string;
+  etc: string;
   id: number;
-  name: string;
-  img: string;
+  location: string;
+  max_seats: number;
+  poster: string;
+  price: number;
+  startTime: string;
+  title: string;
+  user: object;
 }
 
-function PerformSlider({ data }: { data: dummyType[] }) {
+function PerformSlider({ data }: { data: soonDataType[] }) {
   const settings = {
     infinite: false,
-    speed: 500,
+    speed: 100,
     slidesToShow: 3,
     slidesToScroll: 1,
     draggable: true,
@@ -29,7 +37,7 @@ function PerformSlider({ data }: { data: dummyType[] }) {
           data.map((ob) => (
             <Link to="detail" state={ob.id} key={ob.id}>
               <div className={style.sidelistt}>
-                <img src={ob.img} alt="사진" className="h-36 mt-1" />
+                <img src={ob.poster} alt="사진" className="h-36 mt-1" />
                 {/* <p className="text-sm">{ob.name}</p> */}
               </div>
             </Link>

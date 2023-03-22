@@ -2,17 +2,21 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 
-interface dummyType {
-  id: number;
-  name: string;
-  img: string;
-  start: number;
-  location: string;
-  coin: number;
+interface soonDataType {
   description: string;
+  endTime: string;
+  etc: string;
+  id: number;
+  location: string;
+  max_seats: number;
+  poster: string;
+  price: number;
+  startTime: string;
+  title: string;
+  user: object;
 }
 
-function PerformBanner({ data }: { data: dummyType[] }) {
+function PerformBanner({ data }: { data: soonDataType[] }) {
   const settings = {
     infinite: true,
     speed: 500,
@@ -29,7 +33,7 @@ function PerformBanner({ data }: { data: dummyType[] }) {
         {data &&
           data.map((da) => (
             <img
-              src={da.img}
+              src={da.poster}
               className="object-cover w-full h-40 object-top"
               alt="사진"
               key={da.id}
