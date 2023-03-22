@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+import formatDate from "../../components/date/formatDate";
 import axiosApi from "../../services/axiosApi";
 
 interface postType {
@@ -25,16 +26,17 @@ function PerformList() {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const page = useRef<number>(0);
   const [ref, inView] = useInView();
+  let todayTime = new Date();
 
   const rollPage = useCallback(async () => {
     try {
       const res = await axiosApi.get(`/performance/list/${page.current}`);
-      const data = res.data.body.peformance_list;
+      const data = res.data.body.performance_list;
       setPosts((prevPosts) => [...prevPosts, ...data]);
-      setHasNextPage(data.length === 10);
+      setHasNextPage(data.length === 6);
       if (data.length) {
         page.current += 1;
-        console.log("스크롤요청!!!!!! ");
+
         console.log(res);
       }
     } catch (err) {
@@ -42,29 +44,19 @@ function PerformList() {
     }
   }, []);
 
-  // const performListHandler = async () => {
-  //   try {
-  //     const res = await axiosApi.get("/performance/list/0");
-  //     console.log(res);
-  //     setData(res.data.body.peformance_list);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   const handleGoBack = () => {
     navigate(-1);
   };
-  // useEffect(() => {
-  //   performListHandler();
-  // });
+
   useEffect(() => {
-    // performListHandler();
-    console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
       rollPage();
     }
   }, [rollPage, hasNextPage, inView]);
+
+  // useEffect(() => {
+  //   handler();
+  // }, []);
 
   return (
     <div>
@@ -97,7 +89,7 @@ function PerformList() {
               <Link to="/perform/detail" state={dal.id} className="flex mb-5">
                 <img
                   src={dal.poster}
-                  className="h-32 mx-3 rounded"
+                  className="h-32 w-24 mx-3 rounded"
                   alt="poster"
                 ></img>
                 <div className="w-full">

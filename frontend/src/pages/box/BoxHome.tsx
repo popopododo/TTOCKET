@@ -43,7 +43,7 @@ const dummyData: dummyType[] = [
 
 function BoxHome() {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mt-20">
       <div className="h-20 w-full text-center">
         <p className="text-2xl font-bold mt-6">티켓 보관함</p>
       </div>

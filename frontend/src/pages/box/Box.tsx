@@ -1,7 +1,18 @@
-import React from "react";
+import { Route, Routes } from "react-router-dom";
+import HeaderNav from "../../components/HeaderNav";
+import BottomNav from "../../components/BottomNav";
+import BoxHome from "./BoxHome";
 
 function Box() {
-  return <div></div>;
+  return (
+    <div>
+      <HeaderNav />
+      <Routes>
+        <Route path="/" element={<BoxHome />} />
+      </Routes>
+      <BottomNav />
+    </div>
+  );
 }
 
 export default Box;

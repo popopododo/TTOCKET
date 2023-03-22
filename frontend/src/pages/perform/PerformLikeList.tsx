@@ -1,84 +1,81 @@
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import formatDate from "../../components/date/formatDate";
+import axiosApi from "../../services/axiosApi";
 
-interface dummyType {
+interface postType {
+  desc: string;
+  end_time: string;
+  etc: string;
   id: number;
-  name: string;
-  img: string;
-  start: number;
-  lacation: string;
-  coin: number;
+  location: string;
+  max_seats: number;
+  poster: string;
+  price: number;
+  start_time: string;
+  title: string;
+  user_id: string;
 }
 
-const dummyData: dummyType[] = [
-  {
-    id: 1,
-    name: "데스노트",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23002291_p_s.jpg",
-    start: 1,
-    lacation: "잠실 종합운동장",
-    coin: 3.5,
-  },
-  {
-    id: 2,
-    name: "맘마미아",
-    img: "https://ticketimage.interpark.com/Play/image/large/23/23000103_p.gif",
-    start: 2,
-    lacation: "잠실 종합운동장",
-    coin: 3.5,
-  },
-  {
-    id: 3,
-    name: "2023 오은영 토크쇼",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23000721_p_s.jpg",
-    start: 3,
-    lacation: "잠실 종합운동장",
-    coin: 2.5,
-  },
-  {
-    id: 4,
-    name: "2023 김수영 콘서트",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23003674_p_s.jpg",
-    start: 3,
-    lacation: "잠실 종합운동장",
-    coin: 2.5,
-  },
-  {
-    id: 5,
-    name: "미스터 트롯2",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23003941_p.gif",
-    start: 5,
-    lacation: "잠실 종합운동장",
-    coin: 4.0,
-  },
-  {
-    id: 6,
-    name: "TXT 월드 투어",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23000980_p.gif",
-    start: 5,
-    lacation: "잠실 종합운동장",
-    coin: 4.5,
-  },
-  {
-    id: 7,
-    name: "톤앤뮤직 페스티벌 2023",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23003443_p.gif",
-    start: 7,
-    lacation: "잠실 종합운동장",
-    coin: 2.5,
-  },
-];
 function PerformLikeList() {
   const location = useLocation();
   const navigate = useNavigate();
+  const userId = "0xca7AC9f4186853E0641723fc1F29BaD95e58b208";
+
+  const [posts, setPosts] = useState<postType[]>([]);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const page = useRef<number>(0);
+  const [ref, inView] = useInView();
+  let todayTime = new Date();
+
+  const rollPage = useCallback(async () => {
+    try {
+      const res = await axiosApi.get(
+        `/performance/likelist/${userId}/${page.current}`
+      );
+      const data = res.data.body.user_like_list;
+      setPosts((prevPosts) => [...prevPosts, ...data]);
+      setHasNextPage(data.length === 6);
+      if (data.length) {
+        page.current += 1;
+
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
+  const handler = async () => {
+    try {
+      const res = await axiosApi.get(
+        `/performance/likelist/${userId}/${page.current}`
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      rollPage();
+    }
+  }, [rollPage, hasNextPage, inView]);
+
+  useEffect(() => {
+    handler();
+  }, []);
+
   return (
     <div>
-      <div className="h-10 flex items-center justify-between">
-        <p className="">
+      <div className="h-10 flex items-center justify-between mt-20">
+        <p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -100,21 +97,21 @@ function PerformLikeList() {
       </div>
 
       <div className="mt-10">
-        {dummyData &&
-          dummyData.map((da) => (
-            <div key={da.id}>
-              <Link to="/perform/detail" state={da.id} className="flex mb-5">
+        {posts &&
+          posts.map((dal) => (
+            <div key={dal.id}>
+              <Link to="/perform/detail" state={dal.id} className="flex mb-5">
                 <img
-                  src={da.img}
-                  className="h-32 mx-3 rounded"
+                  src={dal.poster}
+                  className="h-32 w-24 mx-3 rounded"
                   alt="poster"
                 ></img>
                 <div className="w-full">
-                  <p className="text-red-500 font-bold">D-{da.start}</p>
-                  <p className="font-bold text-lg">{da.name}</p>
-                  <p>{da.lacation}</p>
+                  <p className="text-red-500 font-bold">D-{dal.start_time}</p>
+                  <p className="font-bold text-lg">{dal.title}</p>
+                  <p>{dal.location}</p>
                   <p className="text-right mt-3 mr-2">
-                    <span className="font-bold mr-1">{da.coin}</span>
+                    <span className="font-bold mr-1">{dal.price}</span>
                     <span>COIN</span>
                   </p>
                 </div>
@@ -122,6 +119,7 @@ function PerformLikeList() {
             </div>
           ))}
       </div>
+      <div ref={ref} />
     </div>
   );
 }

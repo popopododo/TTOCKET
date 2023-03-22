@@ -1,101 +1,28 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PerformBanner from "./PerformBanner";
 import PerformSlider from "./PerformSlider";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 
-interface dummyType {
-  id: number;
-  name: string;
-  img: string;
-  start: number;
-  location: string;
-  coin: number;
-  description: string;
-}
-
-const dummyData: dummyType[] = [
-  {
-    id: 1,
-    name: "데스노트",
-    img: "https://ticketimage.interpark.com/Play/image/large/23/23002291_p.gif",
-    start: 1,
-    location: "잠실 종합운동장",
-    coin: 3.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 2,
-    name: "맘마미아",
-    img: "https://ticketimage.interpark.com/Play/image/large/23/23000103_p.gif",
-    start: 2,
-    location: "잠실 종합운동장",
-    coin: 3.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 3,
-    name: "2023 오은영 토크쇼",
-    img: "https://ticketimage.interpark.com/Play/image/large/23/23000721_p.gif",
-    start: 3,
-    location: "잠실 종합운동장",
-    coin: 2.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 4,
-    name: "2023 김수영 콘서트",
-    img: "https://ticketimage.interpark.com/Play/image/large/23/23003674_p.gif",
-    start: 3,
-    location: "잠실 종합운동장",
-    coin: 2.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 5,
-    name: "미스터 트롯2",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23003941_p.gif",
-    start: 5,
-    location: "잠실 종합운동장",
-    coin: 4.0,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 6,
-    name: "TXT 월드 투어",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23000980_p.gif",
-    start: 5,
-    location: "잠실 종합운동장",
-    coin: 4.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-  {
-    id: 7,
-    name: "톤앤뮤직 페스티벌 2023",
-    img: "http://ticketimage.interpark.com/Play/image/large/23/23003443_p.gif",
-    start: 7,
-    location: "잠실 종합운동장",
-    coin: 2.5,
-    description:
-      "2022년을 강타하며 초대형 흥행 신드롬을 일으킨 뮤지컬 <데스노트>가 돌아온다. \n 매력적인 캐릭터와 두 천재의 긴장감 넘치는 스토리,\n 프랭크 와일드혼의 감각적인 음악, 하이 테크놀로지 뮤지컬의 진수로 무대예술의 황홀경을 선사하며 \n 다시한번 '데스노트' 의 초현실 세계로 초대한다.",
-  },
-];
-
 function PerformHome() {
-  const userId = "1";
+  const userId = "0xca7AC9f4186853E0641723fc1F29BaD95e58b208";
+  const [likePerform, setLikePerform] = useState<[]>([]);
+  const [performSoon, setPerformSoon] = useState<[]>([]);
+  const [openSoon, setOpenSoon] = useState<[]>([]);
 
   const performDataHandler = async () => {
     try {
+<<<<<<< HEAD
       const res = await axiosApi.get(`/home/${userId}`, {
         headers: {},
       });
+=======
+      const res = await axiosApi.get(`performance/home/${userId}`, {});
+>>>>>>> front-performancedetail
       console.log(res);
+      setLikePerform(res.data.body.like_performance);
+      setPerformSoon(res.data.body.perform_soon);
+      setOpenSoon(res.data.body.open_soon);
     } catch (err) {
       console.log(err);
     }
@@ -103,11 +30,11 @@ function PerformHome() {
 
   useEffect(() => {
     performDataHandler();
-  });
+  }, []);
   return (
-    <div className="mt-20">
+    <div className="mt-24">
       <div className="mb-7">
-        <PerformBanner data={dummyData} />
+        <PerformBanner data={openSoon} />
       </div>
       <div className="h-40 mb-20">
         <div className="mb-1 flex justify-between">
@@ -133,7 +60,7 @@ function PerformHome() {
           </p>
         </div>
         <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center">
-          <PerformSlider data={dummyData} />
+          <PerformSlider data={performSoon} />
         </div>
       </div>
       <div>
@@ -157,7 +84,7 @@ function PerformHome() {
           </p>
         </div>
         <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center">
-          <PerformSlider data={dummyData} />
+          <PerformSlider data={likePerform} />
         </div>
       </div>
     </div>
