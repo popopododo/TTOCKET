@@ -47,7 +47,7 @@ public class PerformanceService {
         Optional<User> byId = userRepository.findById(performanceDto.getUserId());
         if (byId.isEmpty()) {
             responseDto.setStatusCode(400);
-            responseDto.setMessage("유저아이디로 검색을 했을 때 유저의 닉네임을 검색할 수 없음");
+            responseDto.setMessage("유저아이디 가입 안되어 있음");
             return responseDto;
         }
 
@@ -64,6 +64,7 @@ public class PerformanceService {
                 .description(performanceDto.getDesc())
                 .poster(performanceDto.getPoster())
                 .etc(performanceDto.getEtc())
+                .price(performanceDto.getPrice())
                 .build();
 
         performanceRepository.save(performance);
