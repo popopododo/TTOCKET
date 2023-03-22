@@ -29,3 +29,8 @@ logging:
             sql:
               BasicBinder: TRACE
     com.ssafy.ttocket: debug
+
+# Context Path 설정
+server:
+  servlet:
+    contextPath: /api
