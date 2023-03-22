@@ -2,7 +2,6 @@ import React from 'react';
 import { ReactNode } from "react";
 
 interface BtnProps {
-  children: ReactNode;
   isOpen : boolean;
   onClose : ()=>void;
 

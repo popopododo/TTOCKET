@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import formatDate from "../../components/date/formatDate";
 import axiosApi from "../../services/axiosApi";
 
 interface postType {
@@ -27,7 +26,6 @@ function PerformLikeList() {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
   const page = useRef<number>(0);
   const [ref, inView] = useInView();
-  let todayTime = new Date();
 
   const rollPage = useCallback(async () => {
     try {

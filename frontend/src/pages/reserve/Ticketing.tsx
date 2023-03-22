@@ -12,7 +12,7 @@ function Ticketing(){
     const getSeatInfo = async (performId:number)=>{
 
 
-        const {data} = await axiosApi.get(`/reserve/${performId}`); 
+        const {data} = await axiosApi.get(`/performance/reserve/${performId}`); 
         
         // 가져온 걸 set하기
         setSeats_state(data.body.seats_state);
@@ -76,12 +76,8 @@ function Ticketing(){
                 </div>
                 
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleReserveModalClose} seatNumber={seatNumber} performId={performId}>
-        
-            </Modal>
-            <AlreadyModal isOpen={AlreadyModalOpen} onClose={handleAlreadyModalClose}>
-        
-            </AlreadyModal>
+            <Modal isOpen={isModalOpen} onClose={handleReserveModalClose} seatNumber={seatNumber} performId={performId}/>
+            <AlreadyModal isOpen={AlreadyModalOpen} onClose={handleAlreadyModalClose}/>
         </div>
     )
 }

@@ -8,7 +8,7 @@ function Progress(){
 
     const confirmReservation = async () => {
         //예약 확정
-        const {data} = await axiosApi.put(`/${location.state.performId}/${location.state.seatNumber}/2`);
+        const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
         console.log(data);
     }
     

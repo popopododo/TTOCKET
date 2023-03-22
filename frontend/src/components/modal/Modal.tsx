@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import axiosApi from '../../services/axiosApi';
 
 interface BtnProps {
-  children: ReactNode;
   isOpen : boolean;
   performId : number;
   seatNumber : number;
@@ -24,7 +23,7 @@ const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
   const reserveSeat = async (seat : number) =>{
     console.log(`reserveSeat >> seatNumber : ${seat}`);
     
-    const {data} = await axiosApi.put(`/${performId}/${seatNumber}/3`);
+    const {data} = await axiosApi.put(`/performance/${performId}/${seatNumber}/3`);
     console.log(data);
     
     navigate(`/reserve/progress`, {state : {

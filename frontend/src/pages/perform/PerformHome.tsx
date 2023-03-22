@@ -12,13 +12,7 @@ function PerformHome() {
 
   const performDataHandler = async () => {
     try {
-<<<<<<< HEAD
-      const res = await axiosApi.get(`/home/${userId}`, {
-        headers: {},
-      });
-=======
       const res = await axiosApi.get(`performance/home/${userId}`, {});
->>>>>>> front-performancedetail
       console.log(res);
       setLikePerform(res.data.body.like_performance);
       setPerformSoon(res.data.body.perform_soon);
