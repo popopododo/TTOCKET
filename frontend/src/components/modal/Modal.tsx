@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
+import { useNavigate } from "react-router";
 import axiosApi from '../../services/axiosApi';
 
 interface BtnProps {
@@ -11,6 +11,8 @@ interface BtnProps {
 
 }
 const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
+  const navigate = useNavigate();
+
   const [isAgree, setIsAgree] = useState<boolean>(false);
   console.log(`Modal Open >> performId : ${performId}, seatNumber : ${seatNumber}`);
   
@@ -22,10 +24,13 @@ const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
   const reserveSeat = async (seat : number) =>{
     console.log(`reserveSeat >> seatNumber : ${seat}`);
     
-    const {data} = await axiosApi.post(`/${performId}/${seatNumber}/1`);
+    const {data} = await axiosApi.put(`/${performId}/${seatNumber}/3`);
     console.log(data);
     
-    
+    navigate(`/reserve/progress`, {state : {
+      'performId' : performId,
+      'seatNumber' : seatNumber
+    }});
   }
 
 

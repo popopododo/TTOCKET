@@ -22,14 +22,11 @@ function Ticketing(){
     // 공연 좌석 정보 가져오기
     useEffect(()=>{
         console.log(location.state);
-        
+        setPerformId(location.state);
 
         //공연 아이디
         getSeatInfo(location.state);
-
-
-
-    }, []);
+    }, [location.state]);
 
     //모달창 노출 여부 state
     // 모달창 띄우기 false -> true

@@ -1,10 +1,24 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
+import axiosApi from '../../services/axiosApi';
 
 function Progress(){
+    const location = useLocation();
     const navigate = useNavigate();
 
+    const confirmReservation = async () => {
+        //예약 확정
+        const {data} = await axiosApi.put(`/${location.state.performId}/${location.state.seatNumber}/2`);
+        console.log(data);
+    }
+    
     useEffect(()=>{
+        // 여기서 티켓 민팅
+
+        //여기서 티켓 상태 전환
+        confirmReservation();
+        
+        console.log("민팅 중입니다.");
         setTimeout(()=>{
             navigate(`/reserve/finish`);
         },2000);
