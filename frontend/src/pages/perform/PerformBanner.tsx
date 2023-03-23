@@ -2,19 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+import formatDate from "../../components/date/formatDate";
+import getDateDiff from "../../components/date/getDateDiff";
 
 interface soonDataType {
-  description: string;
-  endTime: string;
+  desc: string;
+  end_time: string;
   etc: string;
-  id: number;
   location: string;
+  performance_id: number;
   max_seats: number;
   poster: string;
   price: number;
-  startTime: string;
+  start_time: string;
   title: string;
-  user: object;
+  user_id: object;
 }
 
 function PerformBanner({ data }: { data: soonDataType[] }) {
@@ -28,20 +30,28 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
     autoplay: true,
     autoplaySpeed: 8000,
   };
+  let todayTime = new Date();
   return (
     <div className="page-carousel">
       <Slider {...settings}>
         {data &&
           data.map((da) => (
-            <Link to="/perform/detail" state={da.id}>
+            <Link
+              to="/perform/detail"
+              state={da.performance_id}
+              key={da.performance_id}
+            >
               <img
                 src={da.poster}
                 className="object-cover w-full h-40 object-top relative"
                 alt="사진"
-                key={da.id}
               />
-              <div className="absolute top-32">
-                <p>{da.title}</p>
+              <div className="absolute top-24 ml-4">
+                <p className="text-red-400 font-bold">
+                  D
+                  {getDateDiff(da.end_time.slice(0, 10), formatDate(todayTime))}
+                </p>
+                <p className="text-white font-bold">{da.title}</p>
               </div>
             </Link>
           ))}

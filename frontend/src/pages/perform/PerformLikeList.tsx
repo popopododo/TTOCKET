@@ -1,10 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-<<<<<<< HEAD
-=======
-
->>>>>>> front-box
 import axiosApi from "../../services/axiosApi";
 
 interface postType {
@@ -19,6 +15,7 @@ interface postType {
   start_time: string;
   title: string;
   user_id: string;
+  performance_id: string;
 }
 
 function PerformLikeList() {
@@ -101,8 +98,12 @@ function PerformLikeList() {
       <div className="mt-10">
         {posts &&
           posts.map((dal) => (
-            <div key={dal.id}>
-              <Link to="/perform/detail" state={dal.id} className="flex mb-5">
+            <div key={dal.performance_id}>
+              <Link
+                to="/perform/detail"
+                state={dal.performance_id}
+                className="flex mb-5"
+              >
                 <img
                   src={dal.poster}
                   className="h-32 w-24 mx-3 rounded"

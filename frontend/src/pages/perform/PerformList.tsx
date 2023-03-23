@@ -9,7 +9,7 @@ interface postType {
   desc: string;
   end_time: string;
   etc: string;
-  id: number;
+  performance_id: number;
   location: string;
   max_seats: number;
   poster: string;
@@ -85,8 +85,12 @@ function PerformList() {
       <div className="mt-10">
         {posts &&
           posts.map((dal) => (
-            <div key={dal.id}>
-              <Link to="/perform/detail" state={dal.id} className="flex mb-5">
+            <div key={dal.performance_id}>
+              <Link
+                to="/perform/detail"
+                state={dal.performance_id}
+                className="flex mb-5"
+              >
                 <div className="mr-5">
                   <img
                     src={dal.poster}
