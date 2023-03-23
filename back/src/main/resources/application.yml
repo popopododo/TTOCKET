@@ -5,15 +5,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    # Mysql Settings
-#    url: jdbc:mysql://3.38.250.25:3306/ttocket?serverTimezone=UTC&characterEncoding=UTF-8
-#    username: ttocket
-#    password: '!23Qwe'
-
-    # Local Setting
-    url: jdbc:mysql://localhost:3306/ttocket?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: '0000'
+    # Mysql Settings
+    url: jdbc:mysql://3.38.250.25:3306/ttocket?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ttocket
+    password: '!23Qwe'
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
