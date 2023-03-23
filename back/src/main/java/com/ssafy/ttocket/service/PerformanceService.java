@@ -110,6 +110,16 @@ public class PerformanceService {
         for (PerformanceLike lp : likePerform) {
             PerformanceDto performanceDto = PerformanceDto.builder()
                     .title(lp.getPerformance().getTitle())
+                    .location(lp.getPerformance().getLocation())
+                    .price(lp.getPerformance().getPrice())
+                    .desc(lp.getPerformance().getDescription())
+                    .etc(lp.getPerformance().getEtc())
+                    .poster(lp.getPerformance().getPoster())
+                    .id(lp.getPerformance().getId())
+                    .userId(lp.getPerformance().getUser().getId())
+                    .startTime(String.valueOf(lp.getPerformance().getStartTime()))
+                    .endTime(String.valueOf(lp.getPerformance().getEndTime()))
+                    .maxSeats(lp.getPerformance().getMax_seats())
                     .build();
             likePerforms.add(performanceDto);
         }
