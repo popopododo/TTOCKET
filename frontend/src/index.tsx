@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { Web3Provider } from '@ethersproject/providers';
+import { Web3ReactProvider } from '@web3-react/core';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,11 +10,17 @@ import './css/index.css';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
+const getLibrary = (provider :any) => {
+  console.log("[getLibrary] provider", provider);
+  return new Web3Provider(provider);
+}
 
 root.render(
   // <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <App />
+      </Web3ReactProvider>
     </Provider>
   // </React.StrictMode>
 );

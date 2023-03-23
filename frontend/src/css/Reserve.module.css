@@ -1,0 +1,16 @@
+.sidebody > .slick-slide {
+  margin-right: 10px;
+  padding-left: 20px;
+}
+
+.sidebody > .slick-track {
+  padding-left: 20px;
+}
+
+.sidelistt {
+  padding-left: 20px;
+}
+
+.sidelistt > p {
+  font-size: 16px;
+}

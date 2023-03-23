@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "title-font";
+    src: url("../assets/fonts/SDSamliphopangcheTTFOutline.ttf");
+  }
+  
+  .HeaderNavTitle{
+    font-family: "title-font";
+  }
+
+  .NickName{
+    font-family: "title-font";
+  }

@@ -1,0 +1,39 @@
+.TicketTitleSmall {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+}
+.Ticket1 {
+    height : 450px;
+    width: 84%;
+}
+.TicketList {
+    height: 450px;
+}
+
+.TicketRight{
+    width: 276px;
+}
+
+.TicketImg{
+    width: 276px;
+    max-height: 370px;
+}
+
+.TicketInfo{
+    width: 220px;
+}
+.TicketDetail{
+    height : 450px;
+    width: 84%;
+}
+
+.TicketDetailFrame{
+    z-index: 8;
+    top: 0;
+    left: 0;
+}
+
+.TicketBackImg{
+    height : 450px;
+    width: 84%;
+}

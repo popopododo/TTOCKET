@@ -1,7 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosApi = axios.create({
-    baseURL : '스프링 서버 주소 나오면 입력할 예정', //ip 주소
-})
+  baseURL: "https://j8b210.p.ssafy.io/ttocket", //ip 주소
+    // baseURL: "http://localhost:8080/ttocket", //ip 주소
+
+});
 
 export default axiosApi;
