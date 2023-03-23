@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import MetaMaskLogo from '../../assets/metamaskLogo.png'
 import LoginImg1 from '../../assets/loginImg1.png'
 import LoginImg2 from '../../assets/loginImg2.png'
@@ -8,49 +8,13 @@ import LogoWhite from '../../assets/logoWhite.png'
 import Slider from 'react-slick'
 import "../../../node_modules/slick-carousel/slick/slick.css"; 
 import "../../../node_modules/slick-carousel/slick/slick-theme.css"; 
-import { useDispatch } from 'react-redux'
-import { AnyAction, Dispatch } from '@reduxjs/toolkit'
-import {setId} from '../../app/redux-modules/userSlice'
-import { AppDispatch } from '../../app/store'
 import { useNavigate } from 'react-router'
-import useWeb3 from '../../services/web3/useWeb3'
-import Web3 from 'web3'
+import { Injected } from '../../services/web3/Injected'
+import {useWeb3React} from '@web3-react/core'
 
-function isMobileDevice() {
-  return 'ontouchstart' in window || 'onmsgesturechange' in window;
-}
-
-async function connect(web3 : Web3) {
-  if (!window.ethereum) {
-    alert("Get MetaMask!");
-    return;
-  }
-  
-  const accounts = await web3.eth.getAccounts();
-  
-  console.log(accounts[0]);
-  return accounts[0];
-}
-
-async function checkIfWalletIsConnected(web3 : Web3) {
-  if (window.ethereum) {
-    const accounts = await window.ethereum.request({
-      method: "eth_accounts",
-    });
-    
-    if (accounts.length > 0) {
-      const account = accounts[0];
-      return;
-    }
-
-    if (isMobileDevice()) {
-      await connect(web3);
-    }
-  }
-}
-
-
-
+// function isMobileDevice() {
+//   return 'ontouchstart' in window || 'onmsgesturechange' in window;
+// }
 function LoginMain() {
   
   const sliderSettings = {
@@ -60,48 +24,30 @@ function LoginMain() {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-
-  const { web3 } = useWeb3();
-  const [userAddress, setUserAddress] = useState<String>("");
-  const dispatch = useDispatch<AppDispatch>();
+  const [active, setActive] = useState(false);
+  const {activate, deactivate} = useWeb3React();
   const navigator = useNavigate();
 
-  // useEffect(() => {
-  //   checkIfWalletIsConnected();
-  // }, [dispatch]);
-
-  async function ConnectClick() {
-    if (isMobileDevice()) {
-      // const dappUrl = "192.168.31.83:3000"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
-      // const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+  const handleConnect = async () => {
+    if ((window as any).ethereum === undefined) {
+      // 지갑이 설치 안되어있으면 설치 페이지를 오픈한다. 일단 메타마스크만.
+      window.open(
+        `https://metamask.app.link/dapp/${window.location.host}`,
+        "_blank"
+      );
+      return;
     }
-    if (web3) {
-      const connectAccount : any = await connect(web3);
-      
-  
-      console.log(connectAccount);
-      setUserAddress(connectAccount);
-      dispatch(setId(connectAccount));
-
-      if (connectAccount === "0x8cb70DaE0CB19C9a51c23F0C337B2e4223c29209") {
-        navigator("/home");
-      }
-      else {
-        navigator("/login");
-      }
+    if (active) {
+      deactivate();
+      // 이미 연결되어있는 상태면 연결해제 함수 호출
     }
-
-
-    //연결된 계정이 DB에 있는지 확인
+    await activate(Injected);
+    setActive(true);
+    navigator('/login')
     
-    //있으면 홈으로
-    
-    //없으면 닉네임 설정 화면으로
-
-
-    
-
+    // activate 함수로, App에서 만든 Injected란 이름의 connector 인스턴스를 넘겨준다
   }
+
   return (
     <div className='w-screen h-screen py-10 bg-ttokLightPink'>
       <img src={LogoWhite} alt="" className='mx-auto mt-8'/>
@@ -129,7 +75,7 @@ function LoginMain() {
           </div>
         </Slider>
       
-        <div className='flex content-center h-16 mx-auto mt-16 bg-white rounded-full shadow-md px-auto w-72'onClick={ConnectClick}>
+        <div className='flex content-center h-16 mx-auto mt-16 bg-white rounded-full shadow-md px-auto w-72'onClick={handleConnect}>
           <div className='flex mx-auto my-auto'>
             <img src={MetaMaskLogo} className="w-8 h-8" alt="" />
             <p className='ml-4 text-xl'>Meta Mask로 로그인</p>

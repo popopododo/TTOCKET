@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
-import { redirect } from 'react-router-dom'
 import InputNickName from './InputNickName'
 import LoginMain from './LoginMain'
 

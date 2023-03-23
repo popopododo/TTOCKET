@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
 import Modal from '../../components/modal/Modal'
 import AlreadyModal from '../../components/modal/AlreadyReserveModal'
 import axiosApi from "../../services/axiosApi";

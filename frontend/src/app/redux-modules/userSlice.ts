@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
 
 const name = 'userInfo'
 
 interface User {
-    user_nickname : string;
+    user_nickname : string | any;
     user_id : string | any; 
 }
 
