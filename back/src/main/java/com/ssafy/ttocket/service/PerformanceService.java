@@ -19,6 +19,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -210,11 +211,18 @@ public class PerformanceService {
         // 활용할 자료구조 생성
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
+        boolean isLike;
 
         // DB에서 원하는 데이터 찾아오기
         Performance performance = performanceRepository.findById(performanceId);
         PerformanceLike performanceLike = performanceLikeRepository.findByUserIdAndPerformanceId(userId, performanceId);
         List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
+
+        if (performanceLike == null || performanceLike.isLike() == false) {
+            isLike = false;
+        } else {
+            isLike = true;
+        }
 
         PerformanceDto performanceDto = PerformanceDto.builder()
                 .id(performance.getId())
@@ -238,7 +246,7 @@ public class PerformanceService {
 
         // 찾은 데이터 result에 입력
         result.put("performance_dto", performanceDto);
-        result.put("is_user_like", performanceLike.isLike());
+        result.put("is_user_like", isLike);
         result.put("seats_state", seatsState);
 
         // response 형식에 맞게 메시지, result, 상태코드 리턴
@@ -251,21 +259,34 @@ public class PerformanceService {
 
     //==공연 좌석 만들고 시도==//
     public ResponseDto clickLike(String userId, int performanceId) {
+
         // 활용할 자료구조 생성
         boolean result;
         ResponseDto responseDto = new ResponseDto();
 
         // 데이터 있는 지 확인
-        PerformanceLike checkPerformanceLike = performanceLikeRepository.findByPerformanceIdAndUserId(performanceId, userId);
-        if (checkPerformanceLike.isLike() == false) {
-            checkPerformanceLike.setLike(true);
-        } else {
-            checkPerformanceLike.setLike(false);
+        Optional<PerformanceLike> checkPerformanceLike = performanceLikeRepository.findByPerformanceIdAndUserId(performanceId, userId);
+        Optional<User> user = userRepository.findById(userId);
+        Performance performance = performanceRepository.findById(performanceId);
+
+        if (checkPerformanceLike.isPresent()) {
+            PerformanceLike performanceLike = checkPerformanceLike.get();
+            boolean isLiked = performanceLike.isLike();
+            performanceLike.setLike(!isLiked);
+            performanceLikeRepository.save(performanceLike);
+        }
+        else {
+            PerformanceLike performanceLike = new PerformanceLike();
+            performanceLike.setUser(new User(user.get().getId(), user.get().getNickname()));
+            performanceLike.setPerformance(performance);
+            performanceLike.setLikeId(new LikeId(performanceId, userId));
+            performanceLike.setLike(true);
+            performanceLikeRepository.save(performanceLike);
         }
 
-        performanceLikeRepository.save(checkPerformanceLike);
+//        performanceLikeRepository.save(checkPerformanceLike);
 
-        result = checkPerformanceLike.isLike();
+        result = performanceLikeRepository.findByPerformanceIdAndUserId(performanceId, userId).get().isLike();
         responseDto.setMessage("공연 좋아요 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
