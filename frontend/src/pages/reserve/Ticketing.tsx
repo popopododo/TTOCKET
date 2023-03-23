@@ -72,7 +72,7 @@ function Ticketing(){
                 </div>
                 <div className="mt-20">
                     <p className="text-xl font-bold ml-2">좌석</p>
-                    <div className="grid grid-flow-col grid-cols-8 mt-10">
+                    <div className="grid grid-flow-col grid-cols-8 mt-4">
                         {/* 좌석 섹션 */}
                         {seats_state.map((seat, index)=>{
                             if(seat === 'EMPTY'){
