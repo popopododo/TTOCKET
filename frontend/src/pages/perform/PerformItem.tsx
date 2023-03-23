@@ -75,8 +75,8 @@ function PerformItem() {
   }, []);
 
   return (
-    <div className="flex flex-col content-center mt-16 h-screen">
-      <div className="flex h-14 items-center">
+    <div className="flex flex-col content-center h-screen mt-16">
+      <div className="flex items-center h-14">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -100,26 +100,26 @@ function PerformItem() {
             <img
               src={performData.poster}
               alt="backposter"
-              className="relative h-96 w-full blur-md"
+              className="relative w-full h-96 blur-md"
             ></img>
-            <div className="w-full flex justify-center">
+            <div className="flex justify-center w-full">
               <img
                 src={performData.poster}
                 alt="poster"
-                className="h-80 w-72 object-center absolute top-40"
+                className="absolute object-center h-80 w-72 top-40"
               ></img>
             </div>
           </div>
         )}
         <div className="p-2">
-          <p className="font-bold text-2xl my-3">{performData?.title}</p>
-          <hr className="bg-gray-400 my-4"></hr>
+          <p className="my-3 text-2xl font-bold">{performData?.title}</p>
+          <hr className="my-4 bg-gray-400"></hr>
           <p className="flex justify-between ">
             <span className="mr-2">
               {performData?.end_time.slice(0, 10)} |{" "}
               {performData?.end_time.slice(11, 16)}시
             </span>
-            <span className="text-right text-gray-500 flex">
+            <span className="flex text-right text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -135,7 +135,7 @@ function PerformItem() {
               {performData?.location}
             </span>
           </p>
-          {/* <p className="font-bold flex justify-end">
+          {/* <p className="flex justify-end font-bold">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
             alt="coin"
@@ -148,9 +148,9 @@ function PerformItem() {
           <p>{performData?.desc}</p>
         </div>
       </div>
-      <div className="flex absolute bottom-0" onClick={isLikeHandler}>
+      <div className="absolute bottom-0 flex" onClick={isLikeHandler}>
         {isLike ? (
-          <p className="mr-4 ml-4">
+          <p className="ml-4 mr-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -161,14 +161,14 @@ function PerformItem() {
             </svg>
           </p>
         ) : (
-          <p className="mr-4 ml-4">
+          <p className="ml-4 mr-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-9 h-9 text-gray-400"
+              className="text-gray-400 w-9 h-9"
             >
               <path
                 strokeLinecap="round"
@@ -184,9 +184,9 @@ function PerformItem() {
           formatDate(todayTime)
         ) ? (
           <Link to="/reserve/" state={location.state}>
-            <button className="bg-gray-300 text-white w-72 h-10 rounded font-bold">
+            <button className="h-10 font-bold text-white bg-gray-300 rounded w-72">
               {performData.start_time.slice(0, 10)}{" "}
-              {performData?.end_time.slice(11, 16)}시 오픈 예정
+              {performData?.end_time.slice(11, 16)} 오픈 예정
             </button>
           </Link>
         ) : (
