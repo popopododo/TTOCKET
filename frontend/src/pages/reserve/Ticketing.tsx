@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from '../../components/modal/Modal'
 import AlreadyModal from '../../components/modal/AlreadyReserveModal'
 import axiosApi from "../../services/axiosApi";
+import { useLocation } from "react-router";
 
 interface Perform {
     title : string;
@@ -71,7 +72,7 @@ function Ticketing(){
                 </div>
                 <div className="mt-20">
                     <div className="flex">
-                        <span className="text-xl font-bold ml-2 mr-auto">좌석</span>
+                        <span className="ml-2 mr-auto text-xl font-bold">좌석</span>
                         <button className="mr-2" onClick={()=>{getSeatInfo(location.state)}}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -82,7 +83,7 @@ function Ticketing(){
                         {/* 좌석 섹션 */}
                         {seats_state.map((seat, index)=>{
                             if(seat === 'EMPTY'){
-                                return <div className="w-10 h-10 m-1 bg-ttokPink rounded-sm" key={index} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
+                                return <div className="w-10 h-10 m-1 rounded-sm bg-ttokPink" key={index} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
                             }else{ 
                                 return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index} onClick={handleAlreadyModalOpen}></div>;
                             }
