@@ -1,57 +1,57 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import MetaMaskLogo from '../assets/metamaskLogo.png'
-import LoginImg1 from '../assets/loginImg1.png'
-import LoginImg2 from '../assets/loginImg2.png'
-import LoginImg3 from '../assets/loginImg3.png'
-import LoginImg4 from '../assets/loginImg4.png'
-import LogoWhite from '../assets/logoWhite.png'
+import MetaMaskLogo from '../../assets/metamaskLogo.png'
+import LoginImg1 from '../../assets/loginImg1.png'
+import LoginImg2 from '../../assets/loginImg2.png'
+import LoginImg3 from '../../assets/loginImg3.png'
+import LoginImg4 from '../../assets/loginImg4.png'
+import LogoWhite from '../../assets/logoWhite.png'
 import Slider from 'react-slick'
-import "../../node_modules/slick-carousel/slick/slick.css"; 
-import "../../node_modules/slick-carousel/slick/slick-theme.css"; 
+import "../../../node_modules/slick-carousel/slick/slick.css"; 
+import "../../../node_modules/slick-carousel/slick/slick-theme.css"; 
 import { useDispatch } from 'react-redux'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
-import {setId} from '../app/redux-modules/userSlice'
-import { AppDispatch } from '../app/store'
+import {setId} from '../../app/redux-modules/userSlice'
+import { AppDispatch } from '../../app/store'
+import { useNavigate } from 'react-router'
+import useWeb3 from '../../services/web3/useWeb3'
+import Web3 from 'web3'
 
 function isMobileDevice() {
   return 'ontouchstart' in window || 'onmsgesturechange' in window;
 }
 
-async function connect(onConnected : (address: string) => void, dispatch : Dispatch<AnyAction>) {
+async function connect(web3 : Web3) {
   if (!window.ethereum) {
     alert("Get MetaMask!");
     return;
   }
-
-  const accounts = await window.ethereum.request({
-    method: "eth_requestAccounts",
-  });
-
-  dispatch(setId(accounts[0]));
+  
+  const accounts = await web3.eth.getAccounts();
+  
+  console.log(accounts[0]);
+  return accounts[0];
 }
 
-async function checkIfWalletIsConnected(onConnected : (address: string) => void, dispatch : Dispatch<AnyAction>) {
+async function checkIfWalletIsConnected(web3 : Web3) {
   if (window.ethereum) {
     const accounts = await window.ethereum.request({
       method: "eth_accounts",
     });
-
+    
     if (accounts.length > 0) {
       const account = accounts[0];
-      onConnected(account);
       return;
     }
 
     if (isMobileDevice()) {
-      await connect(onConnected, dispatch);
+      await connect(web3);
     }
   }
 }
 
 
 
-function Login() {
+function LoginMain() {
   
   const sliderSettings = {
     dots: true,
@@ -61,20 +61,45 @@ function Login() {
     slidesToScroll: 1
   };
 
+  const { web3 } = useWeb3();
   const [userAddress, setUserAddress] = useState<String>("");
   const dispatch = useDispatch<AppDispatch>();
+  const navigator = useNavigate();
 
-  useEffect(() => {
-    checkIfWalletIsConnected(setUserAddress, dispatch);
-  }, []);
+  // useEffect(() => {
+  //   checkIfWalletIsConnected();
+  // }, [dispatch]);
 
-  function ConnectClick() {
+  async function ConnectClick() {
     if (isMobileDevice()) {
-      const dappUrl = "192.168.31.83:3000"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
-      const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+      // const dappUrl = "192.168.31.83:3000"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
+      // const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
     }
-    connect(setUserAddress, dispatch);
-    console.log(userAddress);
+    if (web3) {
+      const connectAccount : any = await connect(web3);
+      
+  
+      console.log(connectAccount);
+      setUserAddress(connectAccount);
+      dispatch(setId(connectAccount));
+
+      if (connectAccount === "0x8cb70DaE0CB19C9a51c23F0C337B2e4223c29209") {
+        navigator("/home");
+      }
+      else {
+        navigator("/login");
+      }
+    }
+
+
+    //연결된 계정이 DB에 있는지 확인
+    
+    //있으면 홈으로
+    
+    //없으면 닉네임 설정 화면으로
+
+
+    
 
   }
   return (
@@ -104,16 +129,14 @@ function Login() {
           </div>
         </Slider>
       
-      <Link to="/home">
         <div className='flex content-center h-16 mx-auto mt-16 bg-white rounded-full shadow-md px-auto w-72'onClick={ConnectClick}>
           <div className='flex mx-auto my-auto'>
             <img src={MetaMaskLogo} className="w-8 h-8" alt="" />
             <p className='ml-4 text-xl'>Meta Mask로 로그인</p>
           </div>
         </div>
-      </Link>
     </div>
   )
 }
 
-export default Login
+export default LoginMain

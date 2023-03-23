@@ -1,8 +1,8 @@
 import React from "react";
 import "./css/App.css";
-import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Login from "./pages/login/Login";
 import NotFound from "./pages/error/NotFound";
 import Perform from "./pages/perform/Perform";
 import Reserve from "./pages/reserve/Reserve";
@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
+          <Route path="/*" element={<Login />}></Route>
           <Route path="/home/*" element={<Home />}></Route>
           <Route path="/perform/*" element={<Perform />}></Route>
           <Route path="/reserve/*" element={<Reserve />}></Route>

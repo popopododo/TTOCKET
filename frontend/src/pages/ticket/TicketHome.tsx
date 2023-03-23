@@ -6,6 +6,7 @@ import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import useWeb3 from '../../services/web3/useWeb3';
+import { Link } from 'react-router-dom';
 
 function TicketHome() {
     const settings = {
@@ -36,6 +37,9 @@ function TicketHome() {
     return (
     <div className='w-screen h-screen py-20'>
         <p className='my-10 text-xl text-center'>나의 티켓</p>
+        <Link to='/home/detail'>
+            <p>상세보기</p>
+        </Link>
         {retrieve !== undefined && 
             <Slider {...settings} className="TicketList">
             {retrieve[0].map((ticket : any, index : any) => 
