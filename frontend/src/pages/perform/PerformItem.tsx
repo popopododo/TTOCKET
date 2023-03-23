@@ -117,7 +117,7 @@ function PerformItem() {
           <p className="flex justify-between ">
             <span className="mr-2">
               {performData?.end_time.slice(0, 10)} |{" "}
-              {performData?.end_time.slice(11, 16)}시
+              {performData?.end_time.slice(11, 16)} 공연
             </span>
             <span className="text-right text-gray-500 flex">
               <svg
