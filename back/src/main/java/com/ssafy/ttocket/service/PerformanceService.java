@@ -285,8 +285,14 @@ public class PerformanceService {
         }
         List range = listOperations.range(key, 0, -1);
 
+        // 공연 정보 가져오기
+        Performance perform = performanceRepository.findById(performanceId);
+        log.debug("reservationState - performance : {}",perform.toString());
+
         // 찾은 데이터 result에 입력
         result.put("seats_state", range);
+        result.put("perform", perform);
+
         responseDto.setMessage("공연 좌석보기 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
@@ -349,4 +355,5 @@ public class PerformanceService {
         responseDto.setStatusCode(400);
         return responseDto;
     }
+
 }
