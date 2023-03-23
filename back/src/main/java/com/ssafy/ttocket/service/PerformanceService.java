@@ -192,6 +192,7 @@ public class PerformanceService {
                     .endTime(String.valueOf(p.getPerformance().getEndTime()))
                     .description(p.getPerformance().getDescription())
                     .etc(p.getPerformance().getEtc())
+                    .maxSeats(p.getPerformance().getMax_seats())
                     .build();
 
             userlikeDtoList.add(userlikeDto);
