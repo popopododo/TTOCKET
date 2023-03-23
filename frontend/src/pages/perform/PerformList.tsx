@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import formatDate from "../../components/date/formatDate";
+import getDateDiff from "../../components/date/getDateDiff";
 import axiosApi from "../../services/axiosApi";
 
 interface postType {
@@ -24,6 +25,7 @@ function PerformList() {
 
   const [posts, setPosts] = useState<postType[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+
   const page = useRef<number>(0);
   const [ref, inView] = useInView();
   let todayTime = new Date();
@@ -34,6 +36,7 @@ function PerformList() {
       const data = res.data.body.performance_list;
       setPosts((prevPosts) => [...prevPosts, ...data]);
       setHasNextPage(data.length === 6);
+
       if (data.length) {
         page.current += 1;
 
@@ -49,14 +52,11 @@ function PerformList() {
   };
 
   useEffect(() => {
+    // console.log(getDateDiff(formatDate(todayTime), "2023-03-25"));
     if (inView && hasNextPage) {
       rollPage();
     }
   }, [rollPage, hasNextPage, inView]);
-
-  // useEffect(() => {
-  //   handler();
-  // }, []);
 
   return (
     <div>
@@ -87,13 +87,21 @@ function PerformList() {
           posts.map((dal) => (
             <div key={dal.id}>
               <Link to="/perform/detail" state={dal.id} className="flex mb-5">
-                <img
-                  src={dal.poster}
-                  className="h-32 w-24 mx-3 rounded"
-                  alt="poster"
-                ></img>
+                <div className="mr-5">
+                  <img
+                    src={dal.poster}
+                    className="object-cover h-32 w-28 mx-3 rounded"
+                    alt="poster"
+                  ></img>
+                </div>
                 <div className="w-full">
-                  <p className="text-red-500 font-bold">D-{dal.start_time}</p>
+                  <p className="text-red-500 font-bold">
+                    D
+                    {getDateDiff(
+                      dal.end_time.slice(0, 10),
+                      formatDate(todayTime)
+                    )}
+                  </p>
                   <p className="font-bold text-lg">{dal.title}</p>
                   <p>{dal.location}</p>
                   <p className="text-right mt-3 mr-2">
@@ -104,8 +112,8 @@ function PerformList() {
               </Link>
             </div>
           ))}
+        <div ref={ref} />
       </div>
-      <div ref={ref} />
     </div>
   );
 }

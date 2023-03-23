@@ -3,6 +3,7 @@ import PerformBanner from "./PerformBanner";
 import PerformSlider from "./PerformSlider";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
+import BottomNav from "../../components/BottomNav";
 
 function PerformHome() {
   const userId = "0xca7AC9f4186853E0641723fc1F29BaD95e58b208";
@@ -81,6 +82,7 @@ function PerformHome() {
           <PerformSlider data={likePerform} />
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 }
