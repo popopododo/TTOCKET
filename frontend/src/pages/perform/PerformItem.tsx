@@ -185,7 +185,8 @@ function PerformItem() {
         ) ? (
           <Link to="/reserve/" state={location.state}>
             <button className="bg-gray-300 text-white w-72 h-10 rounded font-bold">
-              예매가 불가능한 상품입니다
+              {performData.start_time.slice(0, 10)}{" "}
+              {performData?.end_time.slice(11, 16)}시 오픈 예정
             </button>
           </Link>
         ) : (

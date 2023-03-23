@@ -17,6 +17,7 @@ interface soonDataType {
   startTime: string;
   title: string;
   user: object;
+  performance_id: number;
 }
 
 function PerformSlider({ data }: { data: soonDataType[] }) {
@@ -30,12 +31,13 @@ function PerformSlider({ data }: { data: soonDataType[] }) {
     centerMode: false,
     arrows: true,
   };
+
   return (
     <div className="page-carousel">
       <Slider {...settings} className={style.sidebody}>
         {data &&
           data.map((ob) => (
-            <Link to="detail" state={ob.id} key={ob.id}>
+            <Link to="detail" state={ob.performance_id} key={ob.performance_id}>
               <div className={style.sidelistt}>
                 <img src={ob.poster} alt="사진" className="h-36 mt-1" />
                 {/* <p className="text-sm">{ob.name}</p> */}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axiosApi from '../../services/axiosApi';
@@ -16,12 +17,29 @@ const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
   console.log(`Modal Open >> performId : ${performId}, seatNumber : ${seatNumber}`);
   
   const handleIsAgree = () =>{
+=======
+import React from "react";
+import { useState } from "react";
+import axiosApi from "../../services/axiosApi";
+
+interface BtnProps {
+  isOpen: boolean;
+  seatNumber: number;
+  onClose: () => void;
+}
+const Modal = ({ isOpen, onClose, seatNumber }: BtnProps) => {
+  const [isAgree, setIsAgree] = useState<boolean>(false);
+  console.log(`Modal Open >> seatNumber : ${seatNumber}`);
+
+  const handleIsAgree = () => {
+>>>>>>> front-perform
     setIsAgree(!isAgree);
   };
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
     console.log(`reserveSeat >> seatNumber : ${seat}`);
+<<<<<<< HEAD
     
     const {data} = await axiosApi.put(`/performance/${performId}/${seatNumber}/3`);
     console.log(data);
@@ -31,6 +49,12 @@ const Modal = ({ isOpen, onClose, performId, seatNumber} : BtnProps) => {
       'seatNumber' : seatNumber
     }});
   }
+=======
+
+    const { data } = await axiosApi.post(`/6/2/1`);
+    console.log(data);
+  };
+>>>>>>> front-perform
 
   const modalStyles = isOpen ? "fixed inset-0 z-50 overflow-y-auto" : "hidden";
   const overlayStyles = isOpen
