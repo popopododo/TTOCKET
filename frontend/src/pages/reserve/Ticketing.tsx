@@ -4,8 +4,14 @@ import Modal from '../../components/modal/Modal'
 import AlreadyModal from '../../components/modal/AlreadyReserveModal'
 import axiosApi from "../../services/axiosApi";
 
+interface Perform {
+    title : string;
+    location : string;
+}
+
 function Ticketing(){
     const [seats_state, setSeats_state] = useState<String[]>([]);
+    const [performInfo, setPerformInfo] = useState<Perform>({title : '', location : ''});
     const [performId, setPerformId] = useState<number>(0);
     const location = useLocation();
 
@@ -14,9 +20,13 @@ function Ticketing(){
 
         const {data} = await axiosApi.get(`/performance/reserve/${performId}`); 
         
-        // 가져온 걸 set하기
+        // 좌석 정보 set하기
         setSeats_state(data.body.seats_state);
-        console.log(data.body.seats_state);
+
+        // 공연 정보 set
+        setPerformInfo(data.body.perform);
+        
+        console.log(data.body);
         
     }
     // 공연 좌석 정보 가져오기
@@ -54,15 +64,15 @@ function Ticketing(){
     }
     return (
         <div>
-            {/* 헤더 */}
-            <div className="m-2">
-                <p className="text-xl font-bold">콜드 플레이 내한공연</p>
-                <p className="text-xs">현대카드 슈퍼콘서트 2023 S/S S</p>
+            <div className="m-2 mt-20">
+                <p className="text-xl font-bold">{performInfo.title? performInfo.title : ''}</p>
+                <p className="text-xs">{performInfo.location? performInfo.location : ''}</p>
                 <div className="flex items-center justify-center h-32 mt-4 bg-gray-200 rounded-sm">
                     <p className="text-lg font-bold">STAGE</p>
                 </div>
                 <div className="mt-20">
-                    <div className="grid grid-flow-col grid-cols-8">
+                    <p className="text-xl font-bold ml-2">좌석</p>
+                    <div className="grid grid-flow-col grid-cols-8 mt-4">
                         {/* 좌석 섹션 */}
                         {seats_state.map((seat, index)=>{
                             if(seat === 'EMPTY'){
