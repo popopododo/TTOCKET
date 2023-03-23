@@ -1,14 +1,8 @@
 import React from 'react';
 
 interface BtnProps {
-<<<<<<< HEAD
-  isOpen : boolean;
-  onClose : ()=>void;
-
-=======
   isOpen: boolean;
   onClose: () => void;
->>>>>>> front-perform
 }
 const AlreadyModal = ({ isOpen, onClose} : BtnProps) => {
   const modalStyles = isOpen ? 'fixed inset-0 z-50 overflow-y-auto' : 'hidden';
