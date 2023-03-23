@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 
@@ -32,12 +33,17 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
       <Slider {...settings}>
         {data &&
           data.map((da) => (
-            <img
-              src={da.poster}
-              className="object-cover w-full h-40 object-top"
-              alt="사진"
-              key={da.id}
-            />
+            <Link to="/perform/detail" state={da.id}>
+              <img
+                src={da.poster}
+                className="object-cover w-full h-40 object-top relative"
+                alt="사진"
+                key={da.id}
+              />
+              <div className="absolute top-32">
+                <p>{da.title}</p>
+              </div>
+            </Link>
           ))}
       </Slider>
     </div>

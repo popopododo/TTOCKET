@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import HeaderNav from "../../components/HeaderNav";
-import BottomNav from "../../components/BottomNav";
+// import BottomNav from "../../components/BottomNav";
 import PerformHome from "./PerformHome";
 import PerformList from "./PerformList";
 import PerformLikeList from "./PerformLikeList";
@@ -17,7 +17,6 @@ function Perform() {
         <Route path="/performLikelist" element={<PerformLikeList />} />
         <Route path="/detail" element={<PerformItem />} />
       </Routes>
-      <BottomNav />
     </div>
   );
 }

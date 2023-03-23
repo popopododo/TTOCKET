@@ -1,6 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+<<<<<<< HEAD
+=======
+
+>>>>>>> front-box
 import axiosApi from "../../services/axiosApi";
 
 interface postType {
@@ -20,7 +24,7 @@ interface postType {
 function PerformLikeList() {
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = "0xca7AC9f4186853E0641723fc1F29BaD95e58b208";
+  const userId = "0x29E247A3ac74F466a2acb85C7Abf2F086A4759b3";
 
   const [posts, setPosts] = useState<postType[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
