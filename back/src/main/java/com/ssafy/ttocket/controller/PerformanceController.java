@@ -133,6 +133,7 @@ public class PerformanceController {
     }
     @PostMapping("/test")
     public String test(){
+        log.debug("asdfsadf");
         return "success";
     }
 }
