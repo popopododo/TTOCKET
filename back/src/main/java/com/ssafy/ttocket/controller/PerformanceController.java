@@ -2,6 +2,7 @@ package com.ssafy.ttocket.controller;
 
 import com.ssafy.ttocket.dto.PerformanceDto;
 import com.ssafy.ttocket.dto.ResponseDto;
+import com.ssafy.ttocket.service.PerformanceListService;
 import com.ssafy.ttocket.service.PerformanceService;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 public class PerformanceController {
     private final PerformanceService performanceService;
+    private final PerformanceListService performanceListService;
 
     @Operation(summary = "홈 화면", description = "로그인 한 유저의 홈 화면")
     @ApiResponses(value = {
@@ -32,7 +34,7 @@ public class PerformanceController {
     @GetMapping("/home/{userId}")
     public ResponseEntity<ResponseDto> home(@ApiParam(value = "유저 ID") @PathVariable String userId){
         log.debug("GET: /home/{userId}, userId:{}", userId);
-        ResponseDto responseDto = performanceService.homeList(userId);
+        ResponseDto responseDto = performanceListService.homeList(userId);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
@@ -45,7 +47,7 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody PerformanceDto performanceDto) {
         log.debug("POST: /create");
 
-        ResponseDto responseDto = performanceService.createPerformance(performanceDto);
+        ResponseDto responseDto = performanceListService.createPerformance(performanceDto);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
@@ -60,7 +62,7 @@ public class PerformanceController {
         if (cursorId == null) {
             cursorId = 0;
         }
-        ResponseDto responseDto = performanceService.performanceList(cursorId, 6);  // size 설정
+        ResponseDto responseDto = performanceListService.performanceList(cursorId, 6);  // size 설정
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
@@ -77,7 +79,7 @@ public class PerformanceController {
         if (cursorId == null) {
             cursorId  = 0;
         }
-        ResponseDto responseDto = performanceService.userlikeList(userId, cursorId, 6);
+        ResponseDto responseDto = performanceListService.userlikeList(userId, cursorId, 6);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
     
