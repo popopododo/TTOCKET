@@ -236,6 +236,23 @@ public class PerformanceService {
                 .userId(performance.getUser().getId())
                 .build();
 
+
+        // 좌석 수정 중
+//        System.out.println("seats = " + seats);
+//        int maxSeat = performance.getMax_seats();
+//        System.out.println("maxSeat/8 = " + maxSeat/8);
+//
+//        ArrayList seatList = new ArrayList();
+//        for (int i = 0; i < maxSeat/8+1; i++) {
+//            SeatStatus[] seatRow = new SeatStatus[8];
+//            for (int j = 0; j < 8; j++) {
+//                seatRow[j] = seats.get(i+j).getStatus();
+//            }
+//            seatList.add(seatRow);
+//        }
+        //
+
+
         String[] seatsState = new String[performance.getMax_seats()];
         for (Seat seat : seats) {
             int seatNo = seat.getSeatId().getSeatNo();
@@ -243,6 +260,7 @@ public class PerformanceService {
         }
 
         // 찾은 데이터 result에 입력
+//        result.put("seatList", seatList);
         result.put("performance_dto", performanceDto);
         result.put("is_user_like", isLike);
         result.put("seats_state", seatsState);
