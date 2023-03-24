@@ -25,6 +25,7 @@ public class UserlikeDto {
     @Schema(description = "공연 장소")
     private String location;
     @Schema(description = "티켓 가격")
+    private String poster;
     private double price;
     @Schema(description = "공연 최대 좌석 수")
     @JsonProperty("max_seats")

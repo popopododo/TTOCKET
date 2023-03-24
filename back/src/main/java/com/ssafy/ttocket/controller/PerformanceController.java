@@ -44,6 +44,7 @@ public class PerformanceController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody PerformanceDto performanceDto) {
         log.debug("POST: /create");
+
         ResponseDto responseDto = performanceService.createPerformance(performanceDto);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
@@ -72,6 +73,7 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> userlikeList(@ApiParam(value = "유저 ID") @PathVariable String userId,
                                                     @ApiParam(value = "커서 ID") @PathVariable(required = false) Integer cursorId) {
         log.debug("GET: /likelist/{userId}/{curosrId}, userId: {}, cursorId: {}", userId, cursorId);
+
         if (cursorId == null) {
             cursorId  = 0;
         }
@@ -127,4 +129,5 @@ public class PerformanceController {
         ResponseDto responseDto = performanceService.changeReservationState(performanceId, seatId, code);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
 }
