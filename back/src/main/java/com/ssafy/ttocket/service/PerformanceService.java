@@ -152,7 +152,6 @@ public class PerformanceService {
             }
         }
         List range = listOperations.range(key, 0, -1);
-        System.out.println("range.getClass() = " + range.getClass());
 
         int idx = 0;
         Long listSize = listOperations.size(key)/8;
@@ -167,8 +166,7 @@ public class PerformanceService {
                     }
                     arrayList1.add(arrayList2);
                 }
-            }
-            else {
+            } else {
                 ArrayList<String> arrayList2 = new ArrayList<>();
                 for (int j = 0; j < seatRowNums; j++) {
                     arrayList2.add((String) range.get(idx++));
@@ -176,10 +174,6 @@ public class PerformanceService {
                 arrayList1.add(arrayList2);
             }
         }
-
-        System.out.println("arrayList1 = " + arrayList1);
-        //
-
 
         // 공연 정보 가져오기
         Performance perform = performanceRepository.findById(performanceId);
