@@ -62,18 +62,7 @@ public class PerformanceService {
                 .price(performanceDto.getPrice())
                 .build();
         performanceRepository.save(performance);
-        // 사용자 수만큼 performanceLike DB 등록
-        List<User> userAll = userRepository.findAll();
-        for (User anUser : userAll) {
-            LikeId likeId = new LikeId(performance.getId(), anUser.getId());
-            PerformanceLike performanceLike = PerformanceLike.builder()
-                    .likeId(likeId)
-                    .performance(performance)
-                    .user(anUser)
-                    .isLike(false)
-                    .build();
-            performanceLikeRepository.save(performanceLike);
-        }
+
         // 빈 좌석 만들기
         int maxSeats = performanceDto.getMaxSeats();
         for (int i = 1; i <= maxSeats; i++) {
