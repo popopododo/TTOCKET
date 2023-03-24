@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import Modal from '../../components/modal/Modal'
-import AlreadyModal from '../../components/modal/AlreadyReserveModal'
 import axiosApi from "../../services/axiosApi";
 
 interface Perform {
@@ -55,24 +54,25 @@ function Ticketing(){
       setIsModalOpen(false);
     };
 
-    const [AlreadyModalOpen, setAlreadyModalOpen] = useState(false);
-    const handleAlreadyModalOpen = () =>{
-        setAlreadyModalOpen(true);
-    }
-    const handleAlreadyModalClose = () =>{
-        setAlreadyModalOpen(false);
-    }
     return (
         <div>
             <div className="m-2 mt-20">
                 <p className="text-xl font-bold">{performInfo.title? performInfo.title : ''}</p>
-                <p className="text-xs">{performInfo.location? performInfo.location : ''}</p>
+                <p className="text-xs flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    {performInfo.location? performInfo.location : ''}
+                </p>
                 <div className="flex items-center justify-center h-32 mt-4 bg-gray-200 rounded-sm">
                     <p className="text-lg font-bold">STAGE</p>
                 </div>
                 <div className="mt-20">
                     <div className="flex">
-                        <span className="text-xl font-bold ml-2 mr-auto">좌석</span>
+                        <span className="text-xl font-bold ml-2 mr-auto flex">
+                        좌석
+                        </span>
                         <button className="mr-2" onClick={()=>{getSeatInfo(location.state)}}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -85,7 +85,7 @@ function Ticketing(){
                             if(seat === 'EMPTY'){
                                 return <div className="w-10 h-10 m-1 bg-ttokPink rounded-sm" key={index} onClick={ ()=>{handleReserveModalOpen(index+1) }}></div>;
                             }else{ 
-                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index} onClick={handleAlreadyModalOpen}></div>;
+                                return <div className="w-10 h-10 m-1 bg-gray-300 rounded-sm" key={index}></div>;
                             }
                             
                         })}
@@ -94,7 +94,6 @@ function Ticketing(){
                 
             </div>
             <Modal isOpen={isModalOpen} onClose={handleReserveModalClose} seatNumber={seatNumber} performId={performId}/>
-            <AlreadyModal isOpen={AlreadyModalOpen} onClose={handleAlreadyModalClose}/>
         </div>
     )
 }
