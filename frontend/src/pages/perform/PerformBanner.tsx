@@ -28,7 +28,7 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
     draggable: true,
     vertical: false,
     autoplay: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 5000,
   };
   let todayTime = new Date();
   return (
