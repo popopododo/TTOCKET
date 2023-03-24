@@ -4,7 +4,7 @@ import BottomNavHome from '../assets/bottomNavHome.png'
 
 export default function BottomNav() {
   return (
-    <div className='absolute bottom-0 flex w-screen mb-4 bg-white'>
+    <div className='fixed bottom-0 flex w-screen pt-2 pb-4 bg-white border-t-2'>
         <div className='w-20'>
             <Link to="/perform">
                 <button className='flex items-center justify-center w-full'>
