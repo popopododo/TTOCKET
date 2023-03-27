@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+import style from "../../css/Reserve.module.css";
 import formatDate from "../../components/date/formatDate";
 import getDateDiff from "../../components/date/getDateDiff";
 
@@ -28,7 +29,7 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
     draggable: true,
     vertical: false,
     autoplay: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 5000,
   };
   let todayTime = new Date();
   return (
@@ -43,15 +44,20 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
             >
               <img
                 src={da.poster}
-                className="object-cover w-full h-40 object-top relative"
+                className="object-cover w-full h-52 object-top relative"
                 alt="사진"
               />
-              <div className="absolute top-24 ml-4">
-                <p className="text-red-400 font-bold">
-                  D
-                  {getDateDiff(da.end_time.slice(0, 10), formatDate(todayTime))}
-                </p>
-                <p className="text-white font-bold">{da.title}</p>
+              <div className="absolute top-28">
+                <div className={style.bannerTriangle}>
+                  <p className="text-red-400 font-bold w-32 mt-6">
+                    D
+                    {getDateDiff(
+                      da.end_time.slice(0, 10),
+                      formatDate(todayTime)
+                    )}
+                  </p>
+                  <p className="text-white font-bold w-28">{da.title}</p>
+                </div>
               </div>
             </Link>
           ))}

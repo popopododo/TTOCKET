@@ -25,7 +25,7 @@ function PerformItem() {
   const navigate = useNavigate();
 
   //userID 나중에는 리덕스로 가져올 예정
-  const userId = "0x29E247A3ac74F466a2acb85C7Abf2F086A4759b3";
+  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
 
   // 정보 받은거 내용
   const [isLike, setIsLike] = useState<boolean>(false);
@@ -117,7 +117,7 @@ function PerformItem() {
           <p className="flex justify-between ">
             <span className="mr-2">
               {performData?.end_time.slice(0, 10)} |{" "}
-              {performData?.end_time.slice(11, 16)}시
+              {performData?.end_time.slice(11, 16)} 공연
             </span>
             <span className="flex text-right text-gray-500">
               <svg
@@ -148,43 +148,43 @@ function PerformItem() {
           <p>{performData?.desc}</p>
         </div>
       </div>
-      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 border-t-2" onClick={isLikeHandler}>
+      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 border-t-2">
         {isLike ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="mr-2 w-9 h-9 text-ttokPink"
-            >
-              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-            </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="mr-2 w-9 h-9 text-ttokPink"
+            onClick={isLikeHandler}
+          >
+            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+          </svg>
         ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="mr-2 text-gray-400 w-9 h-9"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-              />
-            </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="mr-2 text-gray-400 w-9 h-9"
+            onClick={isLikeHandler}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
         )}
         {performData &&
         checkEndDate(
           performData.start_time.slice(0, 10),
           formatDate(todayTime)
         ) ? (
-          <Link to="/reserve/" state={location.state}>
-            <button className="h-10 font-bold text-white bg-gray-300 rounded w-">
-              {performData.start_time.slice(0, 10)}{" "}
-              {performData?.end_time.slice(11, 16)} 오픈 예정
-            </button>
-          </Link>
+          <button className="h-10 font-bold text-white bg-gray-300 rounded w-80">
+            {performData.start_time.slice(0, 10)}{" "}
+            {performData?.end_time.slice(11, 16)} 오픈 예정
+          </button>
         ) : (
           <Link to="/reserve/" state={location.state}>
             <button className="bg-[#FB7185] text-white w-80 h-10 rounded font-bold">

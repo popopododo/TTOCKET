@@ -4,18 +4,31 @@
 }
 .Ticket1 {
     height : 450px;
-    width: 84%;
+    width: 330px;
+    scroll-snap-align: center;
 }
 .TicketList {
-    height: 450px;
+    height: 470px;
+    display: flex;
+  
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  
+  
+  
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
-
+.TicketList::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 .TicketRight{
     width: 276px;
 }
 
 .TicketImg{
-    width: 276px;
+    width: 286px;
     max-height: 370px;
 }
 
@@ -28,7 +41,7 @@
 }
 
 .TicketDetailFrame{
-    z-index: 8;
+    z-index: 16;
     top: 0;
     left: 0;
 }
