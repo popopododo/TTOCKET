@@ -16,12 +16,14 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
+//redux persist Config
 export const store = configureStore({
   reducer: {
     persistedReducer,
   },
 });
 
+//persistor 객체 전송
 export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
