@@ -6,11 +6,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import useWeb3 from '../../services/web3/useWeb3';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 
 function TicketHome() {
     const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();
-    const id = useSelector((state: RootState) => state.userSlice.user_id);
+    // const id = useSelector((state : RootState) => state.user.id);
+    const id = useSelector((state: RootState) => state.persistedReducer.user.id);
     const [retrieve, setRetrieve] = useState<any[]>();
 
     const getRetrieve = useCallback(
@@ -25,6 +27,7 @@ function TicketHome() {
         setAddress(id);
         getRetrieve();
     }, [id, getRetrieve]);
+    console.log(retrieve)
     return (
     <div className=''>
         <p className='pt-32 mb-8 text-xl font-bold text-center'>나의 티켓</p>

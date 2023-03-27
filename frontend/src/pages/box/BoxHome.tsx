@@ -47,12 +47,12 @@ const dummyData: dummyType[] = [
 function BoxHome() {
   const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();
-    const id = useSelector((state: RootState) => state.userSlice.user_id);
+    const id = useSelector((state: RootState) => state.persistedReducer.user.id);
     const [afterTicket, setAfterTicket] = useState<any[]>();
 
     const getRetrieve = useCallback(
         async () => {
-            const result = await tokenContract?.methods.getBeforeTicketList().call({from : address});
+            const result = await tokenContract?.methods.getAfterTicketList().call({from : address});
             setAfterTicket(result);
       },
       [address, tokenContract?.methods],
@@ -67,23 +67,22 @@ function BoxHome() {
       <div className="w-full h-20 text-center">
         <p className="mt-6 text-2xl font-bold">티켓 보관함</p>
       </div>
-      
         <div>
-          {dummyData &&
-            dummyData.map((data) => (
+          {afterTicket !== undefined &&
+            afterTicket[0].map((data : any) => (
               <Link key={data.id} to="/box/detail" state={data}>
                 <div
                   className="flex items-center my-4 shadow-md w-80 h-28 shadow-gray-400"
                 >
                   <div className="h-28 w-4 bg-[#FB7185] mr-2"></div>
-                  <img src={data.img} alt="poster" className="w-16 h-24" />
+                  <img src={data.performPoster} alt="poster" className="w-16 h-24" />
                   <div className="mb-1 ml-2">
-                    <p className="mb-2 text-lg font-bold">{data.name}</p>
+                    <p className="mb-2 text-lg font-bold">{data.title}</p>
                     <p className="text-sm font-bold text-slate-500">
                       {data.date}
                     </p>
                     <p className="text-sm font-bold text-slate-500">
-                      {data.seat}
+                      {data.seatNum}
                     </p>
                   </div>
                 </div>
