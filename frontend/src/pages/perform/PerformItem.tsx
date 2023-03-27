@@ -180,7 +180,7 @@ function PerformItem() {
           formatDate(todayTime)
         ) ? (
           <Link to="/reserve/" state={location.state}>
-            <button className="h-10 font-bold text-white bg-gray-300 rounded w-">
+            <button className="h-10 font-bold text-white bg-gray-300 rounded w-80">
               {performData.start_time.slice(0, 10)}{" "}
               {performData?.end_time.slice(11, 16)} 오픈 예정
             </button>

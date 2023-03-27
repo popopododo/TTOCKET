@@ -1,12 +1,12 @@
 import React from "react";
 import "./css/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import NotFound from "./pages/error/NotFound";
 import Perform from "./pages/perform/Perform";
 import Reserve from "./pages/reserve/Reserve";
 import Box from "./pages/box/Box";
+import Ticket from "./pages/ticket/Ticket";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Login />}></Route>
-          <Route path="/home/*" element={<Home />}></Route>
+          <Route path="/home/*" element={<Ticket />}></Route>
           <Route path="/perform/*" element={<Perform />}></Route>
           <Route path="/reserve/*" element={<Reserve />}></Route>
           <Route path="/box/*" element={<Box />}></Route>
