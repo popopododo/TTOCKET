@@ -29,7 +29,7 @@ function TicketHome() {
     <div className=''>
         <p className='pt-32 mb-8 text-xl font-bold text-center'>나의 티켓</p>
 
-        {retrieve !== undefined && 
+        {(retrieve !== undefined && retrieve.length !== 0) &&
             <div className='flex overflow-x-auto snap-mandatory TicketList'>
                 {retrieve[0].map((ticket : any, index : any) => 
                         <div key={index} className='relative flex-shrink-0 mx-8 border-2 rounded-lg shadow-lg Ticket1'>
@@ -55,6 +55,20 @@ function TicketHome() {
                             </Link>
                         </div>
                 )}
+            </div>
+        }
+        {retrieve === undefined && 
+            <div className='flex justify-center place-items-center'>
+                <p>느낌표</p>
+                <p className='text-xl font-bold'>이용 가능한 티켓이 없습니다.</p>
+                <p className='text-gray-400'>티켓을 예매하고 티켓을 관리해보세요!</p>
+            </div>
+        }
+        {(retrieve !== undefined && retrieve.length === 0) &&
+            <div className='flex justify-center place-items-center'>
+                <p>느낌표</p>
+                <p className='text-xl font-bold'>이용 가능한 티켓이 없습니다.</p>
+                <p className='text-gray-400'>티켓을 예매하고 티켓을 관리해보세요!</p>
             </div>
         }
     </div>

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../../app/store";
+import useWeb3 from "../../services/web3/useWeb3";
 
 interface dummyType {
   id: number;
@@ -42,35 +45,53 @@ const dummyData: dummyType[] = [
 ];
 
 function BoxHome() {
+  const [address, setAddress] = useState();
+    const { tokenContract } = useWeb3();
+    const id = useSelector((state: RootState) => state.userSlice.user_id);
+    const [afterTicket, setAfterTicket] = useState<any[]>();
+
+    const getRetrieve = useCallback(
+        async () => {
+            const result = await tokenContract?.methods.getBeforeTicketList().call({from : address});
+            setAfterTicket(result);
+      },
+      [address, tokenContract?.methods],
+    )
+    
+    useEffect(() => {
+        setAddress(id);
+        getRetrieve();
+    }, [id, getRetrieve]);
   return (
-    <div className="flex flex-col justify-center items-center mt-20">
-      <div className="h-20 w-full text-center">
-        <p className="text-2xl font-bold mt-6">티켓 보관함</p>
+    <div className="flex flex-col items-center justify-center mt-20">
+      <div className="w-full h-20 text-center">
+        <p className="mt-6 text-2xl font-bold">티켓 보관함</p>
       </div>
-      <Link to="">
+      
         <div>
           {dummyData &&
             dummyData.map((data) => (
-              <div
-                key={data.id}
-                className="flex w-80 h-28 items-center my-4 shadow-md shadow-gray-400"
-              >
-                <div className="h-28 w-4 bg-[#FB7185] mr-2"></div>
-                <img src={data.img} alt="poster" className="w-16 h-24" />
-                <div className="ml-2 mb-1">
-                  <p className="font-bold text-lg mb-2">{data.name}</p>
-                  <p className="text-slate-500 text-sm font-bold">
-                    {data.date}
-                  </p>
-                  <p className="text-slate-500 text-sm font-bold">
-                    {data.seat}
-                  </p>
+              <Link key={data.id} to="/box/detail" state={data}>
+                <div
+                  className="flex items-center my-4 shadow-md w-80 h-28 shadow-gray-400"
+                >
+                  <div className="h-28 w-4 bg-[#FB7185] mr-2"></div>
+                  <img src={data.img} alt="poster" className="w-16 h-24" />
+                  <div className="mb-1 ml-2">
+                    <p className="mb-2 text-lg font-bold">{data.name}</p>
+                    <p className="text-sm font-bold text-slate-500">
+                      {data.date}
+                    </p>
+                    <p className="text-sm font-bold text-slate-500">
+                      {data.seat}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           {dummyData && dummyData.length === 0 && (
             <div>
-              <p className="flex justify-center items-center mt-10">
+              <p className="flex items-center justify-center mt-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -90,7 +111,6 @@ function BoxHome() {
             </div>
           )}
         </div>
-      </Link>
     </div>
   );
 }
