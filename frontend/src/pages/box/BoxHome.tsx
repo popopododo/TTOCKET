@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../app/store";
+import { TicketData } from "../../global";
 import useWeb3 from "../../services/web3/useWeb3";
 
 interface dummyType {
@@ -48,12 +49,15 @@ function BoxHome() {
   const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();
     const id = useSelector((state: RootState) => state.persistedReducer.user.id);
-    const [afterTicket, setAfterTicket] = useState<any[]>();
-
+    const [afterTicketList, setAfterTicketList] = useState<TicketData[]>();
+    const [afterTicketSize, setAfterTicketSize] = useState<number>();
     const getRetrieve = useCallback(
         async () => {
             const result = await tokenContract?.methods.getAfterTicketList().call({from : address});
-            setAfterTicket(result);
+            if (result !== undefined) {
+              setAfterTicketList(result[0]);
+              setAfterTicketSize(parseInt(result[1]));
+            }
       },
       [address, tokenContract?.methods],
     )
@@ -68,9 +72,10 @@ function BoxHome() {
         <p className="mt-6 text-2xl font-bold">티켓 보관함</p>
       </div>
         <div>
-          {afterTicket !== undefined &&
-            afterTicket[0].map((data : any) => (
-              <Link key={data.id} to="/box/detail" state={data}>
+          {afterTicketList !== undefined && afterTicketSize !== undefined &&
+            afterTicketList.map((data : any, index : number) => (
+              index < afterTicketSize ? 
+              <Link key={index} to="/box/detail" state={data}>
                 <div
                   className="flex items-center my-4 shadow-md w-80 h-28 shadow-gray-400"
                 >
@@ -87,6 +92,7 @@ function BoxHome() {
                   </div>
                 </div>
               </Link>
+              : null
             ))}
           {dummyData && dummyData.length === 0 && (
             <div>
