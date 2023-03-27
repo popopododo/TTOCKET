@@ -157,7 +157,6 @@ public class PerformanceService {
                 arrayList1.add(arrayList2);
             }
         }
-        System.out.println("arrayList1 = " + arrayList1);
 
         // 공연 정보 가져오기
         Performance perform = performanceRepository.findById(performanceId);
