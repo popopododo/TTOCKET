@@ -40,8 +40,6 @@ function PerformList() {
 
       if (data.length) {
         page.current += 1;
-
-        console.log(res);
       }
     } catch (err) {
       console.log(err);
