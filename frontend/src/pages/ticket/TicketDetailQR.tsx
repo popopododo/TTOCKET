@@ -1,10 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function TicketDetailQR() {
+  const location = useLocation();
   return (
     <div>
-      <Link to='/home/detail'>
+      <Link to='/home/detail' state={location.state}>
         <button className='mt-6 ml-2 text-4xl'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -22,7 +23,7 @@ function TicketDetailQR() {
 
       </div>
       <div className='px-8'>
-          <p className='mt-6 text-2xl font-bold'>맘마미아!</p>
+          <p className='mt-5 text-2xl font-bold'>{location.state.title}</p>
           <img src="https://blog.kakaocdn.net/dn/bqqWTy/btqDQtYuJua/X1KNO1U3u3kzWQBunWOVCK/img.jpg" alt="qr" className='p-4 mt-4' />
       </div>
     </div>

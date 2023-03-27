@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function TicketDetailCard() {
   const [onModal, setOnModal] = useState<boolean>(false);
-
+  const location = useLocation();
   function modalOpen() {
     setOnModal(!onModal);
   }
@@ -18,12 +18,12 @@ function TicketDetailCard() {
             </button>
         </Link>
         <div className='px-8'>
-            <p className='mt-10 text-2xl font-bold'>맘마미아!</p>
-            <p className='mt-8'>장소 : 성남 아트홀</p>
-            <p className='mt-2'>날짜 : </p>
-            <p className='mt-2'>좌석 번호 : </p>
+            <p className='mt-5 text-2xl font-bold'>{location.state.title}</p>
+            <p className='mt-8'>{location.state.location}</p>
+            <p className='mt-2'>2020.04.01 16:00 </p>
+            <p className='mt-2'>1열 {location.state.seatNum}번</p>
 
-            <Link to="/home/detail/enter">
+            <Link to="/home/detail/enter" state={location.state}>
                 <button className='w-full h-12 mt-10 text-white rounded-lg bg-ttokPink'> QR 입장 확인 </button>
             </Link>
             <button onClick={modalOpen} className='w-full h-12 mt-2 text-white rounded-lg bg-ttokPink'> 예매 취소 </button>

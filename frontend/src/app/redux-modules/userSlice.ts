@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const name = 'userInfo'
+const name = 'user'
 
 interface User {
-    user_nickname : string | any;
-    user_id : string | any; 
+    nickname : string | any;
+    id : string | any; 
 }
 
 const initialState : User = {
-    user_nickname : "",
-    user_id : "",
+    nickname : "",
+    id : "",
 }
 
 export const userSlice = createSlice({
@@ -17,14 +17,14 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
-            state.user_nickname = action.payload.user_nickname;
-            state.user_id = action.payload.user_id;
+            state.nickname = action.payload.nickname;
+            state.id = action.payload.id;
           },
         setNickName: (state, action: PayloadAction<string>) => {
-              state.user_nickname = action.payload;
+              state.nickname = action.payload;
             },
         setId: (state, action: PayloadAction<string>) => {
-              state.user_id = action.payload;
+              state.id = action.payload;
             },
         },
         extraReducers: {},
