@@ -2,7 +2,6 @@ package com.ssafy.ttocket.controller;
 
 import com.ssafy.ttocket.dto.PerformanceDto;
 import com.ssafy.ttocket.dto.ResponseDto;
-import com.ssafy.ttocket.exception.ErrorResponse;
 import com.ssafy.ttocket.service.PerformanceListService;
 import com.ssafy.ttocket.service.PerformanceService;
 import io.swagger.annotations.ApiParam;
@@ -16,12 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Tag(name = "공연", description = "공연 관련 API")
