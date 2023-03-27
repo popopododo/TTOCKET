@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
-    console.log(`reserveSeat >> seatNumber : ${seat}`);
+    console.log(`reserveSeat >> performId : ${performId}, seatNumber : ${seat}`);
 
     const { data } = await axiosApi.put(
       `/performance/${performId}/${seatNumber}/3`

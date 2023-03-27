@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
-import AlreadyModal from "../../components/modal/AlreadyReserveModal";
 import Modal from "../../components/modal/Modal";
 import axiosApi from "../../services/axiosApi";
 
@@ -63,14 +62,6 @@ function Ticketing() {
   const handleReserveModalClose = () => {
     setIsModalOpen(false);
   };
-
-  const [AlreadyModalOpen, setAlreadyModalOpen] = useState(false);
-  const handleAlreadyModalOpen = () => {
-    setAlreadyModalOpen(true);
-  };
-  const handleAlreadyModalClose = () => {
-    setAlreadyModalOpen(false);
-  };
   return (
     <div>
       <div className="m-2 mt-20">
@@ -103,7 +94,6 @@ function Ticketing() {
                   <div
                     className="w-10 h-10 m-1 bg-gray-300 rounded-sm"
                     key={index}
-                    onClick={handleAlreadyModalOpen}
                   ></div>
                 );
               }
@@ -116,10 +106,6 @@ function Ticketing() {
         onClose={handleReserveModalClose}
         seatNumber={seatNumber}
         performId={performId}
-      />
-      <AlreadyModal
-        isOpen={AlreadyModalOpen}
-        onClose={handleAlreadyModalClose}
       />
     </div>
   );
