@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MetaMaskLogo from '../../assets/metamaskLogo.png'
 import LoginImg1 from '../../assets/loginImg1.png'
 import LoginImg2 from '../../assets/loginImg2.png'
@@ -24,8 +24,7 @@ function LoginMain() {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-  const [active, setActive] = useState(false);
-  const {activate, deactivate} = useWeb3React();
+  const {activate} = useWeb3React();
   const navigator = useNavigate();
 
   const handleConnect = async () => {
@@ -37,13 +36,8 @@ function LoginMain() {
       );
       return;
     }
-    if (active) {
-      deactivate();
-      // 이미 연결되어있는 상태면 연결해제 함수 호출
-    }
     await activate(Injected);
-    setActive(true);
-    navigator('/login')
+    navigator('/loading')
     
     // activate 함수로, App에서 만든 Injected란 이름의 connector 인스턴스를 넘겨준다
   }

@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {useWeb3React} from '@web3-react/core'
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { setId, setNickName } from '../../app/redux-modules/userSlice';
+import axiosApi from '../../services/axiosApi';
 
 function InputNickName() {
   const {account} = useWeb3React();
   const [nickName, setStateNickName] = useState<string>();
   const dispatch = useDispatch<AppDispatch>();
-  
+  const navigator = useNavigate();
+
   function nickNameChange(event : React.ChangeEvent<HTMLInputElement>) {
     setStateNickName(event.target.value);
+  }
+
+  async function loginHandler(event : React.MouseEvent<HTMLElement>) {
+    const result = await axiosApi.get('/user/make/'+account+'/'+nickName);
+    if (result !== undefined) {
+      console.log(result);
+      if (result.data.status_code === 200) {
+        navigator('/home')
+      }
+    }
   }
 
   useEffect(() => {
@@ -32,9 +44,7 @@ function InputNickName() {
                     <p className='text-2xl'>닉네임<span className='text-base'> (최대 8글자)</span></p>
                     <input type="text" className='w-full h-10 px-2 mt-4 rounded-md bg-slate-100' placeholder='사용할 닉네임을 입력해주세요' onChange={nickNameChange} />
                     <div className='flex justify-center'>
-                        <Link to="/home">
-                            <button className='h-10 px-4 mt-4 rounded-md bg-ttokLightPink'>로그인</button>
-                        </Link>
+                        <button onClick={loginHandler} className='h-10 px-4 mt-4 rounded-md bg-ttokLightPink'>로그인</button>
                     </div>
                 </div>
             </div>
