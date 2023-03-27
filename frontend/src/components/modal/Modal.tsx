@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axiosApi from "../../services/axiosApi";
+import '../../css/Modal.css';
 
 interface BtnProps {
   isOpen: boolean;
   performId: number;
-  seatNumber: number;
+
+  reserve : ReservationInfo;
   onClose: () => void;
 }
-const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
+interface ReservationInfo {
+  title : string;
+  seatNumber: number;
+  price: number;
+}
+const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
   const navigate = useNavigate();
 
   const [isAgree, setIsAgree] = useState<boolean>(false);
-  console.log(
-    `Modal Open >> performId : ${performId}, seatNumber : ${seatNumber}`
-  );
 
   const handleIsAgree = () => {
     setIsAgree(!isAgree);
@@ -22,34 +26,31 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
-    console.log(`reserveSeat >> performId : ${performId}, seatNumber : ${seat}`);
 
     const { data } = await axiosApi.put(
-      `/performance/${performId}/${seatNumber}/3`
+      `/performance/${performId}/${seat}/3`
     );
-    console.log(data);
 
     navigate(`/reserve/progress`, {
       state: {
         performId: performId,
-        seatNumber: seatNumber,
+        seatNumber: reserve.seatNumber,
       },
     });
   };
-  const modalStyles = isOpen ? "fixed inset-0 z-50 overflow-y-auto" : "hidden";
   const overlayStyles = isOpen
     ? "absolute inset-0 bg-gray-700 opacity-75"
     : "hidden";
   const contentStyles = isOpen
-    ? "bg-white rounded-t-lg shadow-lg transform translate-y-0"
-    : "transform translate-y-full";
+    ? "absolute bg-white rounded-t-lg shadow-lg transform translate-y-0"
+    : "absolute transform translate-y-full";
   const checkBtnStyles = isAgree ? "bg-ttokPink" : "bg-gray-300";
 
   return (
-    <div className={modalStyles}>
+    <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`absolute p-4 sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300 top-1/4 ${contentStyles}`}
+        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${isOpen ? 'open' : ''}`}
       >
         <button
           className="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700"
@@ -87,18 +88,18 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
             </svg>
-            <h2 className="font-bold ml-1">검청지마 TEEN TROUBLES</h2>
+            <h2 className="font-bold ml-1">{reserve.title}</h2>
           </div>
           <div className="flex px-4">
             <span className="mr-auto">
-              좌석 : A 1열
+              좌석 : {(reserve.seatNumber / 8) + 'A'}
             </span>
             <img
               src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
               alt="coin"
               className="h-6 mr-1"></img>
             <span>
-              0.001
+              {reserve.price}
             </span>
           </div>
         </div>
@@ -150,7 +151,7 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
             className={`px-14 py-1 mx-auto text-white rounded-lg ${checkBtnStyles}`}
             disabled={!isAgree}
             onClick={() => {
-              reserveSeat(seatNumber);
+              reserveSeat(reserve.seatNumber);
             }}
           >
             예매
