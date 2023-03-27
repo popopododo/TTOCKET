@@ -2,6 +2,7 @@ package com.ssafy.ttocket.controller;
 
 import com.ssafy.ttocket.dto.PerformanceDto;
 import com.ssafy.ttocket.dto.ResponseDto;
+import com.ssafy.ttocket.exception.ErrorResponse;
 import com.ssafy.ttocket.service.PerformanceListService;
 import com.ssafy.ttocket.service.PerformanceService;
 import io.swagger.annotations.ApiParam;
@@ -15,14 +16,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Tag(name = "공연", description = "공연 관련 API")
 @RestController
 @RequestMapping("/performance")
 @RequiredArgsConstructor
 @Log4j2
-//@RestControllerAdvice
+@ControllerAdvice
 public class PerformanceController {
     private final PerformanceService performanceService;
     private final PerformanceListService performanceListService;
@@ -45,7 +52,7 @@ public class PerformanceController {
             @ApiResponse(responseCode = "400", description = "bad request operation", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
     })
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody PerformanceDto performanceDto) {
+    public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody @Valid PerformanceDto performanceDto) {
         log.debug("POST: /create");
         ResponseDto responseDto = performanceListService.createPerformance(performanceDto);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
@@ -75,7 +82,6 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> userlikeList(@ApiParam(value = "유저 ID") @PathVariable String userId,
                                                     @ApiParam(value = "커서 ID") @PathVariable(required = false) Integer cursorId) {
         log.debug("GET: /likelist/{userId}/{curosrId}, userId: {}, cursorId: {}", userId, cursorId);
-
         if (cursorId == null) {
             cursorId  = 0;
         }
@@ -135,9 +141,6 @@ public class PerformanceController {
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+
 
 }
