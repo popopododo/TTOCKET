@@ -21,7 +21,7 @@ function Ticketing() {
     const { data } = await axiosApi.get(`/performance/reserve/${performId}`);
 
     // 좌석 정보 set하기
-    setSeats_state(data.body.seats_state);
+    setSeats_state(data.body.seats_state[0]);
 
     // 공연 정보 set
     setPerformInfo(data.body.perform);
@@ -107,6 +107,7 @@ function Ticketing() {
         seatNumber={seatNumber}
         performId={performId}
       />
+      
     </div>
   );
 }

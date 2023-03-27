@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axiosApi from "../../services/axiosApi";
+import '../../css/Modal.css';
 
 interface BtnProps {
   isOpen: boolean;
@@ -36,20 +37,19 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
       },
     });
   };
-  const modalStyles = isOpen ? "fixed inset-0 z-50 overflow-y-auto" : "hidden";
   const overlayStyles = isOpen
     ? "absolute inset-0 bg-gray-700 opacity-75"
     : "hidden";
   const contentStyles = isOpen
-    ? "bg-white rounded-t-lg shadow-lg transform translate-y-0"
-    : "transform translate-y-full";
+    ? "absolute bg-white rounded-t-lg shadow-lg transform translate-y-0"
+    : "absolute transform translate-y-full";
   const checkBtnStyles = isAgree ? "bg-ttokPink" : "bg-gray-300";
 
   return (
-    <div className={modalStyles}>
+    <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`absolute p-4 sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300 top-1/4 ${contentStyles}`}
+        className={`p-4 sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${isOpen ? 'open' : ''}`}
       >
         <button
           className="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700"
