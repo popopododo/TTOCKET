@@ -127,7 +127,7 @@ function SponsorPerformForm() {
   return (
     // <form onSubmit={submitPerformHandler}>
     <div>
-      <div className="fixed top-0 h-16 flex content-center w-full items-center justify-between bg-white border-b-2 z-5">
+      <div className="fixed top-0 h-16 flex content-center w-full items-center justify-between bg-white border-b-2 z-5 ">
         <p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ function SponsorPerformForm() {
         <p className="text-xl font-bold">공연</p>
         <p className="text-gray-400 text-base font-bold mr-3"></p>
       </div>
-      <div className="mt-16 overflow-y-auto mb-28">
+      <div className="mt-16 overflow-y-auto mb-28 overflow-x-hidden">
         <div className="h-48 bg-gray-200 flex flex-col justify-center items-center">
           <img
             src={addPicture}
