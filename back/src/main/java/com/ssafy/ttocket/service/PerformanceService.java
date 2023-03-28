@@ -178,6 +178,14 @@ public class PerformanceService {
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
         }
+        else if (code == 7) {
+            listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
+            result.put("isSuccess", true);
+            responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
+            responseDto.setStatusCode(200);
+            return responseDto;
+        }
+
         // code 2: 예약완료
         else if(code == 2){ // 좌석상태 RESERVED으로 변경
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.RESERVED));
