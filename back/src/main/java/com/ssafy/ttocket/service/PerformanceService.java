@@ -196,8 +196,10 @@ public class PerformanceService {
         // code 3: PURCHASING (사용자가 자리 선택 시)
         if(code == 3){ // {비어있음, 예매후 취소, 예매 중 취소}인 좌석 선택 -> 예매중으로 변경
             String status = (String) listOperations.index(key, seatId - 1);
+            log.debug("changeReservationState - SeatStatus : {}", status);
+
             // {비어있음, 예매 중 취소}
-            if(status.equals(String.valueOf(SeatStatus.EMPTY)) || status.equals(SeatStatus.PURCHASING_CANCEL)){
+            if(status.equals(String.valueOf(SeatStatus.EMPTY)) || status.equals(String.valueOf(SeatStatus.PURCHASING_CANCEL))){
                 listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
                 result.put("isSuccess", true);
                 result.put("beforeStatus","EMPTY");  // EMPTY & PURCHASING_CANCEL
@@ -205,7 +207,7 @@ public class PerformanceService {
                 responseDto.setStatusCode(200);
             }
             // {예매 후 취소}
-            else if(status.equals(SeatStatus.PURCHASED_CANCEL)){
+            else if(status.equals(String.valueOf(SeatStatus.PURCHASED_CANCEL))){
                 result.put("isSuccess", true);
                 result.put("beforeStatus","CANCEL");
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ " 취소티켓 구매시도");
