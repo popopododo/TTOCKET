@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function BoxDetail() {
   let location = useLocation();
-  console.log(location.state);
+  const [flipToggle, setFlipToggle] = useState<boolean>(true);
+  const [diary, setDiary] = useState();
+  
+  function ticketClick(event : React.MouseEvent<HTMLElement>) {
+    setFlipToggle(!flipToggle);
+  }
   return (
   <div className="mt-32">
       <button className='ml-2'>
@@ -16,8 +21,9 @@ function BoxDetail() {
           </Link>
         </div>
       </button>
-      <div className='relative flex-shrink-0 mx-8 mt-8 border-2 rounded-lg shadow-lg Ticket1'>
-          <Link to=''>
+      <div className="mx-8 mt-8 TicketFlip" onClick={ticketClick}>
+        <div className={"relative TicketCard "+ (flipToggle ? "is-flipped" : "")}>
+          <div className='absolute border-2 rounded-lg TicketFront'>
               <div className='absolute flex items-center justify-center w-8 h-full border-r-2 border-dashed'>
                   <p className='absolute text-xs text-center w-60 TicketTitleSmall'>
                       {location.state.title}
@@ -35,8 +41,30 @@ function BoxDetail() {
                     <p className='m-2 text-sm text-right truncate'>{location.state.location}</p>
                     <p className='m-2 text-lg font-bold text-center'>1층 A구역 23번</p>
                 </div>
-            </div>
-          </Link>
+              </div>
+          </div>
+          <div className="relative flex items-center justify-center border-2 rounded-lg TicketBack">
+              {diary !== undefined && 
+                <div className="relative w-full h-full bg-yellow-100">
+                <p className="absolute w-full text-xl font-bold text-center top-6">맘마미아는 전설이다!</p>
+                <p className="absolute w-full pr-4 text-right top-20">2023.03.10 금요일</p>
+                <p className="absolute px-4 top-32 TicketDiaryContent">솔직히 이렇게 재밌을지 몰랐는데 생각보다 괜찮았지.. 일단 배우들 연기력이 대박이었고 무대 구성이나 음악도 너무 좋았다..</p>
+              </div>
+              }
+              {diary === undefined && 
+                <div>
+                  <div className="flex justify-center">
+                    <button>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 hover:text-ttokPink">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="mt-4">나만의 일기를 써보세요</p>
+                </div>
+              }              
+          </div>
+        </div>
       </div>
   </div>
   )
