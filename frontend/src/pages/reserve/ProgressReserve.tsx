@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
@@ -9,33 +9,39 @@ function Progress(){
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
     const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
+    const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
 
-    const confirmReservation = async () => {
-        //예약 확정
-        const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
-        console.log(data);
-    }
-    const createTicket = async () =>{
-        if(!address){
-            alert('잘못된 요청입니다.');
-            navigate(`/`);
-        }
-        const result = await tokenContract?.methods.createTicket(21, 'dongdong', 1).send({from : address,
-         gas : 1000000});
-        console.log(result);
+    const confirmReservation = useCallback(
+        async () => {
+            //예약 확정
+            const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
+            console.log(data);
+        },[location]
+    )
+    const createTicket = useCallback(
+        async () =>{
+            console.log(`id : ${id}`);
+            
+            if(!id){    // 유효성 검사
+                alert('잘못된 요청입니다.');
+                navigate(`/reserve/fail`, {state:{
+                    performId : location.state.performId,
+                    seatNumber : location.state.seatNumber
+                }});
+            }
+            const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+            gas : 1000000});
+            console.log(result);
 
-        if(result !== undefined){
-            confirmReservation();
-            navigate(`/reserve/finish`);
-        }
-        
-    }
+            if(result !== undefined){
+                confirmReservation();
+                navigate(`/reserve/finish`);
+            }    
+        },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
+    )
     useEffect(()=>{
-        
-        setAddress(id);
 
         // 여기서 티켓 민팅
         createTicket();
