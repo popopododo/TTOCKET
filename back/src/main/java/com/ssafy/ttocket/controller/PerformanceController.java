@@ -17,11 +17,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Tag(name = "공연", description = "공연 관련 API")
 @RestController
 @RequestMapping("/performance")
 @RequiredArgsConstructor
 @Log4j2
+@ControllerAdvice
 public class PerformanceController {
     private final PerformanceService performanceService;
     private final PerformanceListService performanceListService;
@@ -44,9 +47,8 @@ public class PerformanceController {
             @ApiResponse(responseCode = "400", description = "bad request operation", content = @Content(schema = @Schema(implementation = ResponseDto.class)))
     })
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody PerformanceDto performanceDto) {
+    public ResponseEntity<ResponseDto> performanceCreate(@ApiParam(value = "공연 DTO") @RequestBody @Valid PerformanceDto performanceDto) {
         log.debug("POST: /create");
-
         ResponseDto responseDto = performanceListService.createPerformance(performanceDto);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
@@ -75,14 +77,13 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> userlikeList(@ApiParam(value = "유저 ID") @PathVariable String userId,
                                                     @ApiParam(value = "커서 ID") @PathVariable(required = false) Integer cursorId) {
         log.debug("GET: /likelist/{userId}/{curosrId}, userId: {}, cursorId: {}", userId, cursorId);
-
         if (cursorId == null) {
             cursorId  = 0;
         }
         ResponseDto responseDto = performanceListService.userlikeList(userId, cursorId, 6);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
-    
+
     @Operation(summary = "공연 상세보기", description = "공연 조회: 사용자 ID(좋아요), 공연 ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
@@ -95,6 +96,7 @@ public class PerformanceController {
         ResponseDto responseDto = performanceService.performanceDetail(userId, performanceId);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
     @Operation(summary = "공연 좋아요 클릭", description = "좋아요: 사용자 ID, 공연 ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
@@ -107,6 +109,7 @@ public class PerformanceController {
         ResponseDto responseDto = performanceService.clickLike(userId, performanceId);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
     @Operation(summary = "예매하기", description = "공연 ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
@@ -118,6 +121,7 @@ public class PerformanceController {
         ResponseDto responseDto = performanceService.reservationState(performanceId);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
+
     @Operation(summary = "좌석 예약", description = "공연ID, 좌석ID, 상태코드")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
@@ -130,10 +134,5 @@ public class PerformanceController {
         log.debug("PUT: /{performance}/{seatId}/{code}, performance: {}, seatId:{}, code:{}", performanceId, seatId, code);
         ResponseDto responseDto = performanceService.changeReservationState(performanceId, seatId, code);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
-    }
-    @PostMapping("/test")
-    public String test(){
-        log.debug("asdfsadf");
-        return "success";
     }
 }

@@ -10,16 +10,10 @@ import com.ssafy.ttocket.repository.SeatRepository;
 import com.ssafy.ttocket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -157,7 +151,6 @@ public class PerformanceService {
                 arrayList1.add(arrayList2);
             }
         }
-        System.out.println("arrayList1 = " + arrayList1);
 
         // 공연 정보 가져오기
         Performance perform = performanceRepository.findById(performanceId);
@@ -185,6 +178,14 @@ public class PerformanceService {
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
         }
+        else if (code == 7) {
+            listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
+            result.put("isSuccess", true);
+            responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
+            responseDto.setStatusCode(200);
+            return responseDto;
+        }
+
         // code 2: 예약완료
         else if(code == 2){ // 좌석상태 RESERVED으로 변경
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.RESERVED));
@@ -196,8 +197,10 @@ public class PerformanceService {
         // code 3: PURCHASING (사용자가 자리 선택 시)
         if(code == 3){ // {비어있음, 예매후 취소, 예매 중 취소}인 좌석 선택 -> 예매중으로 변경
             String status = (String) listOperations.index(key, seatId - 1);
+            log.debug("changeReservationState - SeatStatus : {}", status);
+
             // {비어있음, 예매 중 취소}
-            if(status.equals(String.valueOf(SeatStatus.EMPTY)) || status.equals(SeatStatus.PURCHASING_CANCEL)){
+            if(status.equals(String.valueOf(SeatStatus.EMPTY)) || status.equals(String.valueOf(SeatStatus.PURCHASING_CANCEL))){
                 listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
                 result.put("isSuccess", true);
                 result.put("beforeStatus","EMPTY");  // EMPTY & PURCHASING_CANCEL
@@ -205,7 +208,7 @@ public class PerformanceService {
                 responseDto.setStatusCode(200);
             }
             // {예매 후 취소}
-            else if(status.equals(SeatStatus.PURCHASED_CANCEL)){
+            else if(status.equals(String.valueOf(SeatStatus.PURCHASED_CANCEL))){
                 result.put("isSuccess", true);
                 result.put("beforeStatus","CANCEL");
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ " 취소티켓 구매시도");
