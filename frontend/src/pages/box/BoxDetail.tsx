@@ -3,12 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 
 function BoxDetail() {
   let location = useLocation();
-  const [flipToggle, setFlipToggle] = useState<boolean>(true);
+  const [flipToggle, setFlipToggle] = useState<boolean>(false);
   const [diary, setDiary] = useState();
   
   function ticketClick(event : React.MouseEvent<HTMLElement>) {
     setFlipToggle(!flipToggle);
+    setDiary(undefined)
   }
+
+
   return (
   <div className="mt-32">
       <button className='ml-2'>
