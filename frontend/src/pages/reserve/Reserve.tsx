@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Ticketing from './Ticketing'
-import Progress from './ProgressReserve'
-import FinishReserve from './FinishReserve'
+import ReserveProgress from './ReserveProgress'
+import ReserveFinish from './ReserveFinish'
 import HeaderNav from '../../components/HeaderNav'
-import FailReserve from './FailReserve'
+import ReserveFail from './ReserveFail'
 
 function Reserve() {
   return (
@@ -12,9 +12,9 @@ function Reserve() {
       <HeaderNav />
         <Routes>
           <Route path="/" element={<Ticketing/>}/>
-          <Route path="/progress" element={<Progress/>}/>
-          <Route path="/fail" element={<FailReserve/>}/>
-          <Route path="/finish" element={<FinishReserve/>}/>
+          <Route path="/progress" element={<ReserveProgress/>}/>
+          <Route path="/fail" element={<ReserveFail/>}/>
+          <Route path="/finish" element={<ReserveFinish/>}/>
         </Routes>
       
     </div>

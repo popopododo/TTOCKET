@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function FinishReserve(){
+function ReserveFinish(){
 
     return (
         <div className="flex items-center justify-center w-screen h-screen">
@@ -17,4 +17,4 @@ function FinishReserve(){
     )
 }
 
-export default FinishReserve;
+export default ReserveFinish;

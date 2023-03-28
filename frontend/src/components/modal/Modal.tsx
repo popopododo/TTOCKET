@@ -47,7 +47,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
     });
   };
   const overlayStyles = isOpen
-    ? "absolute inset-0 bg-gray-700 opacity-75"
+    ? "absolute inset-0 bg-gray-700 opacity-75 z-10"
     : "hidden";
   const contentStyles = isOpen
     ? "absolute bg-white rounded-t-lg shadow-lg transform translate-y-0"
@@ -58,7 +58,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
     <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${
+        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300 z-20 ${contentStyles} bottom-modal ${
           isOpen ? "open" : ""
         }`}
       >

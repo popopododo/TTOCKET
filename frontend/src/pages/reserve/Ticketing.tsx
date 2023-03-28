@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
+import BackNav from "../../components/BackNav";
 import Modal from "../../components/modal/Modal";
 import axiosApi from "../../services/axiosApi";
 import SeatList from "./seat/SeatList";
@@ -65,8 +66,9 @@ function Ticketing() {
     setIsModalOpen(false);
   };
   return (
-    <div>
-      <div className="m-2 mt-20">
+    <div className="mt-16">
+      <BackNav/>
+      <div className="m-2">
         <p className="text-xl font-bold">
           {performInfo.title ? performInfo.title : ""}
         </p>
