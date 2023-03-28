@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import Modal from "../../components/modal/Modal";
 import axiosApi from "../../services/axiosApi";
+import SeatList from "./seat/SeatList";
 
 interface Perform {
   title: string;
   location: string;
+  price:number;
 }
 
 function Ticketing() {
-  const [seats_state, setSeats_state] = useState<String[]>([]);
+  const [seats_state, setSeats_state] = useState<string[][]>([]);
   const [performInfo, setPerformInfo] = useState<Perform>({
     title: "",
     location: "",
+    price:0,
   });
   const [performId, setPerformId] = useState<number>(0);
   const location = useLocation();
@@ -30,7 +33,6 @@ function Ticketing() {
   };
   // 공연 좌석 정보 가져오기
   useEffect(() => {
-    console.log(location.state);
     setPerformId(location.state);
 
     //공연 아이디
@@ -75,38 +77,36 @@ function Ticketing() {
           <p className="text-lg font-bold">STAGE</p>
         </div>
         <div className="mt-20">
-          <p className="text-xl font-bold ml-2">좌석</p>
-          <div className="grid grid-flow-col grid-cols-8 mt-4">
-            {/* 좌석 섹션 */}
-            {seats_state.map((seat, index) => {
-              if (seat === "EMPTY") {
-                return (
-                  <div
-                    className="w-10 h-10 m-1 bg-ttokPink rounded-sm"
-                    key={index}
-                    onClick={() => {
-                      handleReserveModalOpen(index + 1);
-                    }}
-                  ></div>
-                );
-              } else {
-                return (
-                  <div
-                    className="w-10 h-10 m-1 bg-gray-300 rounded-sm"
-                    key={index}
-                  ></div>
-                );
-              }
-            })}
+          <div className="flex text-xl font-bold mx-2">
+            <span className="mr-auto">좌석</span>
+            <button onClick={()=>{getSeatInfo(performId)}}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 my-auto">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
+            </button>
           </div>
+          {
+            seats_state.map((seat, index)=>{
+                return (
+                    <SeatList 
+                        seats_state={seat}
+                        modalOpen={handleReserveModalOpen}
+                        cols={index}
+                        key={index}
+                    />
+                )
+            })
+          }
+        
         </div>
       </div>
       <Modal
         isOpen={isModalOpen}
         onClose={handleReserveModalClose}
-        seatNumber={seatNumber}
         performId={performId}
+        reserve={{title : performInfo.title, seatNumber : seatNumber, price : performInfo.price}}
       />
+      
     </div>
   );
 }

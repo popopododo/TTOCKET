@@ -14,7 +14,6 @@ function PerformHome() {
   const performDataHandler = async () => {
     try {
       const res = await axiosApi.get(`performance/home/${userId}`);
-      console.log(res);
       setLikePerform(res.data.body.like_performance);
       setPerformSoon(res.data.body.perform_soon);
       setOpenSoon(res.data.body.open_soon);

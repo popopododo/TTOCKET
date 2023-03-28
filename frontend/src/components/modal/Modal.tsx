@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axiosApi from "../../services/axiosApi";
+import "../../css/Modal.css";
 
 interface BtnProps {
   isOpen: boolean;
   performId: number;
-  seatNumber: number;
+
+  reserve: ReservationInfo;
   onClose: () => void;
 }
-const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
+interface ReservationInfo {
+  title: string;
+  seatNumber: number;
+  price: number;
+}
+const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
   const navigate = useNavigate();
 
   const [isAgree, setIsAgree] = useState<boolean>(false);
-  console.log(
-    `Modal Open >> performId : ${performId}, seatNumber : ${seatNumber}`
-  );
 
   const handleIsAgree = () => {
     setIsAgree(!isAgree);
@@ -22,34 +26,41 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
-    console.log(`reserveSeat >> performId : ${performId}, seatNumber : ${seat}`);
-
-    const { data } = await axiosApi.put(
-      `/performance/${performId}/${seatNumber}/3`
+    const { data } = await axiosApi.put(  // 좌석 변경 요청 3 : empty, PURCHASING_CANCEL -> PURCHASING
+      `/performance/${performId}/${seat}/3`
     );
     console.log(data);
+
+    if(data.status_code !== 200){ //실패 로직
+      navigate(`/reserve/fail`,{state : {
+        performId : performId,
+        seatNumber : seat,
+      }});
+      return;
+    }
 
     navigate(`/reserve/progress`, {
       state: {
         performId: performId,
-        seatNumber: seatNumber,
+        seatNumber: reserve.seatNumber,
       },
     });
   };
-  const modalStyles = isOpen ? "fixed inset-0 z-50 overflow-y-auto" : "hidden";
   const overlayStyles = isOpen
     ? "absolute inset-0 bg-gray-700 opacity-75"
     : "hidden";
   const contentStyles = isOpen
-    ? "bg-white rounded-t-lg shadow-lg transform translate-y-0"
-    : "transform translate-y-full";
+    ? "absolute bg-white rounded-t-lg shadow-lg transform translate-y-0"
+    : "absolute transform translate-y-full";
   const checkBtnStyles = isAgree ? "bg-ttokPink" : "bg-gray-300";
 
   return (
-    <div className={modalStyles}>
+    <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`absolute p-4 sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300 top-1/4 ${contentStyles}`}
+        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${
+          isOpen ? "open" : ""
+        }`}
       >
         <button
           className="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700"
@@ -73,39 +84,75 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
         {/* 취소 수수료 안내 테이블 */}
         <div className="flex mb-2">
           <span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+              />
+            </svg>
           </span>
           <span className="ml-1 text-lg font-bold">예매 확인</span>
         </div>
-        <hr/>
+        <hr />
         <div className="my-4">
           {/* */}
           <div className="flex mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+              />
             </svg>
-            <h2 className="font-bold ml-1">검청지마 TEEN TROUBLES</h2>
+            <h2 className="font-bold ml-1">{reserve.title}</h2>
           </div>
           <div className="flex px-4">
             <span className="mr-auto">
-              좌석 : A 1열
+              좌석 : {reserve.seatNumber / 8 + "A"}
             </span>
             <img
               src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
               alt="coin"
-              className="h-6 mr-1"></img>
-            <span>
-              0.001
-            </span>
+              className="h-6 mr-1"
+            ></img>
+            <span>{reserve.price}</span>
           </div>
         </div>
         <div className="my-4">
           <div className="flex mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
             </svg>
             <h2 className="font-bold ml-1">취소 수수료 안내</h2>
           </div>
@@ -130,7 +177,6 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
               </tbody>
             </table>
           </div>
-          
         </div>
 
         {/* 체크 박스 */}
@@ -150,7 +196,7 @@ const Modal = ({ isOpen, onClose, performId, seatNumber }: BtnProps) => {
             className={`px-14 py-1 mx-auto text-white rounded-lg ${checkBtnStyles}`}
             disabled={!isAgree}
             onClick={() => {
-              reserveSeat(seatNumber);
+              reserveSeat(reserve.seatNumber);
             }}
           >
             예매

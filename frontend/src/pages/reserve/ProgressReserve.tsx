@@ -1,28 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import axiosApi from '../../services/axiosApi';
+import useWeb3 from '../../services/web3/useWeb3';
 
 function Progress(){
     const location = useLocation();
     const navigate = useNavigate();
 
-    const confirmReservation = async () => {
-        //예약 확정
-        const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
-        console.log(data);
-    }
-    
-    useEffect(()=>{
-        // 여기서 티켓 민팅
+    const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
+    const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
+    const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
 
-        //여기서 티켓 상태 전환
-        confirmReservation();
-        
-        console.log("민팅 중입니다.");
-        setTimeout(()=>{
-            navigate(`/reserve/finish`);
-        },2000);
-    });
+    const confirmReservation = useCallback(
+        async () => {
+            //예약 확정
+            const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
+            console.log(data);
+        },[location]
+    )
+    const createTicket = useCallback(
+        async () =>{
+            console.log(`id : ${id}`);
+            
+            if(!id){    // 유효성 검사
+                alert('잘못된 요청입니다.');
+                navigate(`/reserve/fail`, {state:{
+                    performId : location.state.performId,
+                    seatNumber : location.state.seatNumber
+                }});
+            }
+            const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+            gas : 1000000});
+            console.log(result);
+
+            if(result !== undefined){
+                confirmReservation();
+                navigate(`/reserve/finish`);
+            }    
+        },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
+    )
+    useEffect(()=>{
+
+        // 여기서 티켓 민팅
+        createTicket();
+
+    }, [id,createTicket]);
 
     return (
         <div className="flex items-center justify-center w-screen h-screen">

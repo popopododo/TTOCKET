@@ -40,8 +40,6 @@ function PerformList() {
 
       if (data.length) {
         page.current += 1;
-
-        console.log(res);
       }
     } catch (err) {
       console.log(err);
@@ -61,29 +59,29 @@ function PerformList() {
 
   return (
     <div>
-      <div className="overflow-y-auto mb-20">
-        <div className="h-10 flex items-center justify-between mt-20">
-          <p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-8 h-8"
-              onClick={handleGoBack}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
-          </p>
-          <p className="text-lg font-bold">{location.state}</p>
-          <p className="w-7"></p>
-        </div>
+      <div className="fixed h-16 w-full top-0 flex bg-white items-center justify-between mt-16">
+        <p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8"
+            onClick={handleGoBack}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </p>
+        <p className="text-lg font-bold">{location.state}</p>
+        <p className="w-7"></p>
+      </div>
 
+      <div className="overflow-y-auto mb-24 mt-24">
         <div className="mt-10">
           {posts &&
             posts.map((dal) => (

@@ -4,7 +4,7 @@ import Ticketing from './Ticketing'
 import Progress from './ProgressReserve'
 import FinishReserve from './FinishReserve'
 import HeaderNav from '../../components/HeaderNav'
-import BottomNav from '../../components/BottomNav'
+import FailReserve from './FailReserve'
 
 function Reserve() {
   return (
@@ -13,9 +13,9 @@ function Reserve() {
         <Routes>
           <Route path="/" element={<Ticketing/>}/>
           <Route path="/progress" element={<Progress/>}/>
+          <Route path="/fail" element={<FailReserve/>}/>
           <Route path="/finish" element={<FinishReserve/>}/>
         </Routes>
-      <BottomNav />
       
     </div>
   )
