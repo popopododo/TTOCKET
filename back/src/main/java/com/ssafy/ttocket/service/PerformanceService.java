@@ -209,9 +209,11 @@ public class PerformanceService {
             }
             // {예매 후 취소}
             else if(status.equals(String.valueOf(SeatStatus.PURCHASED_CANCEL))){
+                listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
                 result.put("isSuccess", true);
                 result.put("beforeStatus","CANCEL");
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ " 취소티켓 구매시도");
+                responseDto.setStatusCode(200);
             }
             else{
                 result.put("isSuccess", false);
