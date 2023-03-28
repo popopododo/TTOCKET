@@ -4,22 +4,31 @@ import { FormEvent, useState } from "react";
 import ipfsCreate from "../../services/ipfsCreate";
 import addPicture from "../../assets/addPicture.png";
 import formatDate from "../../components/date/formatDate";
+
 import axiosApi from "../../services/axiosApi";
+import useWeb3 from "../../services/web3/useWeb3";
 
 function SponsorPerformForm() {
   const navigate = useNavigate();
+  const { tokenContract } = useWeb3();
+  //정보
   let todayDate = formatDate(new Date()) + " 12:00:00";
   const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
   const [images, setImages] = useState(addPicture);
   const [poster, setPoster] = useState("");
+
   //폼 내용
   const title = useInput("");
   const end_time = useInput(todayDate);
   const location = useInput("");
-  const price = useInput(0);
+  const [price, setPrice] = useState(0);
   const [max_seats, setMax_seats] = useState<number>(8);
   const description = useInput("");
 
+  //날짜 체크
+
+  //유효성 검사
+  const isTitle = title.value.trim() !== "";
   //사진 업로드
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetFile = (e.target.files as FileList)[0];
@@ -39,27 +48,56 @@ function SponsorPerformForm() {
       console.log(err);
     }
   };
+  //
 
   //공연 생성
   const submitPerformHandler = async (event: FormEvent) => {
     event.preventDefault();
-    try {
-      const res = await axiosApi.post("performance/create", {
-        title: title.value,
-        user_id: userId,
-        start_time: todayDate,
-        end_time: end_time.value,
-        location: location.value,
-        price: price.value,
-        max_seats: max_seats,
-        poster: poster,
-        desc: description.value,
-        etc: "보냅니다...",
-      });
-      console.log(res);
-      navigate(-1);
-    } catch (err) {
-      console.log(err);
+    if (!isTitle) {
+      alert("제목을 입력해주세요");
+    } else {
+      try {
+        const res = await axiosApi.post("performance/create", {
+          title: title.value,
+          user_id: userId,
+          start_time: todayDate,
+          end_time: end_time.value,
+          location: location.value,
+          price: price,
+          max_seats: max_seats,
+          poster: poster,
+          desc: description.value,
+          etc: "보냅니다...",
+        });
+        console.log(res);
+        if (res !== undefined) {
+          const data = res.data.body.performance_id;
+          try {
+            const solres = await tokenContract?.methods
+              .createPerform(
+                data,
+                title.value,
+                description.value,
+                max_seats,
+                location.value,
+                price,
+                1,
+                0,
+                60,
+                poster
+              )
+              .send({
+                from: "0x8cb70DaE0CB19C9a51c23F0C337B2e4223c29209",
+              });
+            console.log(solres);
+          } catch (err) {
+            console.log(err);
+          }
+          navigate(-1);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   //뒤로가기
@@ -73,6 +111,9 @@ function SponsorPerformForm() {
     console.log(max_seats);
   };
   const selectVal = [8, 16];
+  const changePrice = (e: any) => {
+    setPrice(e.target.value);
+  };
 
   return (
     // <form onSubmit={submitPerformHandler}>
@@ -103,14 +144,19 @@ function SponsorPerformForm() {
           <img
             src={addPicture}
             alt="addpicture"
-            className="w-24 h-24 mt-5"
+            className="w-24 h-24 mt-5 ml-10"
           ></img>
-          <input type="file" accept="image/*" onChange={changeHandler} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={changeHandler}
+            className="ml-28"
+          />
           <button
             onClick={uploadFile}
-            className="rounded-full bg-[#FB7185] w-52 my-2 text-white h-8"
+            className="rounded-full bg-[#FB7185] w-52 my-2 text-white h-8 ml-10"
           >
-            등록 전에 먼저 눌러주세요..
+            넣으면 바로 눌러주세요..
           </button>
         </div>
         <form
@@ -141,7 +187,7 @@ function SponsorPerformForm() {
             <label className="text-base font-bold mb-2 mt-6">공연 가격</label>
             <input
               type="integer"
-              {...price}
+              onChange={changePrice}
               className="border-b-2 h-9 border-[#FB7185] w-full"
             />
             <label className="text-base font-bold mb-2 mt-6">좌석 수</label>
@@ -163,7 +209,14 @@ function SponsorPerformForm() {
               {...description}
               className="border-b-2 h-9 border-[#FB7185] w-full"
             />
-            <button type="submit">등록</button>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="mt-5 w-72 h-10 bg-[#FB7185] text-white rounded-lg"
+            >
+              등록
+            </button>
           </div>
         </form>
       </div>

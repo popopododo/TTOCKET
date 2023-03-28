@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import axiosApi from "../../services/axiosApi";
-import '../../css/Modal.css';
+
+import "../../css/Modal.css";
 
 interface BtnProps {
   isOpen: boolean;
   performId: number;
 
-  reserve : ReservationInfo;
+  reserve: ReservationInfo;
   onClose: () => void;
 }
 interface ReservationInfo {
-  title : string;
+  title: string;
   seatNumber: number;
   price: number;
 }
@@ -26,11 +26,6 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
-
-    const { data } = await axiosApi.put(
-      `/performance/${performId}/${seat}/3`
-    );
-
     navigate(`/reserve/progress`, {
       state: {
         performId: performId,
@@ -50,7 +45,9 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
     <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${isOpen ? 'open' : ''}`}
+        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300  ${contentStyles} bottom-modal ${
+          isOpen ? "open" : ""
+        }`}
       >
         <button
           className="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700"
@@ -74,39 +71,75 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
         {/* 취소 수수료 안내 테이블 */}
         <div className="flex mb-2">
           <span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+              />
+            </svg>
           </span>
           <span className="ml-1 text-lg font-bold">예매 확인</span>
         </div>
-        <hr/>
+        <hr />
         <div className="my-4">
           {/* */}
           <div className="flex mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+              />
             </svg>
             <h2 className="font-bold ml-1">{reserve.title}</h2>
           </div>
           <div className="flex px-4">
             <span className="mr-auto">
-              좌석 : {(reserve.seatNumber / 8) + 'A'}
+              좌석 : {reserve.seatNumber / 8 + "A"}
             </span>
             <img
               src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
               alt="coin"
-              className="h-6 mr-1"></img>
-            <span>
-              {reserve.price}
-            </span>
+              className="h-6 mr-1"
+            ></img>
+            <span>{reserve.price}</span>
           </div>
         </div>
         <div className="my-4">
           <div className="flex mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
             </svg>
             <h2 className="font-bold ml-1">취소 수수료 안내</h2>
           </div>
@@ -131,7 +164,6 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
               </tbody>
             </table>
           </div>
-          
         </div>
 
         {/* 체크 박스 */}
