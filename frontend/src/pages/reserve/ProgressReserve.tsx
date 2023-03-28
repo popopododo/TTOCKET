@@ -1,28 +1,46 @@
-import { useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import axiosApi from '../../services/axiosApi';
+import useWeb3 from '../../services/web3/useWeb3';
 
 function Progress(){
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [address, setAddress] = useState();
+    const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
+    const id = useSelector((state: RootState) => state.userSlice.user_id);  //address 가져오기
 
     const confirmReservation = async () => {
         //예약 확정
         const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
         console.log(data);
     }
-    
-    useEffect(()=>{
-        // 여기서 티켓 민팅
+    const createTicket = async () =>{
+        if(!address){
+            alert('잘못된 요청입니다.');
+            navigate(`/`);
+        }
+        const result = await tokenContract?.methods.createTicket(21, 'dongdong', 1).send({from : address,
+         gas : 1000000});
+        console.log(result);
 
-        //여기서 티켓 상태 전환
-        confirmReservation();
-        
-        console.log("민팅 중입니다.");
-        setTimeout(()=>{
+        if(result !== undefined){
+            confirmReservation();
             navigate(`/reserve/finish`);
-        },2000);
-    });
+        }
+        
+    }
+    useEffect(()=>{
+        
+        setAddress(id);
+
+        // 여기서 티켓 민팅
+        createTicket();
+
+    }, [id,createTicket]);
 
     return (
         <div className="flex items-center justify-center w-screen h-screen">
