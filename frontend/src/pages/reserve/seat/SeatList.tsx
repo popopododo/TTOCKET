@@ -10,7 +10,7 @@ function SeatList({ seats_state, modalOpen, cols }: Props){
         <div className="grid grid-flow-col grid-cols-8 mt-4">
         {/* 좌석 섹션 */}
         {seats_state.map((seat, index) => {
-          if (seat === "EMPTY") {
+          if (seat === "EMPTY" || seat === "PURCHASED_CANCEL") {
             return (
               <div
                 className="w-10 h-10 m-1 bg-ttokPink rounded-sm"

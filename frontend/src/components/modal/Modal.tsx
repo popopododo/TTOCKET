@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-
+import axiosApi from "../../services/axiosApi";
 import "../../css/Modal.css";
 
 interface BtnProps {
@@ -26,6 +26,19 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
+    const { data } = await axiosApi.put(  // 좌석 변경 요청 3 : empty, PURCHASING_CANCEL -> PURCHASING
+      `/performance/${performId}/${seat}/3`
+    );
+    console.log(data);
+
+    if(data.status_code !== 200){ //실패 로직
+      navigate(`/reserve/fail`,{state : {
+        performId : performId,
+        seatNumber : seat,
+      }});
+      return;
+    }
+
     navigate(`/reserve/progress`, {
       state: {
         performId: performId,
