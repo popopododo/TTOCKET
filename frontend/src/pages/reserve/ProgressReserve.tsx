@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
@@ -11,7 +11,7 @@ function Progress(){
 
     const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
-    const id = useSelector((state: RootState) => state.userSlice.user_id);  //address 가져오기
+    const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
 
     const confirmReservation = async () => {
         //예약 확정
