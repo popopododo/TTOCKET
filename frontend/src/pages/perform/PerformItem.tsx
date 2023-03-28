@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import formatDate from "../../components/date/formatDate";
 import checkEndDate from "../../components/date/checkEndDate";
+import MomentDiff from "../../components/date/MomentDiff";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -68,6 +69,20 @@ function PerformItem() {
       console.log(err);
     }
   };
+  const checkmin =
+    formatDate(todayTime) +
+    " " +
+    ("0" + todayTime.getHours()).slice(-2) +
+    ":" +
+    ("0" + todayTime.getMinutes()).slice(-2) +
+    ":00";
+  const endData =
+    performData?.end_time.slice(0, 10) +
+    " " +
+    performData?.end_time.slice(11, 13) +
+    ":" +
+    performData?.end_time.slice(-2) +
+    ":00";
 
   useEffect(() => {
     performDataHandler();
@@ -119,6 +134,8 @@ function PerformItem() {
               {performData?.end_time.slice(0, 10)} |{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
+            <span>{MomentDiff(endData, checkmin)}</span>
+            {/* <span>{checkmin}</span> */}
             <span className="flex text-right text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
