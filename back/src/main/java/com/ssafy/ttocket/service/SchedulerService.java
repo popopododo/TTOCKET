@@ -24,33 +24,27 @@ public class SchedulerService {
     private final RedisTemplate redisTemplate;
     private final SeatRepository seatRepository;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 180000)
     @Transactional
     public void changeSeatsStatus() {
-        System.out.println("SchedulerService.changeSeatsStatus 실행");
-
+        log.debug("매 3분마다 스케줄러 실행");
         ListOperations listOperations = redisTemplate.opsForList();
         // 람다식 적용 방법 찾아서 적용하기
-
         Set<String> keys = redisTemplate.keys("seatStatus::*");
         for (String key : keys) {
             String keyIdx = key.substring(12);  // performanceId 추출
-            System.out.println("keyIdx = " + keyIdx);
             if (!redisTemplate.type(key).equals(DataType.NONE)) {
                 List<Seat> targetSeats = seatRepository.findByPerformanceId(Integer.parseInt(keyIdx));  // 좌석 정보를 가져오기 위해 repository 탐색
                 List<String> list = listOperations.range("seatStatus::" + keyIdx, 0, -1);  // 레디스
 
                 // 아래 조건에 걸리지 않는 경우 탐색 필요 -> 개발과정에서 mysql 개별 조작 가능성
                 if (list.size() == targetSeats.size()) {
-                    System.out.println("리스트 요소 변경 진행");
                     for (int i = 0; i < list.size(); i++) {
                         SeatStatus s = SeatStatus.valueOf(list.get(i));
                         targetSeats.get(i).setStatus(s);
                         seatRepository.save(targetSeats.get(i));
-                        System.out.println("targetSeats.get(i) = " + targetSeats.get(i).getStatus());
                     }
                 }
-
             } else {
                 log.debug("리스트 타입이 아님");
             }
