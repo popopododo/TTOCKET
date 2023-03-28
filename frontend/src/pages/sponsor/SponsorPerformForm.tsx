@@ -7,6 +7,8 @@ import formatDate from "../../components/date/formatDate";
 
 import axiosApi from "../../services/axiosApi";
 import useWeb3 from "../../services/web3/useWeb3";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 function SponsorPerformForm() {
   const navigate = useNavigate();
@@ -25,10 +27,12 @@ function SponsorPerformForm() {
   const [max_seats, setMax_seats] = useState<number>(8);
   const description = useInput("");
 
-  //날짜 체크
-
+  //아이디 가져오기
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
   //유효성 검사
   const isTitle = title.value.trim() !== "";
+  const isLocation = location.value.trim() !== "";
+  const isDes = description.value.trim() !== "";
   //사진 업로드
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetFile = (e.target.files as FileList)[0];
@@ -55,6 +59,10 @@ function SponsorPerformForm() {
     event.preventDefault();
     if (!isTitle) {
       alert("제목을 입력해주세요");
+    } else if (!isLocation) {
+      alert("장소를 입력해주세요");
+    } else if (!isDes) {
+      alert("공연 상세내용을 입력해주세요");
     } else {
       try {
         const res = await axiosApi.post("performance/create", {
@@ -80,14 +88,15 @@ function SponsorPerformForm() {
                 description.value,
                 max_seats,
                 location.value,
-                price,
+                price * 10 ** 5,
                 1,
                 0,
                 60,
                 poster
               )
               .send({
-                from: "0x8cb70DaE0CB19C9a51c23F0C337B2e4223c29209",
+                from: id,
+                gas: 8000000,
               });
             console.log(solres);
           } catch (err) {
