@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -24,11 +23,11 @@ public class SchedulerService {
     private final RedisTemplate redisTemplate;
     private final SeatRepository seatRepository;
 
+
     @Scheduled(fixedRate = 5000)
     @Transactional
     public void changeSeatsStatus() {
         System.out.println("SchedulerService.changeSeatsStatus");
-
         ListOperations listOperations = redisTemplate.opsForList();
         // 람다식 적용 방법 찾아서 적용하기
 
