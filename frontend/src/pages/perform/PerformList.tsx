@@ -59,7 +59,7 @@ function PerformList() {
 
   return (
     <div>
-      <div className="fixed h-16 w-full top-0 flex bg-white items-center justify-between mt-16">
+      <div className="fixed h-16 w-full top-0 flex bg-white items-center justify-between mt-12">
         <p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +81,8 @@ function PerformList() {
         <p className="w-7"></p>
       </div>
 
-      <div className="overflow-y-auto mb-24 mt-24">
-        <div className="mt-10">
+      <div className="overflow-y-auto mb-16 mt-28">
+        <div className="">
           {posts &&
             posts.map((dal) => (
               <div key={dal.performance_id}>

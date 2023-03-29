@@ -78,7 +78,7 @@ function PerformLikeList() {
   return (
     <div>
       <div className="overflow-y-auto mb-20">
-        <div className="h-10 flex items-center justify-between mt-20">
+        <div className="fixed h-12 w-full top-0 flex bg-white items-center justify-between mt-12">
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +100,7 @@ function PerformLikeList() {
           <p className="w-7"></p>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-28 mb-10">
           {posts &&
             posts.map((dal) => (
               <div key={dal.performance_id}>

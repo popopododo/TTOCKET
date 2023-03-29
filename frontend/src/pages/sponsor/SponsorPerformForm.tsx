@@ -76,20 +76,24 @@ function SponsorPerformForm() {
             });
             console.log(res, "사진");
             if (res !== undefined) {
-              const data = res.data.body.performance_id;
+              const performId = res.data.body.performance_id;
+              const cal = res.data.body.left_minute_perform;
               try {
                 const solres = await tokenContract?.methods
                   .createPerform(
-                    data,
+                    performId,
                     title.value,
                     desText,
                     max_seats,
                     location.value,
                     price * 10 ** 5,
-                    1,
-                    0,
-                    60,
-                    posterHash
+                    cal,
+                    posterHash,
+                    Number(end_time.value.slice(0, 4)),
+                    Number(end_time.value.slice(5, 7)),
+                    Number(end_time.value.slice(8, 10)),
+                    Number(end_time.value.slice(11, 13)),
+                    Number(end_time.value.slice(14, 16))
                   )
                   .send({
                     from: id,

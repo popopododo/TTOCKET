@@ -58,7 +58,7 @@ function PerformHome() {
             <PerformSlider data={performSoon} />
           </div>
         </div>
-        <div className="mb-20">
+        <div className="mb-16">
           <div className="mb-1 flex justify-between">
             <p className="ml-1 flex">
               <svg
@@ -78,7 +78,7 @@ function PerformHome() {
               </Link>
             </p>
           </div>
-          <div className="bg-[#FFE4E4] h-40 flex flex-col justify-center text-center">
+          <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center text-center">
             {likePerform.length === 0 ? (
               <p className="text-gray-500 font-bold">
                 아직 관심으로 지정한 공연이 없습니다
@@ -86,7 +86,6 @@ function PerformHome() {
             ) : (
               <PerformSlider data={likePerform} />
             )}
-            {}
           </div>
         </div>
       </div>
