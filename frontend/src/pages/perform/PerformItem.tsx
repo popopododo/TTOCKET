@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import formatDate from "../../components/date/formatDate";
 import checkEndDate from "../../components/date/checkEndDate";
-import MomentDiff from "../../components/date/MomentDiff";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -69,20 +68,6 @@ function PerformItem() {
       console.log(err);
     }
   };
-  const checkmin =
-    formatDate(todayTime) +
-    " " +
-    ("0" + todayTime.getHours()).slice(-2) +
-    ":" +
-    ("0" + todayTime.getMinutes()).slice(-2) +
-    ":00";
-  const endData =
-    performData?.end_time.slice(0, 10) +
-    " " +
-    performData?.end_time.slice(11, 13) +
-    ":" +
-    performData?.end_time.slice(-2) +
-    ":00";
 
   useEffect(() => {
     performDataHandler();
@@ -90,15 +75,15 @@ function PerformItem() {
   }, []);
 
   return (
-    <div className="flex flex-col content-center h-screen mt-16">
-      <div className="flex items-center h-14">
+    <div className="flex flex-col content-center mt-16">
+      <div className="flex items-center h-12 fixed bg-white top-16">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8"
+          className="w-7 h-7"
           onClick={handleGoBack}
         >
           <path
@@ -109,7 +94,7 @@ function PerformItem() {
         </svg>
         <p onClick={handleGoBack}>돌아가기</p>
       </div>
-      <div className="overflow-scroll">
+      <div className="overflow-y-auto mt-12">
         {performData && (
           <div>
             <img
@@ -134,8 +119,7 @@ function PerformItem() {
               {performData?.end_time.slice(0, 10)} |{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
-            <span>{MomentDiff(endData, checkmin)}</span>
-            {/* <span>{checkmin}</span> */}
+
             <span className="flex text-right text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -152,20 +136,11 @@ function PerformItem() {
               {performData?.location}
             </span>
           </p>
-          {/* <p className="flex justify-end font-bold">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
-            alt="coin"
-            className="h-6 mr-1"
-          ></img>
-          {performData?.price} COIN
-        </p> */}
-
           <p className="mt-2 mb-8 text-lg font-bold">공연 상세</p>
           <p>{performData?.desc}</p>
         </div>
       </div>
-      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 border-t-2">
+      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 border-t-2 bg-white">
         {isLike ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"

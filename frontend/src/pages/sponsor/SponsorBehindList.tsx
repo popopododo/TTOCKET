@@ -32,7 +32,7 @@ function SponsorBehindList() {
             </svg>
           </p>
           <p className="text-lg font-bold ml-6">비하인드 목록</p>
-          <Link to="" className="text-gray-400 font-bold mr-3">
+          <Link to="add" className="text-gray-400 font-bold mr-3">
             등록
           </Link>
         </div>
