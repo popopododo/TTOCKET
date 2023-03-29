@@ -71,6 +71,8 @@ public class PerformanceListService {
                     .build();
             seatRepository.save(seat);
         }
+        //공연까지 몇분 남았는지 계산
+        
         // responseDto
         result.put("performance_id", performance.getId());
         responseDto.setMessage("공연 등록 완료");
