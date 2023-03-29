@@ -135,7 +135,4 @@ public class PerformanceController {
         ResponseDto responseDto = performanceService.changeReservationState(performanceId, seatId, code);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
-
-
-
 }
