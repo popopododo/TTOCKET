@@ -24,18 +24,18 @@ public class RedisConfig {
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory(){
-//        RedisSentinelConfiguration sentinelConfiguration = new RedisSentinelConfiguration()
-//                .master("mymaster")
-//                .sentinel(host,26379)
-//                .sentinel(host,26380)
-//                .sentinel(host,26381);
-//        sentinelConfiguration.setPassword(password);
+        RedisSentinelConfiguration sentinelConfiguration = new RedisSentinelConfiguration()
+                .master("mymaster")
+                .sentinel(host,26379)
+                .sentinel(host,26380)
+                .sentinel(host,26381);
+        sentinelConfiguration.setPassword(password);
 
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(host);
-        redisStandaloneConfiguration.setPort(port);
-        redisStandaloneConfiguration.setPassword(password);
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+//        redisStandaloneConfiguration.setHostName(host);
+//        redisStandaloneConfiguration.setPort(port);
+//        redisStandaloneConfiguration.setPassword(password);
+        return new LettuceConnectionFactory(sentinelConfiguration);
     }
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
