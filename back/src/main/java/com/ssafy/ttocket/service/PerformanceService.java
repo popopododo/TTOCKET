@@ -32,6 +32,7 @@ public class PerformanceService {
     private final TimeService timeService;
     private final RedisTemplate redisTemplate;
     static int seatRowNums = 8;
+    public ArrayList<String> canceledSeatList = new ArrayList<>();
 
     public ResponseDto performanceDetail(String userId, int performanceId) {
         // 활용할 자료구조 생성
@@ -241,15 +242,16 @@ public class PerformanceService {
         }
         // code 5: 구매완료 후 취소
         else if(code == 5){ // 좌석상태 CANCEL으로 변경
+            canceledSeatList.add(Arrays.toString(new int[]{performanceId, seatId}));
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASED_CANCEL));
             result.put("isSuccess", true);
             responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 CANCEL으로 변경 완료");
             responseDto.setStatusCode(200);
+            System.out.println("canceledSeatList = " + canceledSeatList);
             return responseDto;
         }
         responseDto.setMessage("code 확인해주세요");
         responseDto.setStatusCode(400);
         return responseDto;
     }
-
 }
