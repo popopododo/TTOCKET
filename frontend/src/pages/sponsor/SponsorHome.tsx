@@ -7,7 +7,7 @@ function SponsorHome() {
   return (
     <div className="flex flex-col justify-center items-center">
       <HeaderNav />
-      <div className="mt-40 w-full text-center mb-20">
+      <div className="mt-40 w-full text-center mb-20 ">
         <p className="text-2xl font-bold">관리자 메뉴</p>
       </div>
       <div className="flex">

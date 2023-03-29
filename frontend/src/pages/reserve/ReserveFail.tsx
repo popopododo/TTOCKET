@@ -9,7 +9,7 @@ import axiosApi from "../../services/axiosApi";
  * 변경되었던 티켓을 다시 empty 좌석으로 변경
  * 다시 티켓팅 페이지로 이동
  */
-function FailReserve() {
+function ReserveFail() {
     const location = useLocation();
     
   // 좌석 실패 로직
@@ -39,4 +39,4 @@ function FailReserve() {
     )
 }
 
-export default FailReserve;
+export default ReserveFail;

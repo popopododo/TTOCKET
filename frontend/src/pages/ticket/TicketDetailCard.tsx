@@ -18,7 +18,9 @@ function TicketDetailCard() {
             </button>
         </Link>
         <div className='px-8'>
-            <p className='mt-5 text-2xl font-bold'>{location.state.title}</p>
+            <div className='overflow-hidden'>
+                <p className='text-xl font-bold marqueeStyle'>{location.state.title}</p>
+            </div>
             <p className='mt-8'>{location.state.location}</p>
             <p className='mt-2'>2020.04.01 16:00 </p>
             <p className='mt-2'>1열 {location.state.seatNum}번</p>

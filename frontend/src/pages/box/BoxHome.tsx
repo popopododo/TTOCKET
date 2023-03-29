@@ -69,7 +69,7 @@ function BoxHome() {
   return (
     <div className="flex flex-col items-center justify-center mt-20">
       <div className="w-full h-20 text-center">
-        <p className="mt-6 text-2xl font-bold">티켓 보관함</p>
+        <p className="mt-6 text-xl font-bold">티켓 보관함</p>
       </div>
         <div>
           {afterTicketList !== undefined && afterTicketSize !== undefined &&

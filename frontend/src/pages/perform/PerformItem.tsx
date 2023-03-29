@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import formatDate from "../../components/date/formatDate";
 import checkEndDate from "../../components/date/checkEndDate";
-import MomentDiff from "../../components/date/MomentDiff";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import BackNav from "../../components/BackNav";
 
 interface performDataType {
   desc: string;
@@ -23,7 +23,6 @@ interface performDataType {
 
 function PerformItem() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   //userID 나중에는 리덕스로 가져올 예정
   const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
@@ -35,10 +34,7 @@ function PerformItem() {
   //예매버튼 확인용
   let todayTime = new Date();
 
-  //뒤로가기 버튼
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+
 
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
@@ -69,20 +65,6 @@ function PerformItem() {
       console.log(err);
     }
   };
-  const checkmin =
-    formatDate(todayTime) +
-    " " +
-    ("0" + todayTime.getHours()).slice(-2) +
-    ":" +
-    ("0" + todayTime.getMinutes()).slice(-2) +
-    ":00";
-  const endData =
-    performData?.end_time.slice(0, 10) +
-    " " +
-    performData?.end_time.slice(11, 13) +
-    ":" +
-    performData?.end_time.slice(-2) +
-    ":00";
 
   useEffect(() => {
     performDataHandler();
@@ -91,24 +73,7 @@ function PerformItem() {
 
   return (
     <div className="flex flex-col content-center h-screen mt-16">
-      <div className="flex items-center h-14">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-8 h-8"
-          onClick={handleGoBack}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
-        <p onClick={handleGoBack}>돌아가기</p>
-      </div>
+      <BackNav/>
       <div className="overflow-scroll">
         {performData && (
           <div>
@@ -134,8 +99,7 @@ function PerformItem() {
               {performData?.end_time.slice(0, 10)} |{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
-            <span>{MomentDiff(endData, checkmin)}</span>
-            {/* <span>{checkmin}</span> */}
+
             <span className="flex text-right text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -152,20 +116,11 @@ function PerformItem() {
               {performData?.location}
             </span>
           </p>
-          {/* <p className="flex justify-end font-bold">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
-            alt="coin"
-            className="h-6 mr-1"
-          ></img>
-          {performData?.price} COIN
-        </p> */}
-
           <p className="mt-2 mb-8 text-lg font-bold">공연 상세</p>
           <p>{performData?.desc}</p>
         </div>
       </div>
-      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 border-t-2">
+      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 bg-white border-t-2">
         {isLike ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"

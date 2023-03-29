@@ -25,7 +25,7 @@
   }
   
   .bottom-modal.open {
-    height: 50vh; /* set the modal's height when it's open */
+    height: 55vh; /* set the modal's height when it's open */
     padding: 10px;
     transition: height 0.5s ease-out;  
 }

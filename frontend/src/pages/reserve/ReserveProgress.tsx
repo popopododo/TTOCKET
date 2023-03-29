@@ -5,7 +5,7 @@ import { RootState } from '../../app/store';
 import axiosApi from '../../services/axiosApi';
 import useWeb3 from '../../services/web3/useWeb3';
 
-function Progress(){
+function ReserveProgress(){
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -60,4 +60,4 @@ function Progress(){
     )
 }
 
-export default Progress;
+export default ReserveProgress;

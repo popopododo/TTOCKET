@@ -437,16 +437,6 @@ export const contractABI : AbiItem[] = [
       },
       {
         "internalType": "uint256",
-        "name": "_day",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_hour",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_minute",
         "type": "uint256"
       },
@@ -454,6 +444,31 @@ export const contractABI : AbiItem[] = [
         "internalType": "string",
         "name": "_poster",
         "type": "string"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_performYear",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_performMonth",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_performDay",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_performHour",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_performMinute",
+        "type": "uint16"
       }
     ],
     "name": "createPerform",
@@ -470,9 +485,9 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -480,9 +495,9 @@ export const contractABI : AbiItem[] = [
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "seatNum",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "createTicket",
@@ -505,9 +520,9 @@ export const contractABI : AbiItem[] = [
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "cancleMyTicket",
@@ -529,9 +544,9 @@ export const contractABI : AbiItem[] = [
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -554,9 +569,29 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getNowRefundAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "performId",
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -578,9 +613,9 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "getBehindList",
@@ -612,9 +647,9 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "performId",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
             "internalType": "string",
@@ -632,14 +667,39 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "seatNum",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "status",
-            "type": "uint256"
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performYear",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMonth",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performDay",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performHour",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMinute",
+            "type": "uint16"
           }
         ],
         "internalType": "struct TicketDTO.TicketInfo[]",
@@ -673,9 +733,9 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "performId",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
             "internalType": "string",
@@ -693,14 +753,39 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "seatNum",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "status",
-            "type": "uint256"
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performYear",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMonth",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performDay",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performHour",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMinute",
+            "type": "uint16"
           }
         ],
         "internalType": "struct TicketDTO.TicketInfo[]",
@@ -720,9 +805,9 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_performId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "isOwnerOfPerform",
@@ -780,9 +865,9 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "performId",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
             "internalType": "string",
@@ -800,14 +885,39 @@ export const contractABI : AbiItem[] = [
             "type": "string"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "seatNum",
-            "type": "uint256"
+            "type": "uint16"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint16",
             "name": "status",
-            "type": "uint256"
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performYear",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMonth",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performDay",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performHour",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMinute",
+            "type": "uint16"
           }
         ],
         "internalType": "struct TicketDTO.TicketInfo",
@@ -862,9 +972,9 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "getPerformInfo",
@@ -915,6 +1025,31 @@ export const contractABI : AbiItem[] = [
             "internalType": "uint256",
             "name": "performTime",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performYear",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMonth",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performDay",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performHour",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "performMinute",
+            "type": "uint16"
           }
         ],
         "internalType": "struct TicketDTO.PerformInfo",
@@ -971,9 +1106,9 @@ export const contractABI : AbiItem[] = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "performId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "getOwnersByPerform",
@@ -996,4 +1131,4 @@ export const contractABI : AbiItem[] = [
     "type": "function",
     "payable": true
   }
-];
+]
