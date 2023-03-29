@@ -26,7 +26,7 @@ function PerformHome() {
     performDataHandler();
   }, []);
   return (
-    <div className="mt-20">
+    <div className="mt-12">
       <div className="overflow-y-auto overflow-x-hidden">
         <div className="mb-5">
           <PerformBanner data={openSoon} />
@@ -58,7 +58,7 @@ function PerformHome() {
             <PerformSlider data={performSoon} />
           </div>
         </div>
-        <div>
+        <div className="mb-20">
           <div className="mb-1 flex justify-between">
             <p className="ml-1 flex">
               <svg

@@ -34,8 +34,6 @@ function PerformItem() {
   //예매버튼 확인용
   let todayTime = new Date();
 
-
-
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
     try {
@@ -73,7 +71,7 @@ function PerformItem() {
 
   return (
     <div className="flex flex-col content-center h-screen mt-16">
-      <BackNav/>
+      <BackNav />
       <div className="overflow-scroll">
         {performData && (
           <div>
