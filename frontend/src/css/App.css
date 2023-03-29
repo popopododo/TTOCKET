@@ -17,3 +17,24 @@
 .HeaderNav{
   border-bottom-width: 2px;
 }
+
+.waviy {
+  position: relative;
+}
+.waviy span {
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  animation: waviy 2s infinite;
+  animation-delay: calc(.2s * var(--i));
+  
+}
+@keyframes waviy {
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-10px);
+    color : pink;
+  }
+}
