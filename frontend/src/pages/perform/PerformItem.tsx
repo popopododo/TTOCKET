@@ -3,8 +3,9 @@ import axiosApi from "../../services/axiosApi";
 import formatDate from "../../components/date/formatDate";
 import checkEndDate from "../../components/date/checkEndDate";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import BackNav from "../../components/BackNav";
 
 interface performDataType {
   desc: string;
@@ -22,7 +23,6 @@ interface performDataType {
 
 function PerformItem() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   //userID 나중에는 리덕스로 가져올 예정
   const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
@@ -34,10 +34,7 @@ function PerformItem() {
   //예매버튼 확인용
   let todayTime = new Date();
 
-  //뒤로가기 버튼
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+
 
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
@@ -75,6 +72,7 @@ function PerformItem() {
   }, []);
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col content-center mt-16">
       <div className="flex items-center h-12 fixed bg-white top-16">
         <svg
@@ -95,6 +93,11 @@ function PerformItem() {
         <p onClick={handleGoBack}>돌아가기</p>
       </div>
       <div className="overflow-y-auto mt-12">
+=======
+    <div className="flex flex-col content-center h-screen mt-16">
+      <BackNav/>
+      <div className="overflow-scroll">
+>>>>>>> 56cc48c81d9c070bfabd4ee8e03bd2c918d1b57a
         {performData && (
           <div>
             <img
