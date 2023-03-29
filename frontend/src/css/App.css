@@ -9,3 +9,7 @@
   .NickName{
     font-family: "title-font";
   }
+
+.BottomNav{
+  border-top-width: 1px;
+}
