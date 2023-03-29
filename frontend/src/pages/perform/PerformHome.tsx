@@ -4,16 +4,19 @@ import PerformSlider from "./PerformSlider";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import BottomNav from "../../components/BottomNav";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 function PerformHome() {
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
+
   const [likePerform, setLikePerform] = useState<[]>([]);
   const [performSoon, setPerformSoon] = useState<[]>([]);
   const [openSoon, setOpenSoon] = useState<[]>([]);
 
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get(`performance/home/${userId}`);
+      const res = await axiosApi.get(`performance/home/${id}`);
       setLikePerform(res.data.body.like_performance);
       setPerformSoon(res.data.body.perform_soon);
       setOpenSoon(res.data.body.open_soon);
@@ -24,6 +27,7 @@ function PerformHome() {
 
   useEffect(() => {
     performDataHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="">

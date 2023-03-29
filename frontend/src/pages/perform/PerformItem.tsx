@@ -6,6 +6,8 @@ import checkEndDate from "../../components/date/checkEndDate";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BackNav from "../../components/BackNav";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 interface performDataType {
   desc: string;
@@ -25,7 +27,7 @@ function PerformItem() {
   const location = useLocation();
 
   //userID 나중에는 리덕스로 가져올 예정
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   // 정보 받은거 내용
   const [isLike, setIsLike] = useState<boolean>(false);
@@ -37,12 +39,9 @@ function PerformItem() {
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get(
-        `performance/${userId}/${location.state}`,
-        {
-          headers: {},
-        }
-      );
+      const res = await axiosApi.get(`performance/${id}/${location.state}`, {
+        headers: {},
+      });
       console.log(res);
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
@@ -55,7 +54,7 @@ function PerformItem() {
   const isLikeHandler = async () => {
     try {
       const res = await axiosApi.put(
-        `performance/like/${userId}/${location.state}`
+        `performance/like/${id}/${location.state}`
       );
       setIsLike(res.data.body);
       console.log(res);

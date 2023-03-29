@@ -15,7 +15,6 @@ function SponsorPerformForm() {
   const { tokenContract } = useWeb3();
   //정보
   let todayDate = formatDate(new Date()) + " 12:00:00";
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
   const [images, setImages] = useState<File>();
 
   //폼 내용
@@ -65,7 +64,7 @@ function SponsorPerformForm() {
           try {
             const res = await axiosApi.post("performance/create", {
               title: title.value,
-              user_id: userId,
+              user_id: id,
               start_time: start_time.value,
               end_time: end_time.value,
               location: location.value,
