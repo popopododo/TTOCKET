@@ -533,8 +533,9 @@ export const contractABI : AbiItem[] = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [
@@ -580,6 +581,94 @@ export const contractABI : AbiItem[] = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "content",
+        "type": "string"
+      }
+    ],
+    "name": "insertTicketDiary",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint16",
+        "name": "performId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getTicketDetails",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string[]",
+            "name": "behinds",
+            "type": "string[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "subtitle",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "content",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct TicketDTO.Diary",
+            "name": "diary",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct TicketDTO.TicketDetailReturn",
+        "name": "",
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
