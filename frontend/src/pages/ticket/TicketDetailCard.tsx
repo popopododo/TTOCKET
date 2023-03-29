@@ -1,9 +1,23 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom'
+import { RootState } from '../../app/store';
+import useWeb3 from '../../services/web3/useWeb3';
 
 function TicketDetailCard() {
   const [onModal, setOnModal] = useState<boolean>(false);
+  const { tokenContract } = useWeb3();
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
   const location = useLocation();
+  async function cancleClickHandler(){
+    if (location.state) {
+        console.log(location.state.tokenId, location.state.performId)
+        const result = await tokenContract?.methods.cancleMyTicket(location.state.tokenId, location.state.performId).send({from : id, gas : 1000000});
+        if (result !== undefined) {
+            console.log(result);
+        }
+    }
+  }
   function modalOpen() {
     setOnModal(!onModal);
   }
@@ -37,7 +51,7 @@ function TicketDetailCard() {
 
                         <p className='mb-4'>정말로 예매를 취소하시겠습니까?</p>
                         <div className='flex items-center justify-center'>
-                            <button className='w-20 h-8 mx-4 bg-gray-200 rounded-full'>네</button>
+                            <button onClick={cancleClickHandler} className='w-20 h-8 mx-4 bg-gray-200 rounded-full'>네</button>
                             <button onClick={modalOpen} className='w-20 h-8 mx-4 bg-gray-200 rounded-full'>아니오</button>
                         </div>
                     </div>
