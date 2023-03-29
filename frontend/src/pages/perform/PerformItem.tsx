@@ -70,21 +70,21 @@ function PerformItem() {
   }, []);
 
   return (
-    <div className="flex flex-col content-center h-screen mt-16">
+    <div className="flex flex-col content-center">
       <BackNav />
-      <div className="overflow-scroll">
+      <div className="overflow-scroll mb-20">
         {performData && (
           <div>
             <img
-              // src={`https://ipfs.io/ipfs/${performData.poster}`}
-              src={performData.poster}
+              src={`https://ipfs.io/ipfs/${performData.poster}`}
+              // src={performData.poster}
               alt="backposter"
               className="relative w-full h-96 blur-md"
             ></img>
             <div className="flex justify-center w-full">
               <img
-                // src={`https://ipfs.io/ipfs/${performData.poster}`}
-                src={performData.poster}
+                src={`https://ipfs.io/ipfs/${performData.poster}`}
+                // src={performData.poster}
                 alt="poster"
                 className="absolute object-center h-80 w-72 top-40"
               ></img>

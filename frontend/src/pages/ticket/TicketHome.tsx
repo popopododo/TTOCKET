@@ -12,7 +12,9 @@ function TicketHome() {
   const [address, setAddress] = useState();
   const { tokenContract } = useWeb3();
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
-  const nickname =useSelector((state: RootState) => state.persistedReducer.user.nickname);
+  const nickname = useSelector(
+    (state: RootState) => state.persistedReducer.user.nickname
+  );
   const [ticketList, setTicketList] = useState<TicketData[]>();
   const [ticketSize, setTicketSize] = useState<number>();
 
@@ -32,7 +34,9 @@ function TicketHome() {
   }, [id, getRetrieve]);
   return (
     <div className="">
-      <p className="pt-32 mb-8 text-xl font-bold text-center">{nickname} 님의 티켓</p>
+      <p className="pt-32 mb-8 text-xl font-bold text-center">
+        {nickname} 님의 티켓
+      </p>
 
       {ticketList !== undefined &&
         ticketSize !== undefined &&

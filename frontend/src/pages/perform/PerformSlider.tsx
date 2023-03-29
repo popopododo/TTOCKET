@@ -40,8 +40,8 @@ function PerformSlider({ data }: { data: soonDataType[] }) {
             <Link to="detail" state={ob.performance_id} key={ob.performance_id}>
               <div className={style.sidelistt}>
                 <img
-                  // src={`https://ipfs.io/ipfs/${ob.poster}`}
-                  src={ob.poster}
+                  src={`https://ipfs.io/ipfs/${ob.poster}`}
+                  // src={ob.poster}
                   alt="사진"
                   className="h-36 mt-1"
                 />
