@@ -76,12 +76,14 @@ function PerformItem() {
         {performData && (
           <div>
             <img
+              // src={`https://ipfs.io/ipfs/${performData.poster}`}
               src={performData.poster}
               alt="backposter"
               className="relative w-full h-96 blur-md"
             ></img>
             <div className="flex justify-center w-full">
               <img
+                // src={`https://ipfs.io/ipfs/${performData.poster}`}
                 src={performData.poster}
                 alt="poster"
                 className="absolute object-center h-80 w-72 top-40"

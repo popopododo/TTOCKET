@@ -93,6 +93,7 @@ function PerformList() {
                 >
                   <div className="mr-5">
                     <img
+                      // src={`https://ipfs.io/ipfs/${dal.poster}`}
                       src={dal.poster}
                       className="object-cover h-32 w-28 mx-3 rounded"
                       alt="poster"

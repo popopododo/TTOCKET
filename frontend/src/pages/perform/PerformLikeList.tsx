@@ -110,6 +110,7 @@ function PerformLikeList() {
                   className="flex mb-5"
                 >
                   <img
+                    // src={`https://ipfs.io/ipfs/${dal.poster}`}
                     src={dal.poster}
                     className="h-32 w-24 mx-3 rounded"
                     alt="poster"

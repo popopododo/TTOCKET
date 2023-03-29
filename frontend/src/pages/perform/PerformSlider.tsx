@@ -39,7 +39,12 @@ function PerformSlider({ data }: { data: soonDataType[] }) {
           data.map((ob) => (
             <Link to="detail" state={ob.performance_id} key={ob.performance_id}>
               <div className={style.sidelistt}>
-                <img src={ob.poster} alt="사진" className="h-36 mt-1" />
+                <img
+                  // src={`https://ipfs.io/ipfs/${ob.poster}`}
+                  src={ob.poster}
+                  alt="사진"
+                  className="h-36 mt-1"
+                />
                 {/* <p className="text-sm">{ob.name}</p> */}
               </div>
             </Link>

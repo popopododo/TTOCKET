@@ -11,24 +11,24 @@ function SponsorBehinForm() {
   };
 
   //사진 파일
-  //   const fileRef = useRef<HTMLInputElement>(null);
-  //   const [imgSrcList, setImgSrcList] = useState<string[]>([]);
+  // const fileRef = useRef<HTMLInputElement>(null);
+  // const [imgSrcList, setImgSrcList] = useState<string[]>([]);
 
   //사진 변경
-  //   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const file = e.target.files?.[0];
+  // const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
 
-  //     const option = {
-  //       maxSizeMB: 2,
-  //       maxWidthOrHeight: 1920,
-  //     };
-
-  //     if (file) {
-  //       const compressedFile = await imageCompression(file, option);
-  //       const formData = new FormData();
-  //       formData.append("image", compressedFile);
-  //     }
+  //   const option = {
+  //     maxSizeMB: 2,
+  //     maxWidthOrHeight: 1920,
   //   };
+
+  //   if (file) {
+  //     const compressedFile = await imageCompression(file, option);
+  //     const formData = new FormData();
+  //     formData.append("image", compressedFile);
+  //   }
+  // };
 
   return (
     <div>
@@ -53,7 +53,10 @@ function SponsorBehinForm() {
         <p className="text-xl font-bold">비하인드</p>
         <p className="text-gray-400 text-base font-bold mr-7"></p>
       </div>
-      <div className="h-60 bg-gray-200 flex flex-col justify-center items-center"></div>
+      <div className="h-60 bg-gray-200 flex flex-col justify-center items-center">
+        <input type="file" accept="image"></input>
+        <button>파일 업로드 버튼</button>
+      </div>
     </div>
   );
 }

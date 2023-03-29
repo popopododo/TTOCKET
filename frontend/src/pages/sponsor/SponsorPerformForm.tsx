@@ -21,6 +21,7 @@ function SponsorPerformForm() {
   //폼 내용
   const title = useInput("");
   const end_time = useInput(todayDate);
+  const start_time = useInput(todayDate);
   const location = useInput("");
   const [price, setPrice] = useState(0);
   const [max_seats, setMax_seats] = useState<number>(8);
@@ -65,7 +66,7 @@ function SponsorPerformForm() {
             const res = await axiosApi.post("performance/create", {
               title: title.value,
               user_id: userId,
-              start_time: todayDate,
+              start_time: start_time.value,
               end_time: end_time.value,
               location: location.value,
               price: price,
@@ -184,6 +185,14 @@ function SponsorPerformForm() {
             <input
               type="text"
               {...end_time}
+              className="border-b-2 h-9 border-[#FB7185]"
+            />
+            <label className="text-base font-bold mb-2 mt-6">
+              예매 오픈 날짜 및 시간
+            </label>
+            <input
+              type="text"
+              {...start_time}
               className="border-b-2 h-9 border-[#FB7185]"
             />
             <label className="text-base font-bold mb-2 mt-6">공연 장소</label>
