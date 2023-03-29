@@ -11,6 +11,7 @@ function Box() {
       <Routes>
         <Route path="/" element={<BoxHome />} />
         <Route path="/detail" element={<BoxDetail/>}/>
+        <Route path="/diary/*" element={<BoxDetail/>}/>
       </Routes>
       <BottomNav />
     </div>

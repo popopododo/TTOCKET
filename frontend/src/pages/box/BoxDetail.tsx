@@ -55,7 +55,7 @@ function BoxDetail() {
               </div>
               }
               {diary === undefined && 
-                <div>
+                <Link to='/box/diary/write'>
                   <div className="flex justify-center">
                     <button>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 hover:text-ttokPink">
@@ -64,7 +64,7 @@ function BoxDetail() {
                     </button>
                   </div>
                   <p className="mt-4">나만의 일기를 써보세요</p>
-                </div>
+                </Link>
               }              
           </div>
         </div>
