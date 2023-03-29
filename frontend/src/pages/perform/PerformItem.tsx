@@ -34,8 +34,6 @@ function PerformItem() {
   //예매버튼 확인용
   let todayTime = new Date();
 
-
-
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
     try {
@@ -72,32 +70,9 @@ function PerformItem() {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col content-center mt-16">
-      <div className="flex items-center h-12 fixed bg-white top-16">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-7 h-7"
-          onClick={handleGoBack}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
-        <p onClick={handleGoBack}>돌아가기</p>
-      </div>
-      <div className="overflow-y-auto mt-12">
-=======
     <div className="flex flex-col content-center h-screen mt-16">
-      <BackNav/>
+      <BackNav />
       <div className="overflow-scroll">
->>>>>>> 56cc48c81d9c070bfabd4ee8e03bd2c918d1b57a
         {performData && (
           <div>
             <img

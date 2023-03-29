@@ -1,4 +1,6 @@
+// import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
+// import imageCompression from "browser-image-compression";
 
 function SponsorBehinForm() {
   const navigate = useNavigate();
@@ -7,6 +9,26 @@ function SponsorBehinForm() {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  //사진 파일
+  //   const fileRef = useRef<HTMLInputElement>(null);
+  //   const [imgSrcList, setImgSrcList] = useState<string[]>([]);
+
+  //사진 변경
+  //   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     const file = e.target.files?.[0];
+
+  //     const option = {
+  //       maxSizeMB: 2,
+  //       maxWidthOrHeight: 1920,
+  //     };
+
+  //     if (file) {
+  //       const compressedFile = await imageCompression(file, option);
+  //       const formData = new FormData();
+  //       formData.append("image", compressedFile);
+  //     }
+  //   };
 
   return (
     <div>
