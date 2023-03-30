@@ -1,20 +1,28 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { RootState } from '../../app/store';
+import axiosApi from '../../services/axiosApi';
 import useWeb3 from '../../services/web3/useWeb3';
 
 function TicketDetailCard() {
   const [onModal, setOnModal] = useState<boolean>(false);
+  const navigator = useNavigate();
   const { tokenContract } = useWeb3();
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
   const location = useLocation();
   async function cancleClickHandler(){
     if (location.state) {
-        console.log(location.state.tokenId, location.state.performId)
         const result = await tokenContract?.methods.cancleMyTicket(location.state.tokenId, location.state.performId).send({from : id, gas : 1000000});
         if (result !== undefined) {
-            console.log(result);
+        
+            const putResult = await axiosApi.put("/performance/"+location.state.performId+ "/" + location.state.seatNum + "/5");
+            if (putResult !== undefined) {
+                if(putResult.data.status_code === 200){
+                    navigator("/home");
+                }
+            }
+            
         }
     }
   }
