@@ -36,7 +36,7 @@ function ReserveProgress(){
                 //취소된 티켓
                 if(location.state.status && location.state.status === "PURCHASED_CANCEL"){
                     const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, location.state.seatNumber, nickname).send({from : id,
-                        gas : 1000000});
+                        gas : 1000000, value: location.state.price});
                         console.log(result);
                     if(result !== undefined){
                         confirmReservation();
@@ -58,7 +58,8 @@ function ReserveProgress(){
                 alert('결제 실패!!');
                 navigate(`/reserve/fail`, {state:{
                     performId : location.state.performId,
-                    seatNumber : location.state.seatNumber
+                    seatNumber : location.state.seatNumber,
+                    status: location.state.status
                 }});
             }
         },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
@@ -87,7 +88,7 @@ function ReserveProgress(){
             window.removeEventListener('beforeunload', handleUnload);
           };
 
-    }, [id,,location, navigate, createTicket]);
+    }, [id,location, navigate, createTicket]);
 
     return (
         <div className="flex items-center justify-center w-screen h-screen">
