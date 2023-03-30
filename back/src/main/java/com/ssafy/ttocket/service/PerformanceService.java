@@ -196,6 +196,16 @@ public class PerformanceService {
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
         }
+        
+        //==수정중 (동작하는지 확인해보고, 취소될 경우에만 해당하도록 조건 추가)==//
+        String canceledSeatslist = "canceledSeatsList";
+        if (listOperations.size(canceledSeatslist) == 0) {
+            log.debug("canceledSeatslist에 취소된 (공연,좌석) 등록");
+            listOperations.rightPush(canceledSeatslist, new SeatId(performanceId, seatId));
+        }
+        //==수정중==//
+
+
         else if (code == 7) {
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
             result.put("isSuccess", true);
