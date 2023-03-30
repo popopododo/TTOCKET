@@ -44,18 +44,11 @@ function ReserveSeat() {
   // 공연 좌석 정보 가져오기
   useEffect(() => {
     setPerformId(location.state);
-
+    console.log(`location.state >> ${location.state}`);
+    
     //공연 아이디
     getSeatInfo(location.state);
-  }, [location.state]);
 
-  // 공연 좌석 정보 가져오기
-  useEffect(() => {
-    console.log(location.state);
-    setPerformId(location.state);
-
-    //공연 아이디
-    getSeatInfo(location.state);
   }, [location.state]);
 
   //모달창 노출 여부 state
@@ -76,6 +69,7 @@ function ReserveSeat() {
   const handleReserveModalClose = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div>
       <BackNav/>
