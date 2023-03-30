@@ -77,7 +77,7 @@ function ReserveSeat() {
     setIsModalOpen(false);
   };
   return (
-    <div className="mt-16">
+    <div>
       <BackNav/>
       <div className="m-2">
         <p className="text-xl font-bold">

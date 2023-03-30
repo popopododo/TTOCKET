@@ -43,7 +43,7 @@ function PerformSlider({ data }: { data: soonDataType[] }) {
                   src={`https://ipfs.io/ipfs/${ob.poster}`}
                   // src={ob.poster}
                   alt="사진"
-                  className="h-36 mt-1"
+                  className="h-36 mt-1 rounded"
                 />
                 {/* <p className="text-sm">{ob.name}</p> */}
               </div>

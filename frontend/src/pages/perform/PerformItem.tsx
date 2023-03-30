@@ -95,7 +95,7 @@ function PerformItem() {
           <hr className="my-4 bg-gray-400"></hr>
           <p className="flex justify-between ">
             <span className="mr-2">
-              {performData?.end_time.slice(0, 10)} |{" "}
+              {performData?.end_time.slice(0, 10)} <span className="text-gray-300">|</span>{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
 
@@ -115,7 +115,7 @@ function PerformItem() {
               {performData?.location}
             </span>
           </p>
-          <p className="mt-2 mb-8 text-lg font-bold">공연 상세</p>
+          <p className="mt-8 mb-2 text-lg font-bold">공연 상세</p>
           <p>{performData?.desc}</p>
         </div>
       </div>

@@ -59,7 +59,7 @@ function PerformList() {
 
   return (
     <div>
-      <div className="fixed h-16 w-full top-0 flex bg-white items-center justify-between mt-12">
+      <div className="fixed h-12 w-full top-0 flex bg-white items-center justify-between mt-12">
         <p>
           <svg
             xmlns="http://www.w3.org/2000/svg"

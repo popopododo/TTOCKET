@@ -8,7 +8,7 @@ function BackNav() {
   };
 
   return (
-    <div className="flex items-center h-14">
+    <div className="flex items-center h-12">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
