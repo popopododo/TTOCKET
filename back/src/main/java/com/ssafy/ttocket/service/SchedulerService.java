@@ -25,25 +25,26 @@ public class SchedulerService {
     private final RedisTemplate redisTemplate;
     private final SeatRepository seatRepository;
 
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(fixedRate = 30000)
     @Transactional
     public void changeSeatsStatus() {
-        log.debug("매 3분마다 스케줄러 실행");
+        log.debug("매 30초마다 스케줄러 실행");
         ListOperations listOperations = redisTemplate.opsForList();
 
-        //==수정중==//
-        String canceledSeatsList = "canceledSeatsList";
-        Long size = listOperations.size(canceledSeatsList);
+        //==취소 표를 레디스 canceledList에 등록, 스케줄러 실행 시에 MySQL 정보 업데이트==//
+        String canceledList = "canceledSeatsList";
+        Long size = listOperations.size(canceledList);
         for (int i = 0; i < size; i++) {
-            List<Object> canceledSeats = redisTemplate.opsForList().range(canceledSeatsList, 0, -1);
-//            for (Object canceledSeat : canceledSeats) {
-//
-//            }
-//            int performanceId = targetValue.getPerformanceId();
-//            int seatId = targetValue.getSeatNo();
-//            Seat byPerformanceIdAndSeatId = seatRepository.findByPerformanceIdAndSeatId(performanceId, seatId);
-//            byPerformanceIdAndSeatId.setStatus(SeatStatus.EMPTY);
+            List<String> canceledSeats = redisTemplate.opsForList().range(canceledList, 0, -1);
+            for (String canceledSeat : canceledSeats) {
+                int performanceId = Integer.parseInt(canceledSeat.substring(0, 1));
+                int seat_no = Integer.parseInt(canceledSeat.substring(canceledSeat.indexOf(":") + ":".length()));
+                Seat byPerformanceIdAndSeatId = seatRepository.findByPerformanceIdAndSeatId(performanceId, new SeatId(performanceId, seat_no));
+                byPerformanceIdAndSeatId.setStatus(SeatStatus.EMPTY);
+            }
         }
+        redisTemplate.delete(canceledList);
+
         //==수정중==//
 
 //        // 람다식 적용 방법 찾아서 적용하기

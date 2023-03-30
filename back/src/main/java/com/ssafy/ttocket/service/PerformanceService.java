@@ -204,7 +204,13 @@ public class PerformanceService {
             responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
             responseDto.setStatusCode(200);
 
-            // canceledSeatsList에 기록
+//            // canceledSeatsList에 기록
+//            Map<String, Map<String, List>> hashOfhash = new HashMap<>();
+//            String cancelKey = "canceledSeatList"+"_"+performanceId;
+//            Map<String, List> hash = new HashMap<>();
+//            hash.get(cancelKey).add(1);
+//            hashOfhash.put("canceledSeatsList", hash);
+
             listOperations.rightPush("canceledSeatsList", performanceId+":"+seatId);
             log.debug("code==7, canceledSeatslist에 취소된 '공연::좌석' 등록");
 
