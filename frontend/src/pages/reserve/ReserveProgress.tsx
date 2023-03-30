@@ -31,14 +31,36 @@ function ReserveProgress(){
                     seatNumber : location.state.seatNumber
                 }});
             }
-            const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
-            gas : 1000000});
-            console.log(result);
-
-            if(result !== undefined){
-                confirmReservation();
-                navigate(`/reserve/finish`);
-            }    
+            try {
+                //분기
+                //취소된 티켓
+                if(location.state.status && location.state.status === "PURCHASED_CANCEL"){
+                    const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+                        gas : 1000000});
+                        console.log(result);
+                    if(result !== undefined){
+                        confirmReservation();
+                        navigate(`/reserve/finish`);
+                    } 
+                }
+                else{
+                    // 나머지 티켓 구매
+                    const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+                        gas : 1000000});
+                        console.log(result);
+                    if(result !== undefined){
+                        confirmReservation();
+                        navigate(`/reserve/finish`);
+                    } 
+                }
+            } catch (error) {
+                //민팅 오류
+                alert('결제 실패!!');
+                navigate(`/reserve/fail`, {state:{
+                    performId : location.state.performId,
+                    seatNumber : location.state.seatNumber
+                }});
+            }
         },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
     )
     useEffect(()=>{
