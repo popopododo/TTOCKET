@@ -80,7 +80,7 @@ function BoxHome() {
                   className="flex items-center my-4 shadow-md w-80 h-28 shadow-gray-400"
                 >
                   <div className="h-28 w-4 bg-[#FB7185] mr-2"></div>
-                  <img src={data.performPoster} alt="poster" className="w-16 h-24" />
+                  <img src={"https://ipfs.io/ipfs/" + data.performPoster} alt="poster" className="w-16 h-24" />
                   <div className="mb-1 ml-2">
                     <p className="mb-2 text-lg font-bold">{data.title}</p>
                     <p className="text-sm font-bold text-slate-500">

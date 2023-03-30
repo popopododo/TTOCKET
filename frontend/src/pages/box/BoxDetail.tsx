@@ -33,7 +33,7 @@ function BoxDetail() {
                   </p>
               </div>
               <div className="absolute h-full left-8 TicketRight">
-                <img src={location.state.performPoster} alt="공연 이미지" className='absolute m-2 rounded-lg TicketImg' />
+                <img src={"https://ipfs.io/ipfs/" + location.state.performPoster} alt="공연 이미지" className='absolute m-2 rounded-lg TicketImg' />
                 <div className='absolute bottom-0 w-16 bg-white border-t-2 border-r-2 rounded-tr-lg h-28'>
                     <p className='text-sm text-center'>2022</p>
                     <p className='text-3xl font-bold text-center'>04</p>

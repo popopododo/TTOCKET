@@ -2,6 +2,12 @@
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
 }
+
+.TicketSize{
+    height : 450px;
+    width: 330px;
+}
+
 .Ticket1 {
     height : 450px;
     width: 330px;
