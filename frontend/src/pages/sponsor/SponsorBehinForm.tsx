@@ -2,9 +2,15 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import addP from "../../assets/addPicture.png";
 import ipfsCreate from "../../services/ipfsCreate";
+import useWeb3 from "../../services/web3/useWeb3";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 function SponsorBehinForm() {
   const navigate = useNavigate();
+  const { tokenContract } = useWeb3();
+  //id
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   //뒤로가기
   const handleGoBack = () => {
@@ -65,7 +71,20 @@ function SponsorBehinForm() {
     try {
       const res = await ipfsCreate.add(imgUp!);
       console.log(res);
-      const posterHash = res.path;
+      if (res !== undefined) {
+        const posterHash = res.path;
+        try {
+          const solres = await tokenContract?.methods
+            .insertPerformBehind(2, posterHash)
+            .send({
+              from: id,
+              gas: 8000000,
+            });
+          console.log(solres);
+        } catch (err) {
+          console.log(err);
+        }
+      }
     } catch (err) {
       console.log(err);
     }
