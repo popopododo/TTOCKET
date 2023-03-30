@@ -10,7 +10,9 @@ import "./TicketDTO.sol";
 
 contract Ticket is ERC721Enumerable, TicketDTO {
     using Counters for Counters.Counter;
-    constructor() ERC721("TTOKET", "TKT") {}
+    constructor() ERC721("TTOKET", "TKT") {
+
+    }
 
 
     // NFT(티켓) 생성 시 마다 1씩 증가하는 ID
@@ -35,21 +37,40 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     mapping(uint256 => uint256) private _refundAmountByCanceledTicket;
     // performId => 공연별 환불 정보
     mapping(uint256 => PerformRefundInfo) private _refundInfos;
-    
+    // tokenId => diary
+    mapping(uint256 => Diary) private _diarys;
+    // performId  => tokenId[]
+    mapping(uint16 => uint256[]) private _tokenIdByperformId;
+
+    function getTokenIds(uint16 _performId) public view returns (uint256[] memory){
+        return _tokenIdByperformId[_performId];
+    }
+    function resetRefundAmount(uint256 _tokenId, uint256 price) public returns (uint256){
+        _refundAmountByCanceledTicket[_tokenId] = price;
+        return _tokenId;
+    }
+    function ChangeTicketInfoStatusAndName(uint256 _tokenId, string memory _name) public returns (uint256){
+        _ticketInfos[_tokenId].status = 3;
+        _ticketInfos[_tokenId].userName = _name;
+        return _tokenId;
+    }
+    function ChangeTicketStatusCancel(uint256 _tokenId) public returns (uint256){
+        _ticketInfos[_tokenId].status = 2;
+        return _tokenId;
+    }
     function createPerform(uint16 _performId, string memory _title,
                         string memory _description, uint16 _maxSeat, string memory _location,
-                        uint256 _price, uint256 _day, uint256 _hour, uint256 _minute, string memory _poster) public returns (uint256){
+                        uint256 _price, uint256 _minute, string memory _poster,
+                        uint16 _performYear, uint16 _performMonth, uint16 _performDay, uint16 _performHour, uint16 _performMinute) public returns (uint256){
         
-        uint256 _performTime = block.timestamp + (_day * 86400) + (_hour * 3600) + (_minute * 60);
+        uint256 _performTime = block.timestamp + (_minute * 60);
         uint256 _refundTime14 = _performTime - (86400 * 14); // 14일전 시간
         uint256 _refundTime7 = _performTime - (86400 * 7); // 7일전 시간
         uint256 _refundTime3 = _performTime - (86400 * 3); // 3일전 시간
         uint256 _refundTime1 = _performTime - (86400); // 1일전 시간
         
-        // PerformInfo memory p = PerformInfo(_performId,_organizer,_title,_description,_maxSeat,_location,_price,_poster,_performTime);
         PerformRefundInfo memory pr = PerformRefundInfo(_refundTime14,_refundTime7,_refundTime3,_refundTime1);
-        // _setPerformInfo(_performId,p);
-        _performInfos[_performId] = PerformInfo(_performId,msg.sender,_title,_description,_maxSeat,_location,_price,_poster,_performTime);
+        _performInfos[_performId] = PerformInfo(_performId,msg.sender,_title,_description,_maxSeat,_location,_price * (10**13),_poster,_performTime+10,_performYear,_performMonth,_performDay,_performHour,_performMinute);
         _setPerformRefundInfo(_performId, pr);
         return _performId;
     }
@@ -60,16 +81,16 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     * @ param 
     * @ return
     */
-    function createTicket(uint256 performId, string memory userName, 
-                        uint256 seatNum) public payable returns (uint256) {
+    function createTicket(uint16 performId, string memory userName, 
+                        uint16 seatNum) public payable returns (uint256) {
         
         PerformInfo memory p = _performInfos[performId];
         
-        // require(p.price == msg.value,"wrong ticket price");
+        require(p.price == msg.value,"wrong ticket price");
         
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current(); 
-        TicketInfo memory t = TicketInfo(newTokenId,p.poster,performId,p.title,p.location,userName,seatNum,1);
+        TicketInfo memory t = TicketInfo(newTokenId,p.poster,performId,p.title,p.location,userName,seatNum,1,p.performYear,p.performMonth,p.performDay,p.performHour,p.performMinute);
         _mint(msg.sender, newTokenId); 
         _setMinter(newTokenId, msg.sender);
         _setTokenURI(newTokenId, p.poster);
@@ -77,34 +98,22 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         _setTicketsByAccount(newTokenId, msg.sender);
         _setOwnersByPerform(performId, msg.sender);
 
+        _tokenIdByperformId[performId].push(newTokenId);
         return newTokenId;
     }
-    function cancleMyTicket(uint256 tokenId, uint256 performId) public returns (uint256){
+    function cancleMyTicket(uint256 tokenId, uint16 performId) public payable returns (uint256){
         require(_minters[tokenId] == msg.sender, "you're not owner of this ticket");
         require(_ticketInfos[tokenId].status != 2, "already canceled ticket");
         uint256 nowTime = block.timestamp;
         
         PerformInfo memory p = getPerformInfo(performId);
-        PerformRefundInfo memory pr = getPerformRefundInfo(performId);
 
         require(nowTime <= p.performTime, "already finished perform");
-
-        uint256 refundAmount = 0;
-        if(nowTime >= pr.refundTime1){ // 30퍼 환불
-            refundAmount = p.price * 30 / 100;
-        }
-        else if(nowTime >= pr.refundTime3){ // 50퍼 환불
-            refundAmount = p.price * 50 / 100;     
-        }
-        else if(nowTime >= pr.refundTime7){ // 70퍼 환불
-            refundAmount = p.price * 70 / 100;     
-        }
-        else if(nowTime >= pr.refundTime14){ // 80퍼 환불
-            refundAmount = p.price * 80 / 100; 
-        }
+        
+        uint256 refundAmount = getNowRefundAmount(performId);
+        
         payable(msg.sender).transfer(refundAmount); 
         // 환불이 성공해야 취소관련 정보 바꿈
-
         _ticketInfos[tokenId].status = 2; // 티켓상태 취소로 바꿈
         deleteOneOwnersByPerform(msg.sender,performId);
         deleteOneTicketByAccount(msg.sender,tokenId);
@@ -112,29 +121,82 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         _refundAmountByCanceledTicket[tokenId] = p.price - refundAmount;
         return refundAmount;
     }
-    function buyCanceledTicket(uint256 tokenId,uint256 performId,string memory userName) public payable returns (uint256){
+    function buyCanceledTicket(uint16 performId, uint16 seatNum, string memory userName) public payable returns (uint256){
         PerformInfo memory p = _performInfos[performId];
+        require(p.price == msg.value, "wrong ticket price");
+        uint256 tokenId = 0;
+        uint256[] storage tokenIds = _tokenIdByperformId[performId];
+        for(uint16 i=0;i<tokenIds.length;i++){
+            if(getTicketInfo(tokenIds[i]).seatNum == seatNum){
+                tokenId = tokenIds[i];
+                tokenIds[i] = tokenIds[tokenIds.length - 1];
+                tokenIds.pop();
+                break;
+            }
+        }
         TicketInfo memory t = _ticketInfos[tokenId];
         require(t.status == 2, "not canceled ticket");
-        require(p.price == msg.value, "wrong ticket price");
+        _burn(tokenId);
+        _ticketInfos[tokenId] = TicketInfo(0,"",0,"","","",0,0,0,0,0,0,0);
+
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
+        
+        TicketInfo memory newt = TicketInfo(newTokenId,p.poster,performId,p.title,p.location,userName,seatNum,1,p.performYear,p.performMonth,p.performDay,p.performHour,p.performMinute);
+        _mint(msg.sender, newTokenId); 
+        _setMinter(newTokenId, msg.sender);
+        _setTokenURI(newTokenId, p.poster);
+        _setTicketInfo(newTokenId, newt);
+        _setTicketsByAccount(newTokenId, msg.sender);
+        _setOwnersByPerform(performId, msg.sender);
+        _tokenIdByperformId[performId].push(newTokenId);
 
         address beforeOwner = _minters[tokenId];
         payable(beforeOwner).transfer(_refundAmountByCanceledTicket[tokenId]); //다른애가 사주니까 수수료도 돌려주기
         _refundAmountByCanceledTicket[tokenId] = 0; // 없애기
-        safeTransferFrom(beforeOwner, msg.sender, tokenId); // NFT티켓 소유권 바꾸기
-        _setMinter(tokenId, msg.sender);   
-        _setOwnersByPerform(p.id,msg.sender);
-        _setTicketsByAccount(tokenId, msg.sender);
-        t.status = 3;
-        t.userName = userName;
+
+
+        // transferFrom(address(this), msg.sender, tokenId); // NFT티켓 소유권 바꾸기
+        // _setMinter(tokenId, msg.sender);   
+        // _setOwnersByPerform(p.id,msg.sender);
+        // _setTicketsByAccount(tokenId, msg.sender);
+        _ticketInfos[tokenId].status = 3;
+        _ticketInfos[tokenId].userName = userName;
         return tokenId;
     }
 
-    function insertPerformBehind(uint256 performId, string memory behindAddress) public returns(uint256){
+    function getNowRefundAmount(uint16 performId) public view returns(uint256){
+        PerformInfo memory p = getPerformInfo(performId);
+        PerformRefundInfo memory pr = getPerformRefundInfo(performId);
+        uint256 nowTime = block.timestamp;
+        if(nowTime >= pr.refundTime1){ // 30퍼 환불
+            return p.price * 30 / 100;
+        }
+        else if(nowTime >= pr.refundTime3){ // 50퍼 환불
+            return p.price * 50 / 100;     
+        }
+        else if(nowTime >= pr.refundTime7){ // 70퍼 환불
+            return p.price * 70 / 100;     
+        }
+        else { // 80퍼 환불
+            return p.price * 80 / 100; 
+        }
+    }
+    function insertTicketDiary(uint256 tokenId, string memory title, string memory subtitle,string memory content) public returns(uint256){
+        _diarys[tokenId] = Diary(title,subtitle,content);
+        return tokenId;
+    }
+    function getTicketDetails(uint256 tokenId, uint16 performId) public view returns (TicketDetailReturn memory){
+        string[] memory behinds = getBehindList(performId);
+        Diary memory diary = _diarys[tokenId];
+        return TicketDetailReturn(behinds, diary);
+    }
+
+    function insertPerformBehind(uint16 performId, string memory behindAddress) public returns(uint256){
         _performBehinds[performId].push(behindAddress);
         return performId;
     }
-    function getBehindList(uint256 performId) public view returns(string[] memory){
+    function getBehindList(uint16 performId) public view returns(string[] memory){
         return _performBehinds[performId];
     }
     function getBeforeTicketList() public view returns(TicketInfo[] memory, uint8){
@@ -165,10 +227,10 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         }
         return (userTickets,idx);
     }
-    function isOwnerOfPerform(uint256 _performId) public view returns(bool){
+    function isOwnerOfPerform(uint16 _performId) public view returns(bool){
         uint256[] memory tickets = getTicketsByAccount(msg.sender);
         for(uint256 i=0; i<tickets.length ; i++){
-            uint256 performId = getTicketInfo(tickets[i]).performId;
+            uint16 performId = getTicketInfo(tickets[i]).performId;
             if(_performId == performId){
                 return true;
             }
@@ -199,7 +261,7 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setMinter(
             uint256 tokenId, 
             address minter
-        ) private {
+        ) public {
         _minters[tokenId] = minter;
     }
     function getMinter(uint256 tokenId) public view returns (address) {
@@ -208,13 +270,13 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setTicketsByAccount(
             uint256 tokenId, 
             address minter
-        ) private {
+        ) public {
         _ticketsByAccount[minter].push(tokenId);
     }
     function getTicketsByAccount(address minter) public view returns (uint256[] memory) {
         return _ticketsByAccount[minter];
     }
-    function deleteOneTicketByAccount(address owner, uint256 tokenId) private {
+    function deleteOneTicketByAccount(address owner, uint256 tokenId) public {
         uint256 len = _ticketsByAccount[owner].length;
         for(uint256 i = 0 ; i < len ; i++){
             if(_ticketsByAccount[owner][i] == tokenId){
@@ -230,11 +292,11 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         ) private {
         _performInfos[performId] = _performInfo;
     }
-    function getPerformInfo(uint256 performId) public view returns (PerformInfo memory) {
+    function getPerformInfo(uint16 performId) public view returns (PerformInfo memory) {
         return _performInfos[performId];
     }
     function _setPerformRefundInfo(
-            uint256 performId, 
+            uint16 performId, 
             PerformRefundInfo memory _performRefundInfo
         ) private {
         _refundInfos[performId] = _performRefundInfo;
@@ -246,13 +308,13 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setOwnersByPerform(
             uint256 performId, 
             address minter
-        ) private {
+        ) public {
         _ownersByPerform[performId].push(minter);
     }
-    function getOwnersByPerform(uint256 performId) public view returns (address[] memory) {
+    function getOwnersByPerform(uint16 performId) public view returns (address[] memory) {
         return _ownersByPerform[performId];
     }
-    function deleteOneOwnersByPerform(address target, uint256 performId) private {
+    function deleteOneOwnersByPerform(address target, uint16 performId) public {
         uint256 len = _ownersByPerform[performId].length;
         for(uint256 i = 0 ; i < len ; i++){ // 해당 공연 티켓소유자 배열에서 없애기
             if(_ownersByPerform[performId][i] == target) {
@@ -268,4 +330,5 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         require(address(this).balance >= amount, "Contract does not have enough ether.");
         payable(msg.sender).transfer(amount); // Send the ether to the msg.sender address
     }
+
 }
