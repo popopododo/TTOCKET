@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Set;
@@ -32,12 +33,16 @@ public class SchedulerService {
 
         //==수정중==//
         String canceledSeatsList = "canceledSeatsList";
-        for (int i = 0; i < listOperations.size(canceledSeatsList); i++) {
-            SeatId popedValue = (SeatId) listOperations.leftPop(canceledSeatsList);
-            int performanceId = popedValue.getPerformanceId();
-            int seatId = popedValue.getSeatNo();
-            Seat byPerformanceIdAndSeatId = seatRepository.findByPerformanceIdAndSeatId(performanceId, seatId);
-            byPerformanceIdAndSeatId.setStatus(SeatStatus.EMPTY);
+        Long size = listOperations.size(canceledSeatsList);
+        for (int i = 0; i < size; i++) {
+            List<Object> canceledSeats = redisTemplate.opsForList().range(canceledSeatsList, 0, -1);
+//            for (Object canceledSeat : canceledSeats) {
+//
+//            }
+//            int performanceId = targetValue.getPerformanceId();
+//            int seatId = targetValue.getSeatNo();
+//            Seat byPerformanceIdAndSeatId = seatRepository.findByPerformanceIdAndSeatId(performanceId, seatId);
+//            byPerformanceIdAndSeatId.setStatus(SeatStatus.EMPTY);
         }
         //==수정중==//
 

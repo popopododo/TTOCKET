@@ -196,21 +196,18 @@ public class PerformanceService {
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
         }
-        
-        //==수정중 (동작하는지 확인해보고, 취소될 경우에만 해당하도록 조건 추가)==//
-        String canceledSeatslist = "canceledSeatsList";
-        if (listOperations.size(canceledSeatslist) == 0) {
-            log.debug("canceledSeatslist에 취소된 (공연,좌석) 등록");
-            listOperations.rightPush(canceledSeatslist, new SeatId(performanceId, seatId));
-        }
-        //==수정중==//
 
-
-        else if (code == 7) {
+        // cf. if절 정리 필요 //
+        if (code == 7) {
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
             result.put("isSuccess", true);
             responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
             responseDto.setStatusCode(200);
+
+            // canceledSeatsList에 기록
+            listOperations.rightPush("canceledSeatsList", performanceId+":"+seatId);
+            log.debug("code==7, canceledSeatslist에 취소된 '공연::좌석' 등록");
+
             return responseDto;
         }
 
@@ -223,7 +220,7 @@ public class PerformanceService {
             return responseDto;
         }
         // code 3: PURCHASING (사용자가 자리 선택 시)
-        if(code == 3){ // {비어있음, 예매후 취소, 예매 중 취소}인 좌석 선택 -> 예매중으로 변경
+        if(code == 3){ // 예매 중으로 변경 <- {비어있음, 예매후 취소, 예매 중 취소}인 좌석 선택
             String status = (String) listOperations.index(key, seatId - 1);
             log.debug("changeReservationState - SeatStatus : {}", status);
 
@@ -234,6 +231,7 @@ public class PerformanceService {
                 result.put("beforeStatus","EMPTY");  // EMPTY & PURCHASING_CANCEL
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 PURCHASING으로 변경 완료");
                 responseDto.setStatusCode(200);
+
             }
             // {예매 후 취소}
             else if(status.equals(String.valueOf(SeatStatus.PURCHASED_CANCEL))){
@@ -257,7 +255,11 @@ public class PerformanceService {
             result.put("isSuccess", true);
             responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 CANCEL으로 변경 완료");
             responseDto.setStatusCode(200);
-            log.debug("canceldSeatList=", canceledSeatList);
+
+            // canceledSeatsList에 기록
+            listOperations.rightPush("canceledSeatsList", performanceId+":"+seatId);
+            log.debug("구매완료 후 취소, canceledSeatslist에 취소된 '공연::좌석' 등록");
+
             return responseDto;
         }
         responseDto.setMessage("code 확인해주세요");
