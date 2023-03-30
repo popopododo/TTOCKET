@@ -1,6 +1,6 @@
 import useInput from "../../services/useInput";
 import { useNavigate } from "react-router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState, useMemo } from "react";
 import ipfsCreate from "../../services/ipfsCreate";
 import addPicture from "../../assets/addPicture.png";
 import formatDate from "../../components/date/formatDate";
@@ -28,7 +28,8 @@ function SponsorPerformForm() {
   const textAreaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDesText(e.target.value);
   };
-
+  const [imgSrcList, setImgSrcList] = useState<any | null>();
+  const fileRef = useRef<HTMLInputElement>(null);
   //아이디 가져오기
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
   //유효성 검사
@@ -36,15 +37,48 @@ function SponsorPerformForm() {
   const isLocation = location.value.trim() !== "";
   const isDes = desText.trim() !== "";
   //사진 업로드
+  const fileInputHandler = () => {
+    fileRef.current?.click();
+  };
+
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetFile = (e.target.files as FileList)[0];
-
+    const imgFile = e.target.files;
     if (targetFile === undefined) {
       return;
     } else {
       setImages(targetFile);
+      if (imgFile && imgFile[0]) {
+        const url = URL.createObjectURL(imgFile[0]);
+        setImgSrcList({
+          file: imgFile[0],
+          thumbnail: url,
+          type: imgFile[0].type.slice(0, 5),
+          name: imgFile[0].name,
+        });
+      }
     }
   };
+  const showImg = useMemo(() => {
+    if (!imgSrcList && imgSrcList == null) {
+      return (
+        <img
+          src={addPicture}
+          alt="비어있는 사진"
+          className="w-24 h-24 mt-5 ml-5"
+          onClick={fileInputHandler}
+        />
+      );
+    }
+    return (
+      <img
+        src={imgSrcList.thumbnail}
+        alt={imgSrcList.type}
+        onClick={fileInputHandler}
+        className="h-32 mb-2"
+      />
+    );
+  }, [imgSrcList]);
 
   //공연 생성
   const submitPerformHandler = async (event: FormEvent) => {
@@ -155,16 +189,13 @@ function SponsorPerformForm() {
       </div>
       <div className="mt-16 overflow-y-auto mb-28 overflow-x-hidden">
         <div className="h-48 bg-gray-200 flex flex-col justify-center items-center">
-          <img
-            src={addPicture}
-            alt="addpicture"
-            className="w-24 h-24 mt-5 ml-10"
-          ></img>
+          {showImg}
           <input
             type="file"
             accept="image/*"
+            ref={fileRef}
             onChange={changeHandler}
-            className="ml-28"
+            className=" file:mr-4 border-white rounded-lg border-2 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#FB7185] file:text-white"
           />
         </div>
         <form
