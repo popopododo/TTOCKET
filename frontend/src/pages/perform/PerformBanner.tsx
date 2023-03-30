@@ -43,7 +43,7 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
               key={da.performance_id}
             >
               <img
-                src={da.poster}
+                src={`https://ipfs.io/ipfs/${da.poster}`}
                 className="object-cover w-full h-52 object-top relative"
                 alt="사진"
               />

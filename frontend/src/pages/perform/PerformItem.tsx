@@ -6,6 +6,8 @@ import checkEndDate from "../../components/date/checkEndDate";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BackNav from "../../components/BackNav";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 interface performDataType {
   desc: string;
@@ -25,7 +27,7 @@ function PerformItem() {
   const location = useLocation();
 
   //userID 나중에는 리덕스로 가져올 예정
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   // 정보 받은거 내용
   const [isLike, setIsLike] = useState<boolean>(false);
@@ -34,20 +36,16 @@ function PerformItem() {
   //예매버튼 확인용
   let todayTime = new Date();
 
-
-
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get(
-        `performance/${userId}/${location.state}`,
-        {
-          headers: {},
-        }
-      );
-      console.log(res);
+      const res = await axiosApi.get(`performance/${id}/${location.state}`, {
+        headers: {},
+      });
+      // console.log(res);
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -57,7 +55,7 @@ function PerformItem() {
   const isLikeHandler = async () => {
     try {
       const res = await axiosApi.put(
-        `performance/like/${userId}/${location.state}`
+        `performance/like/${id}/${location.state}`
       );
       setIsLike(res.data.body);
       console.log(res);
@@ -72,19 +70,21 @@ function PerformItem() {
   }, []);
 
   return (
-    <div className="flex flex-col content-center h-screen mt-16">
-      <BackNav/>
-      <div className="overflow-scroll">
+    <div className="flex flex-col content-center">
+      <BackNav />
+      <div className="overflow-scroll mb-20">
         {performData && (
           <div>
             <img
-              src={performData.poster}
+              src={`https://ipfs.io/ipfs/${performData.poster}`}
+              // src={performData.poster}
               alt="backposter"
               className="relative w-full h-96 blur-md"
             ></img>
             <div className="flex justify-center w-full">
               <img
-                src={performData.poster}
+                src={`https://ipfs.io/ipfs/${performData.poster}`}
+                // src={performData.poster}
                 alt="poster"
                 className="absolute object-center h-80 w-72 top-40"
               ></img>
@@ -96,7 +96,8 @@ function PerformItem() {
           <hr className="my-4 bg-gray-400"></hr>
           <p className="flex justify-between ">
             <span className="mr-2">
-              {performData?.end_time.slice(0, 10)} |{" "}
+              {performData?.end_time.slice(0, 10)}{" "}
+              <span className="text-gray-300">|</span>{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
 
@@ -116,7 +117,7 @@ function PerformItem() {
               {performData?.location}
             </span>
           </p>
-          <p className="mt-2 mb-8 text-lg font-bold">공연 상세</p>
+          <p className="mt-8 mb-2 text-lg font-bold">공연 상세</p>
           <p>{performData?.desc}</p>
         </div>
       </div>

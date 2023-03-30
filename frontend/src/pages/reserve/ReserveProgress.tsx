@@ -8,7 +8,7 @@ import useWeb3 from '../../services/web3/useWeb3';
 function ReserveProgress(){
     const location = useLocation();
     const navigate = useNavigate();
-
+    console.log(location.state.performId)
     const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
     const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
     const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
@@ -31,14 +31,36 @@ function ReserveProgress(){
                     seatNumber : location.state.seatNumber
                 }});
             }
-            const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
-            gas : 1000000});
-            console.log(result);
-
-            if(result !== undefined){
-                confirmReservation();
-                navigate(`/reserve/finish`);
-            }    
+            try {
+                //분기
+                //취소된 티켓
+                if(location.state.status && location.state.status === "PURCHASED_CANCEL"){
+                    const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+                        gas : 1000000});
+                        console.log(result);
+                    if(result !== undefined){
+                        confirmReservation();
+                        navigate(`/reserve/finish`);
+                    } 
+                }
+                else{
+                    // 나머지 티켓 구매
+                    const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
+                        gas : 1000000, value: location.state.price});
+                        console.log(result);
+                    if(result !== undefined){
+                        confirmReservation();
+                        navigate(`/reserve/finish`);
+                    } 
+                }
+            } catch (error) {
+                //민팅 오류
+                alert('결제 실패!!');
+                navigate(`/reserve/fail`, {state:{
+                    performId : location.state.performId,
+                    seatNumber : location.state.seatNumber
+                }});
+            }
         },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
     )
     useEffect(()=>{

@@ -1,5 +1,5 @@
 interface Props{
-    modalOpen : (index:number) => void;
+    modalOpen : (index:number, seatStatus:String) => void;
     seats_state : String[];
     cols : number;
 }
@@ -16,7 +16,7 @@ function SeatList({ seats_state, modalOpen, cols }: Props){
                 className="w-10 h-10 m-1 bg-ttokPink rounded-sm"
                 key={index}
                 onClick={() => {
-                  modalOpen((cols * 8) + index+1);
+                  modalOpen((cols * 8) + index+1, seat);
                 }}
               ></div>
             );

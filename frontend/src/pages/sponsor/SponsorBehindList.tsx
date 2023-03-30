@@ -13,7 +13,7 @@ function SponsorBehindList() {
     <div>
       <HeaderNav />
       <div className="overflow-y-auto mb-20">
-        <div className="h-10 flex items-center justify-between mt-20">
+        <div className="h-10 flex items-center justify-between">
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"

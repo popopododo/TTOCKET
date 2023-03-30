@@ -5,12 +5,13 @@ import formatDate from "../../components/date/formatDate";
 import getDateDiff from "../../components/date/getDateDiff";
 import axiosApi from "../../services/axiosApi";
 import BottomNav from "../../components/BottomNav";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 interface postType {
   desc: string;
   end_time: string;
   etc: string;
-  id: number;
   location: string;
   max_seats: number;
   poster: string;
@@ -24,7 +25,7 @@ interface postType {
 function PerformLikeList() {
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   const [posts, setPosts] = useState<postType[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -35,7 +36,7 @@ function PerformLikeList() {
   const rollPage = useCallback(async () => {
     try {
       const res = await axiosApi.get(
-        `/performance/likelist/${userId}/${page.current}`
+        `/performance/likelist/${id}/${page.current}`
       );
       const data = res.data.body.user_like_list;
       setPosts((prevPosts) => [...prevPosts, ...data]);
@@ -48,22 +49,23 @@ function PerformLikeList() {
     } catch (err) {
       console.log(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handler = async () => {
-    try {
-      const res = await axiosApi.get(
-        `/performance/likelist/${userId}/${page.current}`
-      );
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handler = async () => {
+  //   try {
+  //     const res = await axiosApi.get(
+  //       `/performance/likelist/${id}/${page.current}`
+  //     );
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -71,14 +73,15 @@ function PerformLikeList() {
     }
   }, [rollPage, hasNextPage, inView]);
 
-  useEffect(() => {
-    handler();
-  }, []);
+  // useEffect(() => {
+  //   handler();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div>
       <div className="overflow-y-auto mb-20">
-        <div className="h-10 flex items-center justify-between mt-20">
+        <div className="fixed h-12 w-full top-0 flex bg-white items-center justify-between mt-12">
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +103,7 @@ function PerformLikeList() {
           <p className="w-7"></p>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-28 mb-10">
           {posts &&
             posts.map((dal) => (
               <div key={dal.performance_id}>
@@ -110,7 +113,8 @@ function PerformLikeList() {
                   className="flex mb-5"
                 >
                   <img
-                    src={dal.poster}
+                    src={`https://ipfs.io/ipfs/${dal.poster}`}
+                    // src={dal.poster}
                     className="h-32 w-24 mx-3 rounded"
                     alt="poster"
                   ></img>

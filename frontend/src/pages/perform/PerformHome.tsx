@@ -4,19 +4,23 @@ import PerformSlider from "./PerformSlider";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import BottomNav from "../../components/BottomNav";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 function PerformHome() {
-  const userId = "0xF01399cF8d61FE67053fa0b4DB99213810C7a844";
+  const id = useSelector((state: RootState) => state.persistedReducer.user.id);
+
   const [likePerform, setLikePerform] = useState<[]>([]);
   const [performSoon, setPerformSoon] = useState<[]>([]);
   const [openSoon, setOpenSoon] = useState<[]>([]);
 
   const performDataHandler = async () => {
     try {
-      const res = await axiosApi.get(`performance/home/${userId}`);
+      const res = await axiosApi.get(`performance/home/${id}`);
       setLikePerform(res.data.body.like_performance);
       setPerformSoon(res.data.body.perform_soon);
       setOpenSoon(res.data.body.open_soon);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -24,11 +28,12 @@ function PerformHome() {
 
   useEffect(() => {
     performDataHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="mt-20">
+    <div className="">
       <div className="overflow-y-auto overflow-x-hidden">
-        <div className="mb-5">
+        <div className="mb-8">
           <PerformBanner data={openSoon} />
         </div>
         <div className="h-36 mb-20">
@@ -58,7 +63,7 @@ function PerformHome() {
             <PerformSlider data={performSoon} />
           </div>
         </div>
-        <div>
+        <div className="mb-20">
           <div className="mb-1 flex justify-between">
             <p className="ml-1 flex">
               <svg
@@ -78,7 +83,7 @@ function PerformHome() {
               </Link>
             </p>
           </div>
-          <div className="bg-[#FFE4E4] h-40 flex flex-col justify-center text-center">
+          <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center text-center">
             {likePerform.length === 0 ? (
               <p className="text-gray-500 font-bold">
                 아직 관심으로 지정한 공연이 없습니다
@@ -86,7 +91,6 @@ function PerformHome() {
             ) : (
               <PerformSlider data={likePerform} />
             )}
-            {}
           </div>
         </div>
       </div>

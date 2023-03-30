@@ -4,10 +4,11 @@ import BottomNav from "../../components/BottomNav";
 import HeaderNav from "../../components/HeaderNav";
 import TicketDetail from "./TicketDetail";
 import TicketHome from "./TicketHome";
+import "../../css/Ticket.css";
 
 function Ticket() {
   return (
-    <div className='h-screen'>
+    <div className='h-screen relative'>
         <HeaderNav/>
         <Routes>
           <Route path="/" element={<TicketHome />} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Ticketing from './Ticketing'
+import ReserveSeat from './ReserveSeat'
 import ReserveProgress from './ReserveProgress'
 import ReserveFinish from './ReserveFinish'
 import HeaderNav from '../../components/HeaderNav'
@@ -11,7 +11,7 @@ function Reserve() {
     <div>
       <HeaderNav />
         <Routes>
-          <Route path="/" element={<Ticketing/>}/>
+          <Route path="/" element={<ReserveSeat/>}/>
           <Route path="/progress" element={<ReserveProgress/>}/>
           <Route path="/fail" element={<ReserveFail/>}/>
           <Route path="/finish" element={<ReserveFinish/>}/>

@@ -11,7 +11,7 @@ interface Perform {
   price:number;
 }
 
-function Ticketing() {
+function ReserveSeat() {
   const [seats_state, setSeats_state] = useState<string[][]>([]);
   const [performInfo, setPerformInfo] = useState<Perform>({
     title: "",
@@ -19,18 +19,27 @@ function Ticketing() {
     price:0,
   });
   const [performId, setPerformId] = useState<number>(0);
+  const [seatStatus, setSeatStatus] = useState<String>("");
   const location = useLocation();
 
   const getSeatInfo = async (performId: number) => {
-    const { data } = await axiosApi.get(`/performance/reserve/${performId}`);
+    try{
+      const { data } = await axiosApi.get(`/performance/reserve/${performId}`);
 
-    // 좌석 정보 set하기
-    setSeats_state(data.body.seats_state);
+      // 좌석 정보 set하기
+      setSeats_state(data.body.seats_state);
+  
+      // 공연 정보 set
+      setPerformInfo(data.body.perform);
+  
+      console.log(data.body);
+    }catch(error :any){
+      console.log(error.status);
+      
+      console.log(error.response.data);
+      
+    }
 
-    // 공연 정보 set
-    setPerformInfo(data.body.perform);
-
-    console.log(data.body);
   };
   // 공연 좌석 정보 가져오기
   useEffect(() => {
@@ -57,8 +66,10 @@ function Ticketing() {
   const [seatNumber, setSeatNumber] = useState<number>(-1);
 
   // 예매 확인 모달 창 띄우기
-  const handleReserveModalOpen = (index: number) => {
+  const handleReserveModalOpen = (index: number, seatStatus:String) => {
     setSeatNumber(index);
+    setSeatStatus(seatStatus);
+
     setIsModalOpen(true);
   };
 
@@ -66,7 +77,7 @@ function Ticketing() {
     setIsModalOpen(false);
   };
   return (
-    <div className="mt-16">
+    <div>
       <BackNav/>
       <div className="m-2">
         <p className="text-xl font-bold">
@@ -106,11 +117,12 @@ function Ticketing() {
         isOpen={isModalOpen}
         onClose={handleReserveModalClose}
         performId={performId}
-        reserve={{title : performInfo.title, seatNumber : seatNumber, price : performInfo.price}}
+        // reserve={{title : performInfo.title, seatNumber : seatNumber, price : performInfo.price}}
+        reserve={{title : performInfo.title, seatNumber : seatNumber, status: seatStatus, price : performInfo.price}}
       />
       
     </div>
   );
 }
 
-export default Ticketing;
+export default ReserveSeat;

@@ -13,6 +13,7 @@ interface BtnProps {
 interface ReservationInfo {
   title: string;
   seatNumber: number;
+  status: String;
   price: number;
 }
 const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
@@ -26,6 +27,8 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
+    console.log("reserve.status >>", reserve.status);
+    
     const { data } = await axiosApi.put(  // 좌석 변경 요청 3 : empty, PURCHASING_CANCEL -> PURCHASING
       `/performance/${performId}/${seat}/3`
     );
@@ -43,6 +46,8 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
       state: {
         performId: performId,
         seatNumber: reserve.seatNumber,
+        status : reserve.status,
+        price : reserve.price * Math.pow(10,18),
       },
     });
   };
@@ -50,7 +55,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
     ? "absolute inset-0 bg-gray-700 opacity-75 z-10"
     : "hidden";
   const contentStyles = isOpen
-    ? "absolute bg-white rounded-t-lg shadow-lg transform translate-y-0"
+    ? "absolute bg-white shadow-lg transform translate-y-0"
     : "absolute transform translate-y-full";
   const checkBtnStyles = isAgree ? "bg-ttokPink" : "bg-gray-300";
 
@@ -58,7 +63,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
     <div>
       <div className={overlayStyles} onClick={onClose}></div>
       <div
-        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto rounded-lg transition-all duration-300 z-20 ${contentStyles} bottom-modal ${
+        className={`sm:p-8 lg:p-10 w-full max-w-md mx-auto transition-all duration-300 z-20 ${contentStyles} rounded-t-lg bottom-modal ${
           isOpen ? "open" : ""
         }`}
       >
@@ -128,7 +133,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
           </div>
           <div className="flex px-4">
             <span className="mr-auto">
-              좌석 : {reserve.seatNumber / 8 + "A"}
+              좌석 : {String.fromCharCode((reserve.seatNumber - 1)/ 8 + 65) + (Math.floor(reserve.seatNumber/ 9) + reserve.seatNumber % 9)}
             </span>
             <img
               src="https://cdn-icons-png.flaticon.com/512/1292/1292744.png"
@@ -158,21 +163,29 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
           </div>
           <div className="px-4">
             {/* 테이블 섹션 */}
-            <table className="text-left border-collapse border-slate-100 min-w-full">
+            <table className="text-left text-xs border-collapse border-slate-100 min-w-full">
               <thead>
                 <tr>
-                  <th className="border-b-2 py-2">취소일</th>
-                  <th className="border-b-2 py-2">환불 금액</th>
+                  <th className="border-b-2 text-sm py-2">취소일</th>
+                  <th className="border-b-2 text-sm py-2">환불 금액</th>
                 </tr>
               </thead>
               <tbody className="align-baseline">
-                <tr>
-                  <td className="py-2 pr-2">공연 D-7</td>
+                <tr className="border-b-2">
+                  <td className="py-2 pr-2">공연 D-1</td>
+                  <td className="py-2 pr-2">티켓 금액의 70%</td>
+                </tr>
+                <tr className="border-b-2">
+                  <td className="py-2 pr-2">공연 D-3</td>
                   <td className="py-2 pr-2">티켓 금액의 50%</td>
                 </tr>
                 <tr className="border-b-2">
-                  <td className="py-2 pr-2">공연 D-14</td>
-                  <td className="py-2 pr-2">티켓 금액의 100%</td>
+                  <td className="py-2 pr-2">공연 D-7</td>
+                  <td className="py-2 pr-2">티켓 금액의 30%</td>
+                </tr>
+                <tr className="border-b-2">
+                  <td className="py-2 pr-2">이전</td>
+                  <td className="py-2 pr-2">-</td>
                 </tr>
               </tbody>
             </table>

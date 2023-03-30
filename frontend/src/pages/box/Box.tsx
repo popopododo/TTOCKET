@@ -3,6 +3,7 @@ import HeaderNav from "../../components/HeaderNav";
 import BottomNav from "../../components/BottomNav";
 import BoxHome from "./BoxHome";
 import BoxDetail from "./BoxDetail";
+import BoxDiary from "./BoxDiary";
 
 function Box() {
   return (
@@ -11,6 +12,7 @@ function Box() {
       <Routes>
         <Route path="/" element={<BoxHome />} />
         <Route path="/detail" element={<BoxDetail/>}/>
+        <Route path="/diary/*" element={<BoxDiary/>}/>
       </Routes>
       <BottomNav />
     </div>

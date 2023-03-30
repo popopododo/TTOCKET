@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { TicketData } from '../../global'
 
 function TicketHomeCard(props:{cardData : TicketData, index : number} ) {
+  console.log(props.cardData);
   return (
     <div key={props.index} className='relative flex-shrink-0 mx-8 border-2 rounded-lg shadow-lg Ticket1'>
         <Link to='/home/detail' key={props.index} state={props.cardData}>
@@ -12,12 +13,12 @@ function TicketHomeCard(props:{cardData : TicketData, index : number} ) {
                 </p>
             </div>
             <div className="absolute h-full left-8 TicketRight">
-            <img src={ props.cardData.performPoster } alt="공연 이미지" className='absolute m-2 rounded-lg TicketImg' />
+            <img src={ "https://ipfs.io/ipfs/" + props.cardData.performPoster } alt="공연 이미지" className='absolute m-2 rounded-lg TicketImg' />
             <div className='absolute bottom-0 w-16 bg-white border-t-2 border-r-2 rounded-tr-lg h-28'>
-                <p className='text-sm text-center'>2022</p>
-                <p className='text-3xl font-bold text-center'>04</p>
-                <p className='text-3xl font-bold text-center'>01</p>
-                <p className='text-sm text-center'>18:00</p>
+                <p className='text-sm text-center'>{props.cardData.performYear}</p>
+                <p className='text-3xl font-bold text-center'>{props.cardData.performMonth.length === 1 ? "0" + props.cardData.performMonth : props.cardData.performMonth}</p>
+                <p className='text-3xl font-bold text-center'>{props.cardData.performDay.length === 1 ? "0" + props.cardData.performDay : props.cardData.performDay}</p>
+                <p className='text-sm text-center'>{props.cardData.performHour.length === 1 ? "0" + props.cardData.performHour : props.cardData.performHour}:{props.cardData.performMinute.length === 1 ? "0" + props.cardData.performMinute : props.cardData.performMinute}</p>
             </div>
             <div className='absolute bottom-0 h-20 pt-2 TicketInfo left-16'>
                 <p className='m-2 text-sm text-right truncate'>{props.cardData.location}</p>
