@@ -16,11 +16,13 @@ function BoxDiaryWrite() {
       </button>
       <div className='flex justify-center mt-8'>
         <div className='TicketSize flex items-center justify-center border-2 rounded-lg bg-white'>
-          <div className='w-full'>
-            <div className='mx-4 p-2 border-b-2 w-72'>
+          <div className='flex justify-center w-full'>
+            <div className='mx-4 p-2'>
               <input type="text" placeholder='제목을 입력해주세요'/>
             </div>
-            <input type="text" placeholder='소제목을 입력해주세요'/>
+            <div className='mx-4 p-2 border-b-2 w-64'>
+              <input type="text" placeholder='소제목을 입력해주세요'/>
+            </div>
             <textarea placeholder='내용을 입력해주세요'/>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
@@ -13,17 +13,21 @@ function ReserveFail() {
     const location = useLocation();
     
   // 좌석 실패 로직
-  const cancelSeat = async () => {
+  const cancelSeat = useCallback(
+    async () => {
         // 좌석 변경 요청 7 : * -> EMPTY
         const { data } = await axiosApi.put(
         `/performance/${location.state.performId}/${location.state.seatNumber}/7`
         );
         console.log(data);
         
-    }
+    },[location])
+
     useEffect(()=>{
-        cancelSeat();
-    });
+        if(location.state.status !== 'PURCHASED_CANCEL'){
+            cancelSeat();
+        }
+    },[location,cancelSeat]);
     return (
         <div className="flex items-center justify-center w-screen h-screen">
             <div>
