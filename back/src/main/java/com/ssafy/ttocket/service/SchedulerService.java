@@ -45,7 +45,6 @@ public class SchedulerService {
         }
         redisTemplate.delete(canceledList);
 
-        //==수정중==//
 
 //        // 람다식 적용 방법 찾아서 적용하기
 //        Set<String> keys = redisTemplate.keys("seatStatus::*");
