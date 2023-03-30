@@ -43,8 +43,8 @@ public class PerformanceService {
         // DB에서 원하는 데이터 찾아오기
         Performance performance = performanceRepository.findById(performanceId);
         PerformanceLike performanceLike = performanceLikeRepository.findByUserIdAndPerformanceId(userId, performanceId);
-        List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
 
+        // 공연 좋아요 체크
         if (performanceLike == null || performanceLike.isLike() == false) {
             isLike = false;
         } else {
@@ -65,12 +65,6 @@ public class PerformanceService {
                 .userId(performance.getUser().getId())
                 .build();
 
-        String[] seatsState = new String[performance.getMax_seats()];
-        for (Seat seat : seats) {
-            int seatNo = seat.getSeatId().getSeatNo();
-            seatsState[seatNo-1] = String.valueOf(seat.getStatus());
-        }
-
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startTime = LocalDateTime.parse(performanceDto.getStartTime());
         LocalDateTime endTime = LocalDateTime.parse(performanceDto.getEndTime());
@@ -86,11 +80,9 @@ public class PerformanceService {
         }
 
         // 찾은 데이터 result에 입력
-//        result.put("seatList", seatList);
         result.put("canReserve", canReserve);
         result.put("performance_dto", performanceDto);
         result.put("is_user_like", isLike);
-        result.put("seats_state", seatsState);
 
         // response 형식에 맞게 메시지, result, 상태코드 리턴
         // 물론 중간중간 원하는 동작 안될시 데이터 넣지 말고 상태코드 다르게 해서 리턴
@@ -99,7 +91,6 @@ public class PerformanceService {
         responseDto.setStatusCode(200);
         return responseDto;
     }
-
     //==공연 좌석 만들고 시도==//
     public ResponseDto clickLike(String userId, int performanceId) {
 
