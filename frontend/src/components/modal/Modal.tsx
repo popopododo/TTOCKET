@@ -47,6 +47,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
         performId: performId,
         seatNumber: reserve.seatNumber,
         status : reserve.status,
+        price : reserve.price * Math.pow(10,18),
       },
     });
   };
