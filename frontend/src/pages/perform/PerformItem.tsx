@@ -45,6 +45,7 @@ function PerformItem() {
       // console.log(res);
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -95,7 +96,8 @@ function PerformItem() {
           <hr className="my-4 bg-gray-400"></hr>
           <p className="flex justify-between ">
             <span className="mr-2">
-              {performData?.end_time.slice(0, 10)} <span className="text-gray-300">|</span>{" "}
+              {performData?.end_time.slice(0, 10)}{" "}
+              <span className="text-gray-300">|</span>{" "}
               {performData?.end_time.slice(11, 16)} 공연
             </span>
 
