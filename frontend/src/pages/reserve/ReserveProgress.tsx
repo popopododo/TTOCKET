@@ -35,8 +35,8 @@ function ReserveProgress(){
                 //분기
                 //취소된 티켓
                 if(location.state.status && location.state.status === "PURCHASED_CANCEL"){
-                    const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
-                        gas : 1000000});
+                    const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, location.state.seatNumber, nickname).send({from : id,
+                        gas : 1000000, value: location.state.price});
                         console.log(result);
                     if(result !== undefined){
                         confirmReservation();
@@ -58,7 +58,8 @@ function ReserveProgress(){
                 alert('결제 실패!!');
                 navigate(`/reserve/fail`, {state:{
                     performId : location.state.performId,
-                    seatNumber : location.state.seatNumber
+                    seatNumber : location.state.seatNumber,
+                    status: location.state.status
                 }});
             }
         },[id,nickname, tokenContract?.methods, location, navigate, confirmReservation],
@@ -68,7 +69,26 @@ function ReserveProgress(){
         // 여기서 티켓 민팅
         createTicket();
 
-    }, [id,createTicket]);
+        const handleUnload = (event:any) => {
+            event.preventDefault();
+            event.returnValue = '';
+
+            // Do something when the browser is closed or refreshed
+            console.log('Browser is about to unload');
+            alert('결제 실패!!');
+            navigate(`/reserve/fail`, {state:{
+                performId : location.state.performId,
+                seatNumber : location.state.seatNumber
+            }});
+          };
+      
+          window.addEventListener('beforeunload', handleUnload);
+      
+          return () => {
+            window.removeEventListener('beforeunload', handleUnload);
+          };
+
+    }, [id,location, navigate, createTicket]);
 
     return (
         <div className="flex items-center justify-center w-screen h-screen">
