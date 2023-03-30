@@ -25,7 +25,7 @@
   position: relative;
   display: inline-block;
   text-transform: uppercase;
-  animation: waviy 2s infinite;
+  animation: waviy 2s infinite ;
   animation-delay: calc(.2s * var(--i));
   
 }
@@ -34,7 +34,7 @@
     transform: translateY(0)
   }
   20% {
-    transform: translateY(-10px);
-    color : pink;
+    transform: translateY(-5px);
+    color: silver
   }
 }
