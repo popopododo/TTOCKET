@@ -56,16 +56,16 @@ function PerformLikeList() {
     navigate(-1);
   };
 
-  const handler = async () => {
-    try {
-      const res = await axiosApi.get(
-        `/performance/likelist/${id}/${page.current}`
-      );
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handler = async () => {
+  //   try {
+  //     const res = await axiosApi.get(
+  //       `/performance/likelist/${id}/${page.current}`
+  //     );
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -73,10 +73,10 @@ function PerformLikeList() {
     }
   }, [rollPage, hasNextPage, inView]);
 
-  useEffect(() => {
-    handler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   handler();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div>

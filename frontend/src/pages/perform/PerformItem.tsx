@@ -42,7 +42,7 @@ function PerformItem() {
       const res = await axiosApi.get(`performance/${id}/${location.state}`, {
         headers: {},
       });
-      console.log(res);
+      // console.log(res);
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
     } catch (err) {

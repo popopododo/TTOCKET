@@ -20,6 +20,7 @@ function PerformHome() {
       setLikePerform(res.data.body.like_performance);
       setPerformSoon(res.data.body.perform_soon);
       setOpenSoon(res.data.body.open_soon);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
