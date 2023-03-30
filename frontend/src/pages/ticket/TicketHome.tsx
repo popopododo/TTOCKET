@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../../css/Ticket.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import { useSelector } from "react-redux";
@@ -34,7 +33,7 @@ function TicketHome() {
   }, [id, getRetrieve]);
   return (
     <div className="">
-      <p className="pt-32 mb-8 text-xl font-bold text-center">
+      <p className="pt-24 mb-8 text-xl font-bold text-center">
         {nickname} 님의 티켓
       </p>
 
