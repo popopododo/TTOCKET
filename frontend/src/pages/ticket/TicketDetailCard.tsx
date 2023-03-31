@@ -7,8 +7,10 @@ import useWeb3 from '../../services/web3/useWeb3';
 
 function TicketDetailCard() {
   const [onModal, setOnModal] = useState<boolean>(false);
+
   const navigator = useNavigate();
   const { tokenContract } = useWeb3();
+  const [refundAmount, setRefundAmount] = useState<number>();
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
   const location = useLocation();
   async function cancleClickHandler(){
@@ -26,7 +28,13 @@ function TicketDetailCard() {
         }
     }
   }
-  function modalOpen() {
+  async function modalOpen() {
+    if (!onModal) {
+        const result = await tokenContract?.methods.getNowRefundAmount(location.state.performId).call({from:id});
+        if( result !== undefined){
+            setRefundAmount(parseInt(result) / Math.pow(10, 18));
+        }
+    }
     setOnModal(!onModal);
   }
 
@@ -63,12 +71,12 @@ function TicketDetailCard() {
         </div>
         {onModal && 
             <div className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-40'>
-                <div className='flex items-center justify-center p-4 bg-white rounded-lg shadow-xl h-28'>
+                <div className='flex items-center justify-center p-4 bg-white rounded-lg shadow-xl h-36'>
                     <div>
-
-                        <p className='mb-4'>정말로 예매를 취소하시겠습니까?</p>
+                        <p className='mb-4 text-lg font-bold'>정말로 예매를 취소하시겠습니까?</p>
+                        <p className='mb-4 text-center'>환불 예정 금액은 <span className='font-bold'>{refundAmount} </span>ETH 입니다.</p>
                         <div className='flex items-center justify-center'>
-                            <button onClick={cancleClickHandler} className='w-20 h-8 mx-4 bg-gray-200 rounded-full'>네</button>
+                            <button onClick={cancleClickHandler} className='w-20 h-8 mx-4 rounded-full bg-ttokLightPink'>네</button>
                             <button onClick={modalOpen} className='w-20 h-8 mx-4 bg-gray-200 rounded-full'>아니오</button>
                         </div>
                     </div>

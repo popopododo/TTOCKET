@@ -34,34 +34,43 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
   let todayTime = new Date();
   return (
     <div className="page-carousel">
-      <Slider {...settings}>
-        {data &&
-          data.map((da) => (
-            <Link
-              to="/perform/detail"
-              state={da.performance_id}
-              key={da.performance_id}
-            >
-              <img
-                src={`https://ipfs.io/ipfs/${da.poster}`}
-                className="object-cover w-full h-52 object-top relative"
-                alt="사진"
-              />
-              <div className="absolute top-28">
-                <div className={style.bannerTriangle}>
-                  <p className="text-red-400 font-bold w-32 mt-6">
-                    D
-                    {getDateDiff(
-                      da.end_time.slice(0, 10),
-                      formatDate(todayTime)
-                    )}
-                  </p>
-                  <p className="text-white font-bold w-28">{da.title}</p>
+      {data.length !== 0 && (
+        <Slider {...settings}>
+          {data &&
+            data.map((da) => (
+              <Link
+                to="/perform/detail"
+                state={da.performance_id}
+                key={da.performance_id}
+              >
+                <img
+                  src={`https://ipfs.io/ipfs/${da.poster}`}
+                  className="object-cover w-full h-52 object-top relative"
+                  alt="사진"
+                />
+                <div className="absolute top-28">
+                  <div className={style.bannerTriangle}>
+                    <p className="text-red-400 font-bold w-32 mt-6">
+                      D
+                      {getDateDiff(
+                        da.end_time.slice(0, 10),
+                        formatDate(todayTime)
+                      )}
+                    </p>
+                    <p className="text-white font-bold w-28">{da.title}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-      </Slider>
+              </Link>
+            ))}
+        </Slider>
+      )}
+      {data.length === 0 && (
+        <img
+          src={`https://ipfs.io/ipfs/QmcVeowUnSsrfWXcAnyueWTAR9kDhKKuuahG5k5br25THT`}
+          className="object-cover w-full h-52 object-top relative"
+          alt="사진"
+        />
+      )}
     </div>
   );
 }
