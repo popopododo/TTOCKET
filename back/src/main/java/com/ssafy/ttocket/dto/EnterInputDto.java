@@ -21,4 +21,7 @@ public class EnterInputDto {
 
     @JsonProperty("nickname")
     private String nickname;
+
+    @JsonProperty("timeQR")
+    private LocalDateTime timeQR;
 }
