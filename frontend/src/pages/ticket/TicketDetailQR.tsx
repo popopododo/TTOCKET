@@ -1,8 +1,41 @@
-import React from 'react'
+import { RootState } from '../../app/store';
+import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 function TicketDetailQR() {
   const location = useLocation();
+  const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
+  const [qrCode, setQrCode] = useState<string>('');
+  const createQRCode = useCallback(
+    async () =>{
+
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = ('0' + (today.getMonth() + 1)).slice(-2);
+      let day = ('0' + today.getDate()).slice(-2);
+
+      let dateString = year + '-' + month  + '-' + day;
+
+      let hours = ('0' + today.getHours()).slice(-2); 
+      let minutes = ('0' + today.getMinutes()).slice(-2);
+      let seconds = ('0' + today.getSeconds()).slice(-2); 
+
+      let timeString = hours + ':' + minutes  + ':' + seconds;
+      const data = {
+        performId : location.state.performId,
+        seatNum : location.state.seatNum,
+        nickname : nickname,
+        timeQR : dateString + " " + timeString,
+      }
+      setQrCode(`https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=${JSON.stringify(data)}`);
+    },[location, nickname]
+  )
+  useEffect(()=>{
+    //createQRCode
+    createQRCode();
+  },[createQRCode])
   return (
     <div>
       <Link to='/home/detail' state={location.state}>
@@ -24,7 +57,8 @@ function TicketDetailQR() {
       </div>
       <div className='px-8'>
           <p className='mt-5 text-2xl font-bold'>{location.state.title}</p>
-          <img src="https://blog.kakaocdn.net/dn/bqqWTy/btqDQtYuJua/X1KNO1U3u3kzWQBunWOVCK/img.jpg" alt="qr" className='p-4 mt-4' />
+          <img src={qrCode} alt="qr" className='p-4 mt-4' />
+          <button onClick={createQRCode}>새로고침</button>
       </div>
     </div>
   )
