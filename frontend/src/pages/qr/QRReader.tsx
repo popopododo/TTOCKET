@@ -1,5 +1,6 @@
 import {QrScanner} from '@yudiel/react-qr-scanner';
 import { useState, useEffect, useCallback } from 'react';
+import { useLocation } from "react-router-dom";
 import BackNav from '../../components/BackNav';
 import HeaderNav from '../../components/HeaderNav';
 import axiosApi from '../../services/axiosApi';
@@ -13,18 +14,19 @@ function QRReader (){
     const [enter, setEnter] = useState<number>(0);
     const [totalSeat, setTotalSeat] = useState<number>(0);
     const [enterList, setEnterList] = useState<Array<enterInfo>>();
-    
+    const location = useLocation();
+
     //API 요청
     const getEnterInfo = useCallback(
         async()=>{
-            const { data } = await axiosApi.get(`/performance/log/${1}`);
+            const { data } = await axiosApi.get(`/performance/log/${location.state}`);
             console.log(data.body.enter_log_list);
             
             setEnter(data.body.enter_cnt);
             setTotalSeat(data.body.max_seat);
             setEnterList(data.body.enter_log_list);
 
-        },[]
+        },[location]
     );
     
     //QR 코드 인증 및 입장 처리
@@ -95,7 +97,7 @@ function QRReader (){
                             {
                                 enterList?.map((e, index)=>{
                                     return (
-                                        <div className="flex w-full h-12 p-2 border-b-2 text-ttokGray">
+                                        <div key={index} className="flex w-full h-12 p-2 border-b-2 text-ttokGray">
                                             <span className='w-1/4 text-center'>{e.nickname}</span>
                                             <span className='w-1/4 text-center'>{e.seat_num}</span>
                                             <span className='w-2/4 text-right'>{e.enter_time}</span>

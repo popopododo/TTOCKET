@@ -89,7 +89,7 @@ function SponsorEnterList() {
                   <p>가격 : {el.price}</p>
                 </div>
                 <div className="self-center">
-                  <Link to="/sponsor/behindlist" state={el.id}>
+                  <Link to="/sponsor/qr" state={el.id}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
