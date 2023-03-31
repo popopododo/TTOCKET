@@ -1,5 +1,5 @@
 import addP from "../../assets/addPerform.png";
-import addB from "../../assets/addBehind.png";
+
 import { Link } from "react-router-dom";
 import HeaderNav from "../../components/HeaderNav";
 
@@ -16,14 +16,18 @@ function SponsorHome() {
             <div className="h-48 w-32 bg-ttokLightPink mx-5 flex flex-col items-center">
               <div className="w-32 h-4 bg-[#FB7185]"></div>
               <img src={addP} alt="addPerform" className="mt-6 ml-4 w-24" />
-              <p className="text-white font-bold text-lg">공연</p>
+              <p className="text-white font-bold text-lg">공연 관리</p>
             </div>
           </Link>
-          <Link to="behindlist">
+          <Link to="Enterlist">
             <div className="h-48 w-32 bg-ttokLightPink mx-5 flex flex-col items-center">
               <div className="w-32 h-4 bg-[#FB7185]"></div>
-              <img src={addB} alt="addBehind" className="mt-5 ml-2 w-24" />
-              <p className="text-white font-bold text-lg">비하인드</p>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1828/1828466.png"
+                alt="addBehind"
+                className="mt-8 mr-3 w-20 mb-4"
+              />
+              <p className="text-white font-bold text-lg">입장 관리</p>
             </div>
           </Link>
         </div>

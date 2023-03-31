@@ -86,7 +86,7 @@ function PerformItem() {
                 src={`https://ipfs.io/ipfs/${performData.poster}`}
                 // src={performData.poster}
                 alt="poster"
-                className="absolute object-center h-80 w-72 top-40"
+                className="absolute object-center h-80 w-72 top-40 drop-shadow-sm"
               ></img>
             </div>
           </div>
