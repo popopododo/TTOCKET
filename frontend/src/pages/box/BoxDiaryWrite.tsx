@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { RootState } from '../../app/store';
 import "../../css/Diary.css"
 import useWeb3 from '../../services/web3/useWeb3';
@@ -13,6 +13,7 @@ function BoxDiaryWrite() {
   const [nowColor, setNowColor] = useState<string>("ffffff");
   const { tokenContract } = useWeb3(); 
 
+  const location = useLocation();
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   function titleHandler(event:React.ChangeEvent<HTMLInputElement>) {
@@ -32,9 +33,13 @@ function BoxDiaryWrite() {
     colorPickerHandler();
   }
   async function submitHandler(event:React.MouseEvent<HTMLElement>) {
-    const result = await tokenContract?.methods.buyCanceledTicket(title, subTitle, content).send({from : id,
-      gas : 1000000})
+    console.log(location.state.tokenId);
     console.log(title, subTitle, content, nowColor);
+    const result = await tokenContract?.methods.insertTicketDiary(location.state.tokenId, title, subTitle, content, nowColor).send({from : id,
+      gas : 1000000});
+    if (result !== undefined) {
+      console.log(result);
+    }
   }
   
   return (

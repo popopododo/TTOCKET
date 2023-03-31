@@ -150,3 +150,30 @@
 
     }
 }
+
+.BoxDetail{
+    height: 730px;
+}
+
+.BackImg{
+    z-index: -10px;
+}
+
+.Direction{
+    color: rgb(201, 201, 201);
+    width: 40px;
+    height: 40px;
+    animation: updown 2s infinite;
+}
+
+@keyframes updown{
+    0%, 100% {
+    transform: translateY(0)
+    }
+    50% {
+    transform: translateY(-15px);
+    width: 30px;
+    height: 30px;
+    color: silver
+    }
+}
