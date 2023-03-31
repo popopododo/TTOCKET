@@ -158,7 +158,7 @@ function SponsorPerformForm() {
     setMax_seats(Number(value));
     console.log(max_seats);
   };
-  const selectVal = [8, 16];
+  const selectVal = [8, 16, 24, 32, 40, 48];
   const changePrice = (e: any) => {
     setPrice(e.target.value);
   };
