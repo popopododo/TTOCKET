@@ -26,6 +26,10 @@ function PerformList() {
 
   const [posts, setPosts] = useState<postType[]>([]);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
 
   const page = useRef<number>(0);
   const [ref, inView] = useInView();
@@ -51,6 +55,7 @@ function PerformList() {
   };
 
   useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
     // console.log(getDateDiff(formatDate(todayTime), "2023-03-25"));
     if (inView && hasNextPage) {
       rollPage();
@@ -58,8 +63,14 @@ function PerformList() {
   }, [rollPage, hasNextPage, inView]);
 
   return (
-    <div>
-      <div className="fixed h-12 w-full top-0 flex bg-white items-center justify-between mt-12">
+    <div className="bg-ttokPink">
+      <div
+        className={
+          scrollPosition < 50
+            ? "fixed mt-12 text-white h-12 w-full top-0 flex items-center justify-between bg-ttokPink"
+            : "fixed mt-12 h-12 w-full top-0 flex items-center justify-between bg-white"
+        }
+      >
         <p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -80,9 +91,9 @@ function PerformList() {
         <p className="text-lg font-bold">{location.state}</p>
         <p className="w-7"></p>
       </div>
-
-      <div className="overflow-y-auto mb-16 mt-28">
-        <div className="">
+      <div className="">
+        <div className="h-1 bg-ttokPink"></div>
+        <div className="overflow-y-auto mb-16 mt-20 pt-10 rounded-t-3xl bg-white">
           {posts &&
             posts.map((dal) => (
               <div key={dal.performance_id}>
@@ -94,7 +105,6 @@ function PerformList() {
                   <div className="mr-5">
                     <img
                       src={`https://ipfs.io/ipfs/${dal.poster}`}
-                      // src={dal.poster}
                       className="object-cover h-32 w-28 mx-3 rounded"
                       alt="poster"
                     ></img>

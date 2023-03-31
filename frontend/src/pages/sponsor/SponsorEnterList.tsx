@@ -96,7 +96,7 @@ function SponsorEnterList() {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-6 h-6 text-gray-400 "
+                      className="w-6 h-6 text-gray-400 ml-2"
                     >
                       <path
                         strokeLinecap="round"

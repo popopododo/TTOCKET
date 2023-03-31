@@ -4,23 +4,28 @@ import { FormEvent, useRef, useState, useMemo } from "react";
 import ipfsCreate from "../../services/ipfsCreate";
 import addPicture from "../../assets/addPicture.png";
 import formatDate from "../../components/date/formatDate";
-
+import "react-datepicker/dist/react-datepicker.css";
 import axiosApi from "../../services/axiosApi";
 import useWeb3 from "../../services/web3/useWeb3";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/esm/locale";
 
 function SponsorPerformForm() {
   const navigate = useNavigate();
   const { tokenContract } = useWeb3();
   //정보
-  let todayDate = formatDate(new Date()) + " 12:00:00";
+
   const [images, setImages] = useState<File>();
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
 
   //폼 내용
   const title = useInput("");
-  const end_time = useInput(todayDate);
-  const start_time = useInput(todayDate);
+  const end_time = formatDate(endDate) + " " + String(endDate).slice(16, 24);
+  const start_time =
+    formatDate(startDate) + " " + String(startDate).slice(16, 24);
   const location = useInput("");
   const [price, setPrice] = useState(0);
   const [max_seats, setMax_seats] = useState<number>(8);
@@ -99,8 +104,8 @@ function SponsorPerformForm() {
             const res = await axiosApi.post("performance/create", {
               title: title.value,
               user_id: id,
-              start_time: start_time.value,
-              end_time: end_time.value,
+              start_time: start_time,
+              end_time: end_time,
               location: location.value,
               price: price,
               max_seats: max_seats,
@@ -123,11 +128,11 @@ function SponsorPerformForm() {
                     price * 10 ** 5,
                     cal,
                     posterHash,
-                    Number(end_time.value.slice(0, 4)),
-                    Number(end_time.value.slice(5, 7)),
-                    Number(end_time.value.slice(8, 10)),
-                    Number(end_time.value.slice(11, 13)),
-                    Number(end_time.value.slice(14, 16))
+                    Number(end_time.slice(0, 4)),
+                    Number(end_time.slice(5, 7)),
+                    Number(end_time.slice(8, 10)),
+                    Number(end_time.slice(11, 13)),
+                    Number(end_time.slice(14, 16))
                   )
                   .send({
                     from: id,
@@ -163,6 +168,14 @@ function SponsorPerformForm() {
     setPrice(e.target.value);
   };
 
+  // useEffect(() => {
+  //   console.log(end_time);
+  //   console.log(Number(end_time.slice(0, 4)));
+  //   console.log(Number(end_time.slice(5, 7)));
+  //   console.log(Number(end_time.slice(8, 10)));
+  //   console.log(Number(end_time.slice(11, 13)));
+  //   console.log(Number(end_time.slice(14, 16)));
+  // });
   return (
     // <form onSubmit={submitPerformHandler}>
     <div>
@@ -212,18 +225,28 @@ function SponsorPerformForm() {
             <label className="text-base font-bold mb-2 mt-6">
               공연 날짜 및 시간
             </label>
-            <input
-              type="text"
-              {...end_time}
-              className="border-b-2 h-9 border-[#FB7185]"
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date!)}
+              locale={ko}
+              showTimeSelect
+              timeFormat="p"
+              timeIntervals={15}
+              dateFormat="Pp"
+              className="border-2 border-[#FB7185] rounded-md h-8 w-full text-center"
             />
             <label className="text-base font-bold mb-2 mt-6">
               예매 오픈 날짜 및 시간
             </label>
-            <input
-              type="text"
-              {...start_time}
-              className="border-b-2 h-9 border-[#FB7185]"
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date!)}
+              locale={ko}
+              showTimeSelect
+              timeFormat="p"
+              timeIntervals={15}
+              dateFormat="Pp"
+              className="border-2 border-[#FB7185] rounded-md h-8 w-full text-center"
             />
             <label className="text-base font-bold mb-2 mt-6">공연 장소</label>
             <input

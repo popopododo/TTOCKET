@@ -46,8 +46,8 @@ function SponsorBehindList() {
   return (
     <div>
       <HeaderNav />
-      <div className="overflow-y-auto mb-20">
-        <div className="h-10 flex items-center justify-between">
+      <div className="overflow-y-auto mb-20 mt-2">
+        <div className="h-10 flex items-center justify-between mb-10">
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,11 +74,15 @@ function SponsorBehindList() {
             등록
           </Link>
         </div>
-        <div className="grid grid-cols-3 mt-10">
+        <div className="grid grid-cols-3 mt-10 pl-5">
           {behindList &&
             behindList.map((el, idx) => (
               <div key={idx}>
-                <img src={`https://ipfs.io/ipfs/${el}`} alt="비하인드사진" />
+                <img
+                  src={`https://ipfs.io/ipfs/${el}`}
+                  alt="비하인드사진"
+                  className="h-40 mb-5"
+                />
               </div>
             ))}
         </div>
