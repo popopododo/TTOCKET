@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import addP from "../../assets/addPicture.png";
 import ipfsCreate from "../../services/ipfsCreate";
 import useWeb3 from "../../services/web3/useWeb3";
@@ -9,6 +9,7 @@ import { RootState } from "../../app/store";
 function SponsorBehinForm() {
   const navigate = useNavigate();
   const { tokenContract } = useWeb3();
+  const location = useLocation();
   //id
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
@@ -75,12 +76,13 @@ function SponsorBehinForm() {
         const posterHash = res.path;
         try {
           const solres = await tokenContract?.methods
-            .insertPerformBehind(2, posterHash)
+            .insertPerformBehind(location.state, posterHash)
             .send({
               from: id,
               gas: 8000000,
             });
           console.log(solres);
+          handleGoBack();
         } catch (err) {
           console.log(err);
         }
