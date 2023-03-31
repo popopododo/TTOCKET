@@ -274,7 +274,15 @@ public class PerformanceService {
     public ResponseDto createEnterLog(EnterInputDto enterInputDto) {
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
-        Duration duration = Duration.between(enterInputDto.getTimeQR(),LocalDateTime.now());
+        String timeQR1 = enterInputDto.getTimeQR();
+        LocalDateTime timeQR = LocalDateTime.of(Integer.parseInt(timeQR1.substring(0,4)),
+                Integer.parseInt(timeQR1.substring(5,7)),
+                Integer.parseInt(timeQR1.substring(8,10)),
+                Integer.parseInt(timeQR1.substring(11,13)),
+                Integer.parseInt(timeQR1.substring(14,16)),
+                Integer.parseInt(timeQR1.substring(17)));
+
+        Duration duration = Duration.between(timeQR,LocalDateTime.now());
         if(duration.toSeconds() > GapQRTime){
             result.put("isSuccess", false);
             responseDto.setBody(result);
