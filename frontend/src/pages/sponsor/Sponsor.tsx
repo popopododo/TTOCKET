@@ -5,6 +5,8 @@ import SponsorBehindList from "./SponsorBehindList";
 import SponsorPerformForm from "./SponsorPerformForm";
 import SponsorBehinForm from "./SponsorBehinForm";
 import BottomNav from "../../components/BottomNav";
+import QRReader from "../qr/QRReader";
+
 
 function Sponsor() {
   return (
@@ -15,6 +17,7 @@ function Sponsor() {
         <Route path="/behindlist" element={<SponsorBehindList />} />
         <Route path="/performlist/add" element={<SponsorPerformForm />} />
         <Route path="/behindlist/add" element={<SponsorBehinForm />} />
+        <Route path="/qr/*" element={<QRReader />}></Route>
       </Routes>
       <BottomNav />
     </div>
