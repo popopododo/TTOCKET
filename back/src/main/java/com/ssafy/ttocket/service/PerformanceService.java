@@ -291,8 +291,8 @@ public class PerformanceService {
             return responseDto;
         }
 
-        int performanceId = enterInputDto.getPerformId();
-        int seatNum = enterInputDto.getSeatNum();
+        int performanceId = Integer.parseInt(enterInputDto.getPerformId());
+        int seatNum = Integer.parseInt(enterInputDto.getSeatNum());
         String key = "seatStatus::" + performanceId;
         ListOperations listOperations = redisTemplate.opsForList();
         Performance perform = performanceRepository.findById(performanceId);
