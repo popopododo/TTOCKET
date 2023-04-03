@@ -42,7 +42,6 @@ function PerformItem() {
       const res = await axiosApi.get(`performance/${id}/${location.state}`, {
         headers: {},
       });
-
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
     } catch (err) {
@@ -88,13 +87,13 @@ function PerformItem() {
             </div>
           </div>
         )}
-        <div className="p-2">
-          <div>
-            <p className="my-3 text-2xl font-bold ">{performData?.title}</p>
-            <hr className="my-4 bg-gray-400"></hr>
+        <div className="p-2 ">
+          <div className="">
+            <p className="my-3 text-2xl font-bold">{performData?.title}</p>
           </div>
           <div>
             <div className="">
+              <hr className="my-4 bg-gray-400"></hr>
               {performData?.end_time.slice(0, 10)}{" "}
               <span className="text-gray-300">|</span>{" "}
               {performData?.end_time.slice(11, 16)} 공연
@@ -119,7 +118,7 @@ function PerformItem() {
           <p>{performData?.desc}</p>
         </div>
       </div>
-      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 bg-white border-t-2">
+      <div className="fixed bottom-0 flex items-center justify-center w-screen pt-2 pb-4 bg-white">
         {isLike ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"

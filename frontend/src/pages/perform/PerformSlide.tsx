@@ -28,6 +28,7 @@ function PerformSlide({ data }: { data: soonDataType[] }) {
           gap: "1rem",
           perPage: 3,
           perMove: 1,
+          focus: 0,
           arrows: false,
           pagination: false,
         }}
