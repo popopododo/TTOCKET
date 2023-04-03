@@ -71,7 +71,6 @@ function SponsorBehinForm() {
   const uploadHandler = async () => {
     try {
       const res = await ipfsCreate.add(imgUp!);
-      // console.log(res);
       if (res !== undefined) {
         const posterHash = res.path;
         try {
@@ -82,7 +81,6 @@ function SponsorBehinForm() {
               from: id,
               gas: 8000000,
             });
-          // console.log(solres);
           handleGoBack();
         } catch (err) {
           console.log(err);

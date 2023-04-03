@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PerformBanner from "./PerformBanner";
-import PerformSlider from "./PerformSlider";
+import PerformSlide from "./PerformSlide";
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
 import BottomNav from "../../components/BottomNav";
@@ -59,7 +59,7 @@ function PerformHome() {
             </p>
           </div>
           <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center">
-            <PerformSlider data={performSoon} />
+            <PerformSlide data={performSoon} />
           </div>
         </div>
         <div className="mb-20">
@@ -88,7 +88,7 @@ function PerformHome() {
                 아직 관심으로 지정한 공연이 없습니다
               </p>
             ) : (
-              <PerformSlider data={likePerform} />
+              <PerformSlide data={likePerform} />
             )}
           </div>
         </div>

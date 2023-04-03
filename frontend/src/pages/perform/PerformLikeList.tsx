@@ -47,8 +47,6 @@ function PerformLikeList() {
       setHasNextPage(data.length === 6);
       if (data.length) {
         page.current += 1;
-
-        // console.log(res);
       }
     } catch (err) {
       console.log(err);

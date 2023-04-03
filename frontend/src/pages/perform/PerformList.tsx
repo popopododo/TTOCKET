@@ -41,7 +41,7 @@ function PerformList() {
       const data = res.data.body.performance_list;
       setPosts((prevPosts) => [...prevPosts, ...data]);
       setHasNextPage(data.length === 6);
-      // console.log(res);
+
       if (data.length) {
         page.current += 1;
       }
@@ -56,7 +56,6 @@ function PerformList() {
 
   useEffect(() => {
     window.addEventListener("scroll", updateScroll);
-    // console.log(getDateDiff(formatDate(todayTime), "2023-03-25"));
     if (inView && hasNextPage) {
       rollPage();
     }

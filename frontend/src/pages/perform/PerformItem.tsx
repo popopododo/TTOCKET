@@ -42,10 +42,9 @@ function PerformItem() {
       const res = await axiosApi.get(`performance/${id}/${location.state}`, {
         headers: {},
       });
-      // console.log(res);
+
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
-      // console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -58,7 +57,6 @@ function PerformItem() {
         `performance/like/${id}/${location.state}`
       );
       setIsLike(res.data.body);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }

@@ -100,7 +100,6 @@ function SponsorPerformForm() {
     } else {
       try {
         const res = await ipfsCreate.add(images!);
-        // console.log(res);
         const posterHash = res.path;
         if (res !== undefined) {
           try {
@@ -116,7 +115,6 @@ function SponsorPerformForm() {
               desc: desText,
               etc: "보냅니다...",
             });
-            // console.log(res, "사진");
             if (res !== undefined) {
               const performId = res.data.body.performance_id;
               const cal = res.data.body.left_minute_perform;
@@ -142,7 +140,6 @@ function SponsorPerformForm() {
                     from: id,
                     gas: 8000000,
                   });
-                // console.log(solres, "솔리디티");
               } catch (err) {
                 console.log(err);
               }
@@ -161,21 +158,12 @@ function SponsorPerformForm() {
   const selectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setMax_seats(Number(value));
-    console.log(max_seats);
   };
   const selectVal = [8, 16, 24, 32, 40, 48];
   const changePrice = (e: any) => {
     setPrice(e.target.value);
   };
 
-  // useEffect(() => {
-  //   console.log(end_time);
-  //   console.log(Number(end_time.slice(0, 4)));
-  //   console.log(Number(end_time.slice(5, 7)));
-  //   console.log(Number(end_time.slice(8, 10)));
-  //   console.log(Number(end_time.slice(11, 13)));
-  //   console.log(Number(end_time.slice(14, 16)));
-  // });
   return (
     // <form onSubmit={submitPerformHandler}>
     <div>
