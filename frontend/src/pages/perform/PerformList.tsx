@@ -41,7 +41,7 @@ function PerformList() {
       const data = res.data.body.performance_list;
       setPosts((prevPosts) => [...prevPosts, ...data]);
       setHasNextPage(data.length === 6);
-      console.log(res);
+      // console.log(res);
       if (data.length) {
         page.current += 1;
       }
