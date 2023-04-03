@@ -72,7 +72,7 @@ function QRReader (){
     return(
         <div className="">
             <HeaderNav />
-            <BackNav url={''}/>
+            <BackNav url={'/sponsor'}/>
             <div className="m-4">
                 <div className="mx-10">
                     <QrScanner

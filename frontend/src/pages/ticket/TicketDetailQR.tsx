@@ -2,11 +2,14 @@ import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import GetTime from './TicketQRReload';
 
 function TicketDetailQR() {
   const location = useLocation();
   const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
   const [qrCode, setQrCode] = useState<string>('');
+
+
   const createQRCode = useCallback(
     async () =>{
 
@@ -32,9 +35,12 @@ function TicketDetailQR() {
       setQrCode(`https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=${JSON.stringify(data)}`);
     },[location, nickname]
   )
+
   useEffect(()=>{
+    
     //createQRCode
     createQRCode();
+
   },[createQRCode])
   return (
     <div>
@@ -56,12 +62,13 @@ function TicketDetailQR() {
 
       </div>
       <div className='px-8'>
-          <p className='mt-5 text-2xl font-bold'>{location.state.title}</p>
+          <p className=' text-2xl font-bold'>{location.state.title}</p>
           <img src={qrCode} alt="qr" className='p-4 mt-4' />
-          <button onClick={createQRCode}>새로고침</button>
+          <GetTime createQRCode={createQRCode}/>
+
       </div>
     </div>
   )
 }
 
-export default TicketDetailQR
+export default TicketDetailQR;
