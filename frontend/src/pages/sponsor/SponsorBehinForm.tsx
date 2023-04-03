@@ -71,17 +71,16 @@ function SponsorBehinForm() {
   const uploadHandler = async () => {
     try {
       const res = await ipfsCreate.add(imgUp!);
-      console.log(res);
       if (res !== undefined) {
         const posterHash = res.path;
         try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const solres = await tokenContract?.methods
             .insertPerformBehind(location.state, posterHash)
             .send({
               from: id,
               gas: 8000000,
             });
-          console.log(solres);
           handleGoBack();
         } catch (err) {
           console.log(err);

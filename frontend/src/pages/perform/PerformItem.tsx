@@ -42,10 +42,9 @@ function PerformItem() {
       const res = await axiosApi.get(`performance/${id}/${location.state}`, {
         headers: {},
       });
-      // console.log(res);
+
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -58,7 +57,6 @@ function PerformItem() {
         `performance/like/${id}/${location.state}`
       );
       setIsLike(res.data.body);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +69,7 @@ function PerformItem() {
 
   return (
     <div className="flex flex-col content-center">
-      <BackNav  url={"/perform"}/>
+      <BackNav url={"/perform"} />
       <div className="overflow-scroll mb-20">
         {performData && (
           <div>
@@ -84,7 +82,6 @@ function PerformItem() {
             <div className="flex justify-center w-full">
               <img
                 src={`https://ipfs.io/ipfs/${performData.poster}`}
-                // src={performData.poster}
                 alt="poster"
                 className="absolute object-center h-80 w-72 top-40 drop-shadow-sm"
               ></img>
@@ -92,15 +89,16 @@ function PerformItem() {
           </div>
         )}
         <div className="p-2">
-          <p className="my-3 text-2xl font-bold">{performData?.title}</p>
-          <hr className="my-4 bg-gray-400"></hr>
-          <p className="flex justify-between ">
-            <span className="mr-2">
+          <div>
+            <p className="my-3 text-2xl font-bold ">{performData?.title}</p>
+            <hr className="my-4 bg-gray-400"></hr>
+          </div>
+          <div>
+            <div className="">
               {performData?.end_time.slice(0, 10)}{" "}
               <span className="text-gray-300">|</span>{" "}
               {performData?.end_time.slice(11, 16)} 공연
-            </span>
-
+            </div>
             <span className="flex text-right text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +114,7 @@ function PerformItem() {
               </svg>
               {performData?.location}
             </span>
-          </p>
+          </div>
           <p className="mt-8 mb-2 text-lg font-bold">공연 상세</p>
           <p>{performData?.desc}</p>
         </div>

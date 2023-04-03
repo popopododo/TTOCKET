@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
 interface destination {
-  url : string
+  url: string;
 }
-function BackNav({url} : destination) {
+function BackNav({ url }: destination) {
   const navigate = useNavigate();
 
   //뒤로가기 버튼
