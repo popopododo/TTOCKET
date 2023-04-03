@@ -29,7 +29,7 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
     draggable: true,
     vertical: false,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3500,
   };
   let todayTime = new Date();
   return (
@@ -45,7 +45,7 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
               >
                 <img
                   src={`https://ipfs.io/ipfs/${da.poster}`}
-                  className="object-cover w-full h-52 object-top relative"
+                  className="object-cover w-full h-52 object-center relative"
                   alt="사진"
                 />
                 <div className="absolute top-28">
@@ -53,11 +53,13 @@ function PerformBanner({ data }: { data: soonDataType[] }) {
                     <p className="text-red-400 font-bold w-32 mt-6">
                       D
                       {getDateDiff(
-                        da.end_time.slice(0, 10),
+                        da.start_time.slice(0, 10),
                         formatDate(todayTime)
                       )}
                     </p>
-                    <p className="text-white font-bold w-28">{da.title}</p>
+                    <p className="text-white font-bold w-28 text-ellipsis ...">
+                      {da.title}
+                    </p>
                   </div>
                 </div>
               </Link>

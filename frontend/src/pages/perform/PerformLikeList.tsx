@@ -48,7 +48,7 @@ function PerformLikeList() {
       if (data.length) {
         page.current += 1;
 
-        console.log(res);
+        // console.log(res);
       }
     } catch (err) {
       console.log(err);
@@ -141,7 +141,7 @@ function PerformLikeList() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-16 h-16"
+                className="w-16 h-16 text-ttokPink"
               >
                 <path
                   strokeLinecap="round"

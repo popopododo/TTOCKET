@@ -41,11 +41,14 @@ function SponsorPerformForm() {
   const isTitle = title.value.trim() !== "";
   const isLocation = location.value.trim() !== "";
   const isDes = desText.trim() !== "";
+  //뒤로가기
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   //사진 업로드
   const fileInputHandler = () => {
     fileRef.current?.click();
   };
-
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetFile = (e.target.files as FileList)[0];
     const imgFile = e.target.files;
@@ -97,7 +100,7 @@ function SponsorPerformForm() {
     } else {
       try {
         const res = await ipfsCreate.add(images!);
-        console.log(res);
+        // console.log(res);
         const posterHash = res.path;
         if (res !== undefined) {
           try {
@@ -113,11 +116,12 @@ function SponsorPerformForm() {
               desc: desText,
               etc: "보냅니다...",
             });
-            console.log(res, "사진");
+            // console.log(res, "사진");
             if (res !== undefined) {
               const performId = res.data.body.performance_id;
               const cal = res.data.body.left_minute_perform;
               try {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const solres = await tokenContract?.methods
                   .createPerform(
                     performId,
@@ -138,11 +142,11 @@ function SponsorPerformForm() {
                     from: id,
                     gas: 8000000,
                   });
-                console.log(solres, "솔리디티");
+                // console.log(solres, "솔리디티");
               } catch (err) {
                 console.log(err);
               }
-              navigate(-1);
+              handleGoBack();
             }
           } catch (err) {
             console.log(err);
@@ -152,10 +156,6 @@ function SponsorPerformForm() {
         console.log(err);
       }
     }
-  };
-  //뒤로가기
-  const handleGoBack = () => {
-    navigate(-1);
   };
   //좌석 셀렉트 박스 선택
   const selectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {

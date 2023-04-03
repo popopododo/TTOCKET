@@ -33,7 +33,7 @@ function SponsorEnterList() {
     try {
       const res = await axiosApi.get(`supervisor/list/${id}`);
       setUserPerformList(res.data.body.user_created_list);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
