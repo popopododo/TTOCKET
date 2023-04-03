@@ -132,11 +132,8 @@ public class PerformanceService {
         // Redis에 대기열 저장 공간이 없을 경우
         if(listOperations.size(key) == 0){
             List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
-//            for (Seat seat : seats) {
-//                listOperations.rightPush(key, String.valueOf(seat.getStatus()));
-//            }
-            for(int i = 0; i < seats.size(); i++){
-                listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
+            for (Seat seat : seats) {
+                listOperations.rightPush(key, String.valueOf(seat.getStatus()));
             }
         }
         List range = listOperations.range(key, 0, -1);
