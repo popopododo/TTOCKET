@@ -129,19 +129,20 @@ public class PerformanceService {
         String key = "seatStatus::" + performanceId;
         ListOperations listOperations = redisTemplate.opsForList();
 
-        // Redis에 대기열 저장 공간이 없을 경우
+        // Redis에 좌석정보가 기록된 적이 없을 때, Redis에 좌석정보 기록
         if(listOperations.size(key) == 0){
             List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
             for (Seat seat : seats) {
                 listOperations.rightPush(key, String.valueOf(seat.getStatus()));
             }
         }
-        List range = listOperations.range(key, 0, -1);
 
+        List range = listOperations.range(key, 0, -1);
         int idx = 0;
         Long listSize = listOperations.size(key)/8;
         ArrayList<ArrayList> arrayList1 = new ArrayList<>();
 
+        // seatStatus::N에 행렬로 좌석정보 저장
         for (int i = 0; i < listSize+1; i++) {
             if (i == listSize) {
                 if (listOperations.size(key) % seatRowNums != 0) {
@@ -160,11 +161,10 @@ public class PerformanceService {
             }
         }
 
-        // 공연 정보 가져오기
+        // 공연 정보
         Performance perform = performanceRepository.findById(performanceId);
         log.debug("reservationState - performance : {}", perform.toString());
 
-        // 찾은 데이터 result에 입력
         result.put("seats_state", arrayList1);
         result.put("perform", perform);
 
