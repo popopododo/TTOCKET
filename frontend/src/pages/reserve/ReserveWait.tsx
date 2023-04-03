@@ -7,7 +7,7 @@ function ReserveWait (){
 
     useEffect(()=>{
         client.current = Stomp.over(() => {
-            const sock = new SockJS("http://localhost:8080" + "/wait/ticket")
+            const sock = new SockJS("http://localhost:8081" + "/wait/ticket")
             return sock;
         });
         client.current.connect({},
@@ -17,11 +17,15 @@ function ReserveWait (){
                     (message)=>{
                         //메시지 받는거?
                         console.log(message.body);
+
+                        //메세지가 연결 종료 flag를 받으면 navigate
+                        
                     }
                 )
+                client.current?.send("/pub/chat/enter",{}, JSON.stringify({userId : 'abc', performId : 1}));
             },{}
         );
-        client.current.send("/pub/chat/message",{}, JSON.stringify({}));
+        
 
         return () =>{
             // 컴포넌트 사라질때
