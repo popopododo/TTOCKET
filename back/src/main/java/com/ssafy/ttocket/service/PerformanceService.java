@@ -142,7 +142,7 @@ public class PerformanceService {
         Long listSize = listOperations.size(key)/8;
         ArrayList<ArrayList> arrayList1 = new ArrayList<>();
 
-        // seatStatus::N에 행렬로 좌석정보 저장
+        // key = seatStatus::N에 행렬로 좌석정보 저장
         for (int i = 0; i < listSize+1; i++) {
             if (i == listSize) {
                 if (listOperations.size(key) % seatRowNums != 0) {
@@ -186,19 +186,8 @@ public class PerformanceService {
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
         }
-
-        // cf. if절 정리 필요 //
-        if (code == 7) {
-            listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
-            log.debug(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
-            result.put("isSuccess", true);
-            responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
-            responseDto.setStatusCode(200);
-
-            return responseDto;
-        }
-        // code 2: 예약완료
-        else if(code == 2){ // 좌석상태 RESERVED으로 변경
+        // code 2: 예약완료, 좌석상태를 RESERVED로 변경
+        if(code == 2){
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.RESERVED));
             log.debug(performanceId+"번 공연 "+ seatId+ "번 좌석 RESERVED으로 변경 완료");
             result.put("isSuccess", true);
@@ -206,10 +195,11 @@ public class PerformanceService {
             responseDto.setStatusCode(200);
             return responseDto;
         }
-        // code 3: PURCHASING (사용자가 자리 선택 시)
-        else if(code == 3){ // 예매 중으로 변경 <- {비어있음, 예매후 취소, 예매 중 취소}인 좌석 선택
+        // code 3: 구매중, 사용자가 좌석 선택을 선택하면 PURCHASING으로 변경
+        else if(code == 3){
             String status = (String) listOperations.index(key, seatId - 1);
-            // {비어있음, 예매 중 취소}
+            // {비어있음, 예매후 취소, 예매 중 취소}일 때만 작동
+            // 1. 비어있음
             if(status.equals(String.valueOf(SeatStatus.EMPTY))){
                 listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
                 log.debug(performanceId+"번 공연 "+ seatId+ "번 좌석 PURCHASING으로 변경 완료");
@@ -217,9 +207,8 @@ public class PerformanceService {
                 result.put("beforeStatus","EMPTY");  // EMPTY & PURCHASING_CANCEL
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 PURCHASING으로 변경 완료");
                 responseDto.setStatusCode(200);
-
             }
-            // {예매 후 취소}
+            // 2. 예매 후 취소
             else if(status.equals(String.valueOf(SeatStatus.PURCHASED_CANCEL))){
                 listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
                 log.debug(performanceId+"번 공연 "+ seatId+ " 취소티켓 구매시도");
@@ -228,6 +217,7 @@ public class PerformanceService {
                 responseDto.setMessage(performanceId+"번 공연 "+ seatId+ " 취소티켓 구매시도");
                 responseDto.setStatusCode(200);
             }
+            // 3. 예매 중 취소
             else{
                 log.debug(performanceId+"번 공연 "+ seatId+ "번 좌석 이미 선택됨");
                 result.put("isSuccess", false);
@@ -236,8 +226,8 @@ public class PerformanceService {
             }
             return responseDto;
         }
-        // code 5: 구매완료 후 취소
-        else if(code == 5){ // 좌석상태 CANCEL으로 변경
+        // code 5: 좌석상태 CANCEL로 변경
+        else if(code == 5){
             canceledSeatList.add(Arrays.toString(new int[]{performanceId, seatId}));
             listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASED_CANCEL));
             result.put("isSuccess", true);
@@ -250,6 +240,17 @@ public class PerformanceService {
 
             return responseDto;
         }
+        // code 7 : 좌석상태 EMPTY로 변경
+        else if (code == 7) {
+            listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.EMPTY));
+            log.debug(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
+            result.put("isSuccess", true);
+            responseDto.setMessage(performanceId+"번 공연 "+ seatId+ "번 좌석 EMPTY으로 변경 완료");
+            responseDto.setStatusCode(200);
+
+            return responseDto;
+        }
+
         responseDto.setMessage("code 확인해주세요");
         responseDto.setStatusCode(400);
         return responseDto;
