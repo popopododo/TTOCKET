@@ -196,10 +196,9 @@ public class PerformanceService {
             responseDto.setStatusCode(200);
             return responseDto;
         }
-        // code 3: 구매중, 사용자가 좌석 선택을 선택하면 PURCHASING으로 변경
+        // code 3: 구매중, 사용자가 좌석 선택을 선택하면 PURCHASING으로 변경, {비어있음, 예매후 취소, 예매 중 취소}일 때만 작동
         else if(code == 3){
             String status = (String) listOperations.index(key, seatId - 1);
-            // {비어있음, 예매후 취소, 예매 중 취소}일 때만 작동
             // 1. 비어있음
             if(status.equals(String.valueOf(SeatStatus.EMPTY))){
                 listOperations.set(key,seatId - 1,String.valueOf(SeatStatus.PURCHASING));
@@ -258,6 +257,7 @@ public class PerformanceService {
             return responseDto;
         }
 
+        // 설정된 code에 해당하지 않은 경우
         responseDto.setMessage("code 확인해주세요");
         responseDto.setBody(result);
         responseDto.setStatusCode(400);
