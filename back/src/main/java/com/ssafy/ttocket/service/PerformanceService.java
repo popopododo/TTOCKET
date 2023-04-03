@@ -13,10 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -37,16 +35,14 @@ public class PerformanceService {
     public ArrayList<String> canceledSeatList = new ArrayList<>();
 
     public ResponseDto performanceDetail(String userId, int performanceId) {
-        // 활용할 자료구조 생성
         Map<String,Object> result = new HashMap<>();
         ResponseDto responseDto = new ResponseDto();
         boolean isLike;
 
-        // DB에서 원하는 데이터 찾아오기
         Performance performance = performanceRepository.findById(performanceId);
         PerformanceLike performanceLike = performanceLikeRepository.findByUserIdAndPerformanceId(userId, performanceId);
 
-        // 공연 좋아요 체크
+        // 공연 좋아요 여부
         if (performanceLike == null || performanceLike.isLike() == false) {
             isLike = false;
         } else {
@@ -67,6 +63,7 @@ public class PerformanceService {
                 .userId(performance.getUser().getId())
                 .build();
 
+        // 현재와 공연 시간과의 차이
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startTime = LocalDateTime.parse(performanceDto.getStartTime());
         LocalDateTime endTime = LocalDateTime.parse(performanceDto.getEndTime());
@@ -74,6 +71,7 @@ public class PerformanceService {
         Duration beforeDuration = Duration.between(startTime, now);
         Duration afterDuration = Duration.between(now, endTime);
 
+        // 예약 가능한 기간에 따라 true/false 표기
         boolean canReserve;
         if (beforeDuration.compareTo(Duration.ZERO) > 0 && afterDuration.compareTo(Duration.ZERO) > 0) {
             canReserve = true;
@@ -86,25 +84,23 @@ public class PerformanceService {
         result.put("performance_dto", performanceDto);
         result.put("is_user_like", isLike);
 
-        // response 형식에 맞게 메시지, result, 상태코드 리턴
-        // 물론 중간중간 원하는 동작 안될시 데이터 넣지 말고 상태코드 다르게 해서 리턴
         responseDto.setMessage("티켓팅 상세보기 데이터 리턴");
         responseDto.setBody(result);
         responseDto.setStatusCode(200);
         return responseDto;
     }
-    //==공연 좌석 만들고 시도==//
+
     public ResponseDto clickLike(String userId, int performanceId) {
 
-        // 활용할 자료구조 생성
         boolean result;
         ResponseDto responseDto = new ResponseDto();
 
-        // 데이터 있는 지 확인
+        // 필요 데이터 조회
         Optional<PerformanceLike> checkPerformanceLike = performanceLikeRepository.findByPerformanceIdAndUserId(performanceId, userId);
         Optional<User> user = userRepository.findById(userId);
         Performance performance = performanceRepository.findById(performanceId);
 
+        // 좋아요 클릭시 상태 변경
         if (checkPerformanceLike.isPresent()) {
             PerformanceLike performanceLike = checkPerformanceLike.get();
             boolean isLiked = performanceLike.isLike();
@@ -133,8 +129,12 @@ public class PerformanceService {
         String key = "seatStatus::" + performanceId;
         ListOperations listOperations = redisTemplate.opsForList();
 
+        // Redis에 대기열 저장 공간이 없을 경우
         if(listOperations.size(key) == 0){
             List<Seat> seats = seatRepository.findByPerformanceId(performanceId);
+//            for (Seat seat : seats) {
+//                listOperations.rightPush(key, String.valueOf(seat.getStatus()));
+//            }
             for(int i = 0; i < seats.size(); i++){
                 listOperations.rightPush(key,String.valueOf(seats.get(i).getStatus()));
             }
