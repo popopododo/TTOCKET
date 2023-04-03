@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { RootState } from '../../app/store';
 import "../../css/Diary.css"
 import useWeb3 from '../../services/web3/useWeb3';
 
 function BoxDiaryWrite() {
-  const [title, setTitle] = useState<string>();
-  const [subTitle, setSubTitle] = useState<string>();
-  const [content, setContent] = useState<string>();
+  const [title, setTitle] = useState<string>("");
+  const [subTitle, setSubTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [onColorPick, setOnColorPick] = useState<boolean>(false);
   const [nowColor, setNowColor] = useState<string>("ffffff");
   const { tokenContract } = useWeb3(); 
 
   const location = useLocation();
+  const navigator = useNavigate();
+
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
 
   function titleHandler(event:React.ChangeEvent<HTMLInputElement>) {
@@ -33,12 +35,22 @@ function BoxDiaryWrite() {
     colorPickerHandler();
   }
   async function submitHandler(event:React.MouseEvent<HTMLElement>) {
-    console.log(location.state.tokenId);
-    console.log(title, subTitle, content, nowColor);
-    const result = await tokenContract?.methods.insertTicketDiary(location.state.tokenId, title, subTitle, content, nowColor).send({from : id,
-      gas : 1000000});
-    if (result !== undefined) {
-      console.log(result);
+    if(title === ""){
+      alert("제목을 입력해주세요!")
+    }
+    else if(subTitle === ""){
+      alert("소제목을 입력해주세요!")
+    }
+    else if(content === ""){
+      alert("내용을 입력해주세요!")
+    }
+    else{
+      const result = await tokenContract?.methods.insertTicketDiary(location.state.tokenId, title, subTitle, content, nowColor).send({from : id,
+        gas : 1000000});
+      if (result !== undefined) {
+        console.log(result);
+        navigator("/box/detail", {state : location.state});
+      }
     }
   }
   

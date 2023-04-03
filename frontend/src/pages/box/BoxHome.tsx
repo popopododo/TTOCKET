@@ -5,56 +5,17 @@ import { RootState } from "../../app/store";
 import { TicketData } from "../../global";
 import useWeb3 from "../../services/web3/useWeb3";
 
-interface dummyType {
-  id: number;
-  name: string;
-  img: string;
-  start: number;
-  location: string;
-  seat: string;
-  date: string;
-}
-
-const dummyData: dummyType[] = [
-  {
-    id: 1,
-    name: "데스노트",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23002291_p_s.jpg",
-    start: 1,
-    location: "잠실 종합운동장",
-    seat: "1층 C열 32번",
-    date: "2023-05-01",
-  },
-  {
-    id: 2,
-    name: "맘마미아",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23000103_p_s.jpg",
-    start: 2,
-    location: "잠실 종합운동장",
-    seat: "2층 A열 03번",
-    date: "2023-06-01",
-  },
-  {
-    id: 3,
-    name: "2023 오은영 토크쇼",
-    img: "http://ticketimage.interpark.com/rz/image/play/goods/poster/23/23000721_p_s.jpg",
-    start: 3,
-    location: "잠실 종합운동장",
-    seat: "J열 10번",
-    date: "2023-07-01",
-  },
-];
-
 function BoxHome() {
   const [address, setAddress] = useState();
     const { tokenContract } = useWeb3();
     const id = useSelector((state: RootState) => state.persistedReducer.user.id);
     const [afterTicketList, setAfterTicketList] = useState<TicketData[]>();
-    const [afterTicketSize, setAfterTicketSize] = useState<number>();
+    const [afterTicketSize, setAfterTicketSize] = useState<number>(0);
     const getRetrieve = useCallback(
         async () => {
             const result = await tokenContract?.methods.getAfterTicketList().call({from : address});
             if (result !== undefined) {
+              console.log(result);
               setAfterTicketList(result[0]);
               setAfterTicketSize(parseInt(result[1]));
             }
@@ -94,7 +55,7 @@ function BoxHome() {
               </Link>
               : null
             ))}
-          {dummyData && dummyData.length === 0 && (
+          {afterTicketSize === 0 && (
             <div>
               <p className="flex items-center justify-center mt-10">
                 <svg

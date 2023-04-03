@@ -69,14 +69,16 @@ function BoxDetail() {
               </div>
           </div>
           <div className="relative flex items-center justify-center border-2 rounded-lg TicketBack">
-              {diary !== undefined && 
-                <div className={"relative w-full h-full bg-[#" + diary.color + "]"}>
-                <p className="absolute w-full text-xl font-bold text-center top-6">{diary.title}</p>
-                <p className="absolute w-full pr-4 text-right top-20">{diary.subtitle}</p>
-                <p className="absolute px-4 top-32 TicketDiaryContent">{diary.content}</p>
+              {diary !== undefined && diary.title !== "" && 
+                <div className={"relative w-full rounded-lg h-full bg-[#" + diary.color + "]"}>
+                <p className="absolute w-full text-2xl font-bold text-center top-6">{diary.title}</p>
+                <p className="absolute w-full pr-6 text-lg text-right top-20">{diary.subtitle}</p>
+                <div className="absolute h-64 w-72 left-2 top-32 notes2">
+                  <p className="px-6 TicketDiaryContent">{diary.content}</p>
+                </div>
               </div>
               }
-              {diary === undefined && 
+              {diary !== undefined && diary.title === "" && 
                 <Link to='/box/diary/write' state={location.state}>
                   <div className="flex justify-center">
                     <button>

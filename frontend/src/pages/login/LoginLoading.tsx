@@ -14,7 +14,6 @@ function LoginLoading() {
     async () => {
         const result = await axiosApi.get('/user/check/'+account);
         if (result !== undefined) {
-            console.log(result)
             if (result.data.status_code === 200) {
                 if (account) {
                     dispatch(setId(account));

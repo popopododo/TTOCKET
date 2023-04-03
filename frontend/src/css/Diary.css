@@ -36,6 +36,15 @@ textarea:focus{
 	padding: 8px 5px;
   }
 
+.notes2 {
+	background-attachment: local;
+	background-image:
+	  linear-gradient(to right, rgba(255, 255, 255, 0) 10px, transparent 10px),
+	  linear-gradient(to left, rgba(255, 255, 255, 0) 10px, transparent 10px),
+	  repeating-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 31px, rgba(0,0,0,0.4) 31px, rgba(0,0,0,0.4) 32px);
+	margin: 10px 10px;
+  }
+
 .InputUnder{
 	border-bottom-width: 1px;
 }
