@@ -9,6 +9,7 @@ spring:
     port: 6379
     password: '13524'
 
-logging:
-  level:
-    com.ssafy.ttocket: DEBUG
+  logging:
+    level:
+      com.ssafy.tttocket: DEBUG
+

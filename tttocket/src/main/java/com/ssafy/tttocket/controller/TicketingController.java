@@ -25,18 +25,22 @@ public class TicketingController {
 
     @MessageMapping(value = "/chat/enter")
     public void enter(@RequestBody WaitQueEnterDto waitQueEnterDto){
-        log.debug("userId : "+waitQueEnterDto.getUserId() +",  performId : "+ waitQueEnterDto.getPerformId());
+        log.info("userId : "+waitQueEnterDto.getUserId() +",  performId : "+ waitQueEnterDto.getPerformId());
         // 해당 유저를 해당 공연 대기큐에 추가
         Map<String, Object> returnData = ticketingService.addToWaitQue(waitQueEnterDto.getUserId(), waitQueEnterDto.getPerformId());
-        sendingOperations.convertAndSend("/sub/chat/room/"+waitQueEnterDto.getPerformId() ,returnData);
+        sendingOperations.convertAndSend("/sub/chat/perform/"+waitQueEnterDto.getPerformId() ,returnData);
     }
 
     @Scheduled(fixedRate = 30000)
     public void QuePoll(){
+        log.info("앙 실행");
         Set<String> redisKeys = redisTemplate.keys("WaitQue");
         Iterator<String> it = redisKeys.iterator();
         while (it.hasNext()) {
+
             String data = it.next();
+            log.info("data : {data}");
+
             Integer performId = Integer.parseInt(data.split("::")[1]);
             String debateChatDtos = redisTemplate.opsForList().range(data,0,-1).toString();
             log.info(debateChatDtos);
