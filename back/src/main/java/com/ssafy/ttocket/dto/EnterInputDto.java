@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EnterInputDto {
     @JsonProperty("performId")
-    private int performId;
+    private String performId;
 
     @JsonProperty("seatNum")
-    private int seatNum;
+    private String seatNum;
 
     @JsonProperty("nickname")
     private String nickname;
