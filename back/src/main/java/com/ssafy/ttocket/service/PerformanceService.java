@@ -364,6 +364,5 @@ public class PerformanceService {
         responseDto.setMessage("공연 입장 로그 목록 리턴");
         responseDto.setStatusCode(200);
         return responseDto;
-
     }
 }
