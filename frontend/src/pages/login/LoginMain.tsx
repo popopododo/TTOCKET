@@ -59,9 +59,11 @@ function LoginMain() {
             <p className='my-2 text-center text-ttokGray'>티켓 보관함을 통해 보관하세요 </p>
           </div>
           <div>
-            <div className="relative mb-5 h-80">
-              <img className="absolute top-0 object-cover mx-auto mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 left-36 rounded-2xl" src={LoginImg4} alt="로그인 이미지4"/>
-              <img className="absolute object-cover mx-auto mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 top-4 left-20 rounded-2xl" src={LoginImg3} alt="로그인 이미지4" />
+            <div className="flex justify-center w-full mb-5 h-80">
+              <div className='relative w-64'>
+                <img className="absolute top-0 object-cover mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 rounded-2xl" src={LoginImg4} alt="로그인 이미지4"/>
+                <img className="absolute object-cover mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 top-4 left-20 rounded-2xl" src={LoginImg3} alt="로그인 이미지4" />
+              </div>
             </div>
             <p className='text-xl text-center text-white'>이더리움 기반 티켓팅</p>
             <p className='mt-4 text-center text-ttokGray'>MetaMask 지갑을 연결해서 </p>

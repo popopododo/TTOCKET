@@ -22,7 +22,7 @@ function TicketHomeCard(props:{cardData : TicketData, index : number} ) {
             </div>
             <div className='absolute bottom-0 h-20 pt-2 TicketInfo left-16'>
                 <p className='m-2 text-sm text-right truncate'>{props.cardData.location}</p>
-                <p className='m-2 text-lg font-bold text-center'>1층 A구역 23번</p>
+                <p className='m-2 text-lg font-bold text-center'>{props.cardData.seatNum}번 좌석</p>
             </div>
         </div>
         </Link>
