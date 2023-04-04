@@ -5,7 +5,7 @@ import HeaderNav from "../../components/HeaderNav";
 
 function SponsorHome() {
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-full mb-20">
       <HeaderNav />
       <div className="">
         <div className="mt-40 w-full text-center mb-20 ">
