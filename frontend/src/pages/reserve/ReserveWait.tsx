@@ -37,9 +37,17 @@ function ReserveWait (){
                     (message)=>{
                         //메시지 받는거?
                         // 총 연결 요청 수
-                        setTotalWait(JSON.parse(message.body).que_size);
+                        const data = JSON.parse(message.body);
+                        console.log(data);
+                        
+                        setTotalWait(data.que_size);
                         //메세지가 연결 종료 flag를 받으면 navigate
                         
+                        if(data.isMyTurn){
+                            //메세지가 연결 종료 flag를 받으면 navigate
+                            client.current?.disconnect();
+                            navigator('/reserve',{state: performId});
+                        }
                     }
                 )
 
