@@ -151,7 +151,7 @@ function PerformItem() {
           performData.start_time.slice(0, 10),
           formatDate(todayTime)
         ) ? (
-          <button className="h-10 font-bold text-white bg-gray-300 rounded w-80">
+          <button className="h-10 font-bold text-white bg-gray-300 rounded w-80 disabled">
             {performData.start_time.slice(0, 10)}{" "}
             {performData?.end_time.slice(11, 16)} 오픈 예정
           </button>
