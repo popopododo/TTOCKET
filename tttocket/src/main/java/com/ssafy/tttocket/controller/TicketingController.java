@@ -11,7 +11,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.*;
 
 @Controller
@@ -22,6 +21,7 @@ public class TicketingController {
     private final SimpMessageSendingOperations sendingOperations;
     private final TicketingService ticketingService;
     private final RedisTemplate redisTemplate;
+    private static final int popAmount = 10;
 
     @MessageMapping(value = "/chat/enter")
     public void enter(@RequestBody WaitQueEnterDto waitQueEnterDto){
@@ -37,14 +37,12 @@ public class TicketingController {
         Set<String> redisKeys = redisTemplate.keys("WaitQue*");
         Iterator<String> it = redisKeys.iterator();
         while (it.hasNext()) {
-
             String key = it.next();
             List waitQue = redisTemplate.opsForList().range(key, 0, -1);
             int idx = 0;
-
             for (Object o : waitQue) {
                 log.info("Object o.toString : {}", o.toString());
-                if(idx >= 10){ //이번 차례 아닌 놈들
+                if(idx >= popAmount){ //이번 차례 아닌 놈들
                     Map<String,Object> result = new HashMap<>();
                     result.put("isMyTurn",false);
                     result.put("myOrder",idx-9);
@@ -53,6 +51,7 @@ public class TicketingController {
                 else{ //이번 차례인놈들!
                     Map<String,Object> result = new HashMap<>();
                     result.put("isMyTurn",true);
+                    result.put("myOrder",0);
                     redisTemplate.opsForList().leftPop(key);
                     sendingOperations.convertAndSend("/sub/id/" + o.toString() ,result);
                 }
