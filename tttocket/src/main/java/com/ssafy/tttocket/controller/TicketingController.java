@@ -34,17 +34,29 @@ public class TicketingController {
     @Scheduled(fixedRate = 30000)
     public void QuePoll(){
         log.info("앙 실행");
-        Set<String> redisKeys = redisTemplate.keys("WaitQue");
+        Set<String> redisKeys = redisTemplate.keys("WaitQue*");
         Iterator<String> it = redisKeys.iterator();
         while (it.hasNext()) {
 
-            String data = it.next();
-            log.info("data : {data}");
+            String key = it.next();
+            List waitQue = redisTemplate.opsForList().range(key, 0, -1);
+            int idx = 0;
 
-            Integer performId = Integer.parseInt(data.split("::")[1]);
-            String debateChatDtos = redisTemplate.opsForList().range(data,0,-1).toString();
-            log.info(debateChatDtos);
-            //이제 여기서 10개 빼면 댐
+            for (Object o : waitQue) {
+                if(idx >= 10){ //이번 차례 아닌 놈들
+                    Map<String,Object> result = new HashMap<>();
+                    result.put("isMyTurn",false);
+                    result.put("myOrder",idx-9);
+                    sendingOperations.convertAndSendToUser(o.toString(),"",result);
+                }
+                else{ //이번 차례인놈들!
+                    Map<String,Object> result = new HashMap<>();
+                    result.put("isMyTurn",true);
+                    redisTemplate.opsForList().leftPop(key);
+                    sendingOperations.convertAndSendToUser(o.toString(),"",result);
+                }
+                idx++;
+            }
         }
     }
 }
