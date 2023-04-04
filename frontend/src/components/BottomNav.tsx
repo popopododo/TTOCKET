@@ -13,6 +13,7 @@ export default function BottomNav() {
   
   return (
     <div className="fixed bottom-0 z-10 flex w-screen pt-2 bg-white BottomNav">
+      <div className="absolute h-1.5 left-4 top-0 w-13 bg-ttokLightPink "></div>
       <div className="flex items-center justify-start flex-1 ml-4">
         <Link to="/perform">
           <button>
@@ -38,10 +39,10 @@ export default function BottomNav() {
       </div>
       <div className="flex items-center justify-center flex-1">
         <Link to="/home">
-          <button className="flex items-center justify-center w-full">
-            <img className="mt-1 w-9" src={BottomNavHome} alt="홈 이미지" />
-          </button>
-          <p className="mt-1 text-xs text-center">홈</p>
+            <button className="flex items-center justify-center w-full">
+              <img className="mt-1 w-9" src={BottomNavHome} alt="홈 이미지" />
+            </button>
+            <p className="mt-1 text-xs text-center">홈</p>
         </Link>
       </div>
       <div className="flex items-center justify-end flex-1 mr-4">

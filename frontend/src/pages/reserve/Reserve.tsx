@@ -5,6 +5,7 @@ import ReserveProgress from './ReserveProgress'
 import ReserveFinish from './ReserveFinish'
 import HeaderNav from '../../components/HeaderNav'
 import ReserveFail from './ReserveFail'
+import ReserveWait from './ReserveWait'
 
 function Reserve() {
   return (
@@ -12,6 +13,7 @@ function Reserve() {
       <HeaderNav />
         <Routes>
           <Route path="/" element={<ReserveSeat/>}/>
+          <Route path="/wait" element={<ReserveWait/>}/>
           <Route path="/progress" element={<ReserveProgress/>}/>
           <Route path="/fail" element={<ReserveFail/>}/>
           <Route path="/finish" element={<ReserveFinish/>}/>
