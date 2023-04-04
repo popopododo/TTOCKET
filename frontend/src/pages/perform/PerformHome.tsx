@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PerformBanner from "./PerformBanner";
 import PerformSlide from "./PerformSlide";
 import { Link } from "react-router-dom";
@@ -24,6 +24,17 @@ function PerformHome() {
       console.log(err);
     }
   };
+
+  const checkSoonPerform = useMemo(() => {
+    if (performSoon.length === 0) {
+      return (
+        <p className="text-gray-500 font-bold text-center">
+          공연이 임박한 공연이 없습니다
+        </p>
+      );
+    }
+    return <PerformSlide data={performSoon} />;
+  }, [performSoon]);
 
   useEffect(() => {
     performDataHandler();
@@ -61,7 +72,7 @@ function PerformHome() {
             </p>
           </div>
           <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center">
-            <PerformSlide data={performSoon} />
+            {checkSoonPerform}
           </div>
         </div>
         <div className="mb-20">
