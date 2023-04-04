@@ -1,111 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 export default function HeaderNav() {
+  const location = useLocation();
+  const [headerText, setHeaderText] = useState<string>("똑켓");
+  useEffect(() => {
+    const path = location.pathname.split('/')[1];
+    if(path === 'home'){
+      setHeaderText("나의 티켓")
+    }
+    else if(path === 'box'){
+      setHeaderText("보관함")
+    }
+    else if(path === 'perform'){
+      setHeaderText("공연 예매")
+    }
+  }, [location])
   return (
     <div className="sticky top-0 z-10 flex justify-center w-screen overflow-hidden">
-      <div className="flex w-full pt-2 pb-1 bg-white HeaderNav">
-        <p className="pl-2 text-3xl text-left HeaderNavTitle">똑켓</p>
-        <p className="pt-3 pl-2 text-left waviy">
-          <span
-            style={
-              {
-                "--i": 1,
-              } as React.CSSProperties
-            }
-          >
-            N
-          </span>
-          <span
-            style={
-              {
-                "--i": 2,
-              } as React.CSSProperties
-            }
-          >
-            o
-          </span>
-          <span
-            style={
-              {
-                "--i": 3,
-              } as React.CSSProperties
-            }
-          >
-            .
-          </span>
-          <span
-            style={
-              {
-                "--i": 4,
-              } as React.CSSProperties
-            }
-          >
-            1
-          </span>
-          <span
-            style={
-              {
-                "--i": 5,
-              } as React.CSSProperties
-            }
-          >
-            &nbsp;{" "}
-          </span>
-          <span
-            style={
-              {
-                "--i": 6,
-              } as React.CSSProperties
-            }
-          >
-            티
-          </span>
-          <span
-            style={
-              {
-                "--i": 7,
-              } as React.CSSProperties
-            }
-          >
-            켓
-          </span>
-          <span
-            style={
-              {
-                "--i": 8,
-              } as React.CSSProperties
-            }
-          >
-            &nbsp;
-          </span>
-          <span
-            style={
-              {
-                "--i": 9,
-              } as React.CSSProperties
-            }
-          >
-            플
-          </span>
-          <span
-            style={
-              {
-                "--i": 10,
-              } as React.CSSProperties
-            }
-          >
-            랫
-          </span>
-          <span
-            style={
-              {
-                "--i": 11,
-              } as React.CSSProperties
-            }
-          >
-            폼
-          </span>
-        </p>
+      <div className="flex items-end justify-center w-full h-12 pt-2 pb-1 HeaderNav">
+        <p className="font-bold">{headerText}</p>
       </div>
     </div>
   );

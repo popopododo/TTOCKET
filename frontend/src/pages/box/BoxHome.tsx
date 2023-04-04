@@ -27,19 +27,16 @@ function BoxHome() {
         getRetrieve();
     }, [id, getRetrieve]);
   return (
-    <div className="flex flex-col items-center justify-center mt-20">
-      <div className="w-full h-20 text-center">
-        <p className="mt-6 text-xl font-bold">티켓 보관함</p>
-      </div>
+    <div className="flex items-center justify-center w-full h-5/6">
         <div>
           {afterTicketList !== undefined && afterTicketSize !== undefined &&
             afterTicketList.map((data : any, index : number) => (
               index < afterTicketSize ? 
               <Link key={index} to="/box/detail" state={data}>
                 <div
-                  className="flex items-center my-4 shadow-md w-80 h-28 shadow-gray-400"
+                  className="flex items-center my-4 bg-white shadow-md rounded-l-md w-80 h-28 shadow-gray-400"
                 >
-                  <div className="h-28 w-4 bg-[#FB7185] mr-2"></div>
+                  <div className="h-28 w-4 bg-[#FB7185] mr-2 rounded-l-md"></div>
                   <img src={"https://ipfs.io/ipfs/" + data.performPoster} alt="poster" className="w-16 h-24" />
                   <div className="mb-1 ml-2">
                     <p className="mb-2 text-lg font-bold">{data.title}</p>
@@ -56,7 +53,7 @@ function BoxHome() {
             ))}
           {afterTicketSize === 0 && (
             <div>
-              <p className="flex items-center justify-center mt-10">
+              <p className="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -72,7 +69,8 @@ function BoxHome() {
                   />
                 </svg>
               </p>
-              <p className="mt-7">구매하신 티켓이 없습니다</p>
+              <p className="mt-4 text-xl font-bold text-center">보관함이 비었습니다!</p>
+              <p className="mt-4 text-center text-pink-500 ">공연이 끝난 티켓이 자동으로 보관됩니다</p>
             </div>
           )}
         </div>

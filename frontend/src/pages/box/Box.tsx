@@ -7,7 +7,7 @@ import BoxDiary from "./BoxDiary";
 
 function Box() {
   return (
-    <div>
+    <div className="h-screen bg-ttokLightPink bg-opacity-30">
       <HeaderNav />
       <Routes>
         <Route path="/" element={<BoxHome />} />

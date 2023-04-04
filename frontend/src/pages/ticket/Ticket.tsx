@@ -8,7 +8,7 @@ import "../../css/Ticket.css";
 
 function Ticket() {
   return (
-    <div className='h-screen relative'>
+    <div className='relative h-screen bg-ttokLightPink bg-opacity-30'>
         <HeaderNav/>
         <Routes>
           <Route path="/" element={<TicketHome />} />
