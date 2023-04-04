@@ -1,20 +1,33 @@
 @font-face {
-    font-family: "title-font";
-    src: url("../assets/fonts/SDSamliphopangcheTTFOutline.ttf");
-  }
-  .HeaderNavTitle{
-    font-family: "title-font";
-  }
+  font-family: "SUIT-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "SUIT-Regular";
+  font-weight: 400;
+  letter-spacing: 0.4px;
+}
 
-  .NickName{
-    font-family: "title-font";
-  }
+@font-face {
+  font-family: "title-font";
+  src: url("../assets/fonts/SDSamliphopangcheTTFOutline.ttf");
+}
+.HeaderNavTitle {
+  font-family: "title-font";
+}
 
-.BottomNav{
+.NickName {
+  font-family: "title-font";
+}
+
+.BottomNav {
   border-top-width: 1px;
 }
 
-.HeaderNav{
+.HeaderNav {
   border-bottom-width: 2px;
 }
 
@@ -25,16 +38,17 @@
   position: relative;
   display: inline-block;
   text-transform: uppercase;
-  animation: waviy 2s infinite ;
-  animation-delay: calc(.2s * var(--i));
-  
+  animation: waviy 2s infinite;
+  animation-delay: calc(0.2s * var(--i));
 }
 @keyframes waviy {
-  0%,40%,100% {
-    transform: translateY(0)
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
   }
   20% {
     transform: translateY(-5px);
-    color: silver
+    color: silver;
   }
 }

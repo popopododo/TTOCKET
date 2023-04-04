@@ -42,7 +42,7 @@ function PerformHome() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-6 h-6 ml-1 text-red-600"
+                className="w-6 h-6 ml-1 text-red-600 mt-[2px]"
               >
                 <path
                   fillRule="evenodd"
@@ -50,9 +50,11 @@ function PerformHome() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="ml-1">곧 티켓 예매가 마감돼요!</span>
+              <span className="ml-1 text-lg mt-[1px]">
+                곧 티켓 예매가 마감돼요!
+              </span>
             </p>
-            <p className="mr-1 text-sm text-gray-500 font-bold">
+            <p className="mr-1 text-sm text-gray-500 font-bold mt-[7px]">
               <Link to="performlist" state="전체 공연 목록">
                 공연 전체목록
               </Link>
@@ -69,14 +71,16 @@ function PerformHome() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-6 h-6 text-[#FF9191]"
+                className="w-6 h-6 text-[#FF9191] mt-[2px]"
               >
                 <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
               </svg>
 
-              <span className="font-bold ml-1">나의 관심 목록</span>
+              <span className="font-bold ml-1 text-lg mt-[1px]">
+                나의 관심 목록
+              </span>
             </p>
-            <p className="mr-1 text-sm text-gray-500 font-bold">
+            <p className="mr-1 text-sm text-gray-500 font-bold mt-1 mt-[7px]">
               <Link to="performLikelist" state="나의 관심">
                 목록가기
               </Link>
@@ -84,7 +88,7 @@ function PerformHome() {
           </div>
           <div className="bg-[#FFE4E4] h-44 flex flex-col justify-center text-center">
             {likePerform.length === 0 ? (
-              <p className="text-gray-500 font-bold">
+              <p className="text-gray-500 font-bold ">
                 아직 관심으로 지정한 공연이 없습니다
               </p>
             ) : (
