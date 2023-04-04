@@ -31,7 +31,7 @@ public class TicketingController {
         sendingOperations.convertAndSend("/sub/chat/perform/"+waitQueEnterDto.getPerformId() ,returnData);
     }
 
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 10000)
     public void QuePoll(){
         log.info("앙 실행");
         Set<String> redisKeys = redisTemplate.keys("WaitQue*");
@@ -43,17 +43,18 @@ public class TicketingController {
             int idx = 0;
 
             for (Object o : waitQue) {
+                log.info("Object o.toString : {}", o.toString());
                 if(idx >= 10){ //이번 차례 아닌 놈들
                     Map<String,Object> result = new HashMap<>();
                     result.put("isMyTurn",false);
                     result.put("myOrder",idx-9);
-                    sendingOperations.convertAndSendToUser(o.toString(),"",result);
+                    sendingOperations.convertAndSend("/sub/id/abc" ,result);
                 }
                 else{ //이번 차례인놈들!
                     Map<String,Object> result = new HashMap<>();
                     result.put("isMyTurn",true);
                     redisTemplate.opsForList().leftPop(key);
-                    sendingOperations.convertAndSendToUser(o.toString(),"",result);
+                    sendingOperations.convertAndSend("/sub/id/abc" ,result);
                 }
                 idx++;
             }
