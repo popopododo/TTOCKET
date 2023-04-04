@@ -11,17 +11,15 @@ function TicketHome() {
   const [address, setAddress] = useState();
   const { tokenContract } = useWeb3();
   const id = useSelector((state: RootState) => state.persistedReducer.user.id);
-  const nickname = useSelector(
-    (state: RootState) => state.persistedReducer.user.nickname
-  );
-  const [ticketList, setTicketList] = useState<TicketData[]>();
-  const [ticketSize, setTicketSize] = useState<number>();
+  const [ticketList, setTicketList] = useState<TicketData[]>([]);
+  const [ticketSize, setTicketSize] = useState<number>(0);
 
   const getRetrieve = useCallback(async () => {
     const result = await tokenContract?.methods
       .getBeforeTicketList()
       .call({ from: address });
     if (result !== undefined) {
+      console.log(result)
       setTicketList(result[0]);
       setTicketSize(parseInt(result[1]));
     }
@@ -32,11 +30,7 @@ function TicketHome() {
     getRetrieve();
   }, [id, getRetrieve]);
   return (
-    <div className="">
-      <p className="pt-24 mb-8 text-xl font-bold text-center">
-        {nickname} 님의 티켓
-      </p>
-
+    <div className="flex items-center justify-center w-full h-5/6">
       {ticketList !== undefined &&
         ticketSize !== undefined &&
         ticketSize !== 0 && (
@@ -52,8 +46,8 @@ function TicketHome() {
             )}
           </div>
         )}
-      {ticketSize !== undefined && ticketSize === 0 && (
-        <div className="flex justify-center mt-32 place-items-center">
+      {ticketSize === 0 && (
+        <div className="flex justify-center place-items-center">
           <div>
             <div className="flex items-center justify-center">
               <svg
@@ -62,7 +56,7 @@ function TicketHome() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-32 h-32"
+                className="w-24 h-24"
               >
                 <path
                   strokeLinecap="round"
@@ -71,10 +65,10 @@ function TicketHome() {
                 />
               </svg>
             </div>
-            <p className="mt-4 text-2xl font-bold text-center">
+            <p className="mt-4 text-xl font-bold text-center">
               이용 가능한 티켓이 없습니다.
             </p>
-            <p className="mt-4 text-center text-gray-400">
+            <p className="mt-4 text-center text-pink-500">
               티켓을 예매하고 티켓을 관리해보세요!
             </p>
           </div>
