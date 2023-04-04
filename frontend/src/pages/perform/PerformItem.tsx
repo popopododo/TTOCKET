@@ -156,7 +156,7 @@ function PerformItem() {
             {performData?.end_time.slice(11, 16)} 오픈 예정
           </button>
         ) : (
-          <Link to="/reserve/wait" state={location.state}>
+          <Link to="/reserve/" state={location.state}>
             <button className="bg-[#FB7185] text-white w-80 h-10 rounded font-bold">
               예매하기
             </button>
