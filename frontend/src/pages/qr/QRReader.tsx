@@ -20,7 +20,6 @@ function QRReader (){
     const getEnterInfo = useCallback(
         async()=>{
             const { data } = await axiosApi.get(`/performance/log/${location.state}`);
-            console.log(data.body.enter_log_list);
             
             setEnter(data.body.enter_cnt);
             setTotalSeat(data.body.max_seat);
@@ -31,19 +30,14 @@ function QRReader (){
     
     //QR 코드 인증 및 입장 처리
     const authQRCode = async (qrCode : string) =>{
-        console.log(`QrCode >> ${qrCode}`);
         let qr = JSON.parse(qrCode);
         
-        console.log(qr);
         
         const { data } = await axiosApi.post('/performance/enter', qr);
-        console.log(data);
         
         if(data.status_code === 200){
             //로그 맨 위에 추가
-            console.log(data.body);
             
-            console.log(data.body.enter_log);
             const list: enterInfo[] = [data.body.enter_log];
             
             enterList?.forEach((enter)=>{
@@ -87,10 +81,10 @@ function QRReader (){
                     </div>
                     <div className='mt-4 border rounded-lg'>
                         <div className="">
-                            <div className="flex h-8 w-full rounded-t-lg border-b-2 text-ttokPink">
-                                <span className='w-1/4 text-center font-bold'>닉네임</span>
-                                <span className='w-1/4 text-center font-bold'>좌석</span>
-                                <span className='w-2/4 text-center font-bold'>시간</span>
+                            <div className="flex w-full h-8 border-b-2 rounded-t-lg text-ttokPink">
+                                <span className='w-1/4 font-bold text-center'>닉네임</span>
+                                <span className='w-1/4 font-bold text-center'>좌석</span>
+                                <span className='w-2/4 font-bold text-center'>시간</span>
                             </div>
                         </div>
                         <div className="h-64 overflow-scroll ">

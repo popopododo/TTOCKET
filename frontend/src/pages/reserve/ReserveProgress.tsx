@@ -8,7 +8,6 @@ import useWeb3 from '../../services/web3/useWeb3';
 function ReserveProgress(){
     const location = useLocation();
     const navigate = useNavigate();
-    console.log(location.state.performId)
     const { tokenContract } = useWeb3();    // 스마트 컨트렉트 계약
     const id = useSelector((state: RootState) => state.persistedReducer.user.id);  //address 가져오기
     const nickname = useSelector((state: RootState) => state.persistedReducer.user.nickname);  //address 가져오기
@@ -16,13 +15,11 @@ function ReserveProgress(){
     const confirmReservation = useCallback(
         async () => {
             //예약 확정
-            const {data} = await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
-            console.log(data);
+            await axiosApi.put(`/performance/${location.state.performId}/${location.state.seatNumber}/2`);
         },[location]
     )
     const createTicket = useCallback(
         async () =>{
-            console.log(`id : ${id}`);
             
             if(!id){    // 유효성 검사
                 alert('잘못된 요청입니다.');
@@ -37,7 +34,6 @@ function ReserveProgress(){
                 if(location.state.status && location.state.status === "PURCHASED_CANCEL"){
                     const result = await tokenContract?.methods.buyCanceledTicket(location.state.performId, location.state.seatNumber, nickname).send({from : id,
                         gas : 1000000, value: location.state.price});
-                        console.log(result);
                     if(result !== undefined){
                         confirmReservation();
                         navigate(`/reserve/finish`);
@@ -47,7 +43,6 @@ function ReserveProgress(){
                     // 나머지 티켓 구매
                     const result = await tokenContract?.methods.createTicket(location.state.performId, nickname , location.state.seatNumber).send({from : id,
                         gas : 1000000, value: location.state.price});
-                        console.log(result);
                     if(result !== undefined){
                         confirmReservation();
                         navigate(`/reserve/finish`);
@@ -74,7 +69,6 @@ function ReserveProgress(){
             event.returnValue = '';
 
             // Do something when the browser is closed or refreshed
-            console.log('Browser is about to unload');
             alert('결제 실패!!');
             navigate(`/reserve/fail`, {state:{
                 performId : location.state.performId,

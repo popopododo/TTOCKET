@@ -48,7 +48,6 @@ function BoxDiaryWrite() {
       const result = await tokenContract?.methods.insertTicketDiary(location.state.tokenId, title, subTitle, content, nowColor).send({from : id,
         gas : 1000000});
       if (result !== undefined) {
-        console.log(result);
         navigator("/box/detail", {state : location.state});
       }
     }

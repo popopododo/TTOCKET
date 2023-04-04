@@ -26,7 +26,6 @@ function BoxDetail() {
     if (result !== undefined){
       setDiary(result.diary);
       setBehinds(result.behinds);
-      console.log(result);
     }
   }, [id, location.state, tokenContract?.methods]);
   

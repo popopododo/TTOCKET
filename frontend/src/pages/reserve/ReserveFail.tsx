@@ -16,10 +16,9 @@ function ReserveFail() {
   const cancelSeat = useCallback(
     async () => {
         // 좌석 변경 요청 7 : * -> EMPTY
-        const { data } = await axiosApi.put(
+        await axiosApi.put(
         `/performance/${location.state.performId}/${location.state.seatNumber}/7`
         );
-        console.log(data);
         
     },[location])
 
