@@ -1,8 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import BottomNavHome from "../assets/bottomNavHome.png";
 
 export default function BottomNav() {
+  const location = useLocation();
+  
+  useEffect(() => {
+    if(location.pathname.split('/')[1] === 'home'){
+      
+    }
+  }, [location])
+  
   return (
     <div className="fixed bottom-0 z-10 flex w-screen pt-2 bg-white BottomNav">
       <div className="flex items-center justify-start flex-1 ml-4">
@@ -31,7 +39,7 @@ export default function BottomNav() {
       <div className="flex items-center justify-center flex-1">
         <Link to="/home">
           <button className="flex items-center justify-center w-full">
-            <img className="w-8" src={BottomNavHome} alt="홈 이미지" />
+            <img className="mt-1 w-9" src={BottomNavHome} alt="홈 이미지" />
           </button>
           <p className="mt-1 text-xs text-center">홈</p>
         </Link>
