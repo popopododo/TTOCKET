@@ -45,7 +45,7 @@ function BoxDetail() {
           </Link>
         </div>
       </button>
-      <div className="mx-8 mt-8 TicketFlip" onClick={ticketClick}>
+      <div className="mx-8 mt-8 bg-white shadow-lg TicketFlip" onClick={ticketClick}>
         <div className={"relative TicketCard "+ (flipToggle ? "is-flipped" : "")}>
           <div className='absolute bg-white border-2 rounded-lg TicketFront'>
               <div className='absolute flex items-center justify-center w-8 h-full border-r-2 border-dashed'>
