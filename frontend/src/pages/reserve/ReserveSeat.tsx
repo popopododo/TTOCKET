@@ -32,10 +32,8 @@ function ReserveSeat() {
       // 공연 정보 set
       setPerformInfo(data.body.perform);
   
-      console.log(data.body);
     }catch(error :any){
       console.log(error.status);
-      
       console.log(error.response.data);
       
     }
@@ -44,8 +42,6 @@ function ReserveSeat() {
   // 공연 좌석 정보 가져오기
   useEffect(() => {
     setPerformId(location.state);
-    console.log(`location.state >> ${location.state}`);
-    
     //공연 아이디
     getSeatInfo(location.state);
 
@@ -84,7 +80,7 @@ function ReserveSeat() {
           <p className="text-lg font-bold">STAGE</p>
         </div>
         <div className="mt-20">
-          <div className="flex text-xl font-bold mx-2">
+          <div className="flex mx-2 text-xl font-bold">
             <span className="mr-auto">좌석</span>
             <button onClick={()=>{getSeatInfo(performId)}}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 my-auto">

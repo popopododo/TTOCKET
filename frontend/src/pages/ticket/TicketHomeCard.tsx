@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { TicketData } from '../../global'
 
 function TicketHomeCard(props:{cardData : TicketData, index : number} ) {
-  console.log(props.cardData);
   return (
     <div key={props.index} className='relative flex-shrink-0 mx-8 border-2 rounded-lg shadow-lg Ticket1'>
         <Link to='/home/detail' key={props.index} state={props.cardData}>

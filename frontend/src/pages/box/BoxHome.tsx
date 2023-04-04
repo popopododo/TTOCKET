@@ -15,7 +15,6 @@ function BoxHome() {
         async () => {
             const result = await tokenContract?.methods.getAfterTicketList().call({from : address});
             if (result !== undefined) {
-              console.log(result);
               setAfterTicketList(result[0]);
               setAfterTicketSize(parseInt(result[1]));
             }

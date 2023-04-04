@@ -27,12 +27,10 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
 
   // 좌석 예약하기 로직
   const reserveSeat = async (seat: number) => {
-    console.log("reserve.status >>", reserve.status);
     
     const { data } = await axiosApi.put(  // 좌석 변경 요청 3 : empty, PURCHASING_CANCEL -> PURCHASING
       `/performance/${performId}/${seat}/3`
     );
-    console.log(data);
 
     if(data.status_code !== 200){ //실패 로직
       navigate(`/reserve/fail`,{state : {
@@ -72,7 +70,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
           onClick={onClose}
         >
           <svg
-            className="h-6 w-6"
+            className="w-6 h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -129,7 +127,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
                 d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
               />
             </svg>
-            <h2 className="font-bold ml-1">{reserve.title}</h2>
+            <h2 className="ml-1 font-bold">{reserve.title}</h2>
           </div>
           <div className="flex px-4">
             <span className="mr-auto">
@@ -159,15 +157,15 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
                 d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
               />
             </svg>
-            <h2 className="font-bold ml-1">취소 수수료 안내</h2>
+            <h2 className="ml-1 font-bold">취소 수수료 안내</h2>
           </div>
           <div className="px-4">
             {/* 테이블 섹션 */}
-            <table className="text-left text-xs border-collapse border-slate-100 min-w-full">
+            <table className="min-w-full text-xs text-left border-collapse border-slate-100">
               <thead>
                 <tr>
-                  <th className="border-b-2 text-sm py-2">취소일</th>
-                  <th className="border-b-2 text-sm py-2">환불 금액</th>
+                  <th className="py-2 text-sm border-b-2">취소일</th>
+                  <th className="py-2 text-sm border-b-2">환불 금액</th>
                 </tr>
               </thead>
               <tbody className="align-baseline">
@@ -193,7 +191,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
         </div>
 
         {/* 체크 박스 */}
-        <div className="m-4 flex">
+        <div className="flex m-4">
           <input
             className="w-4 h-4"
             id="default-checkbox"
@@ -215,7 +213,7 @@ const Modal = ({ isOpen, onClose, performId, reserve }: BtnProps) => {
             예매
           </button>
           <button
-            className="px-14 py-1 mx-auto bg-gray-300 text-black rounded-lg"
+            className="py-1 mx-auto text-black bg-gray-300 rounded-lg px-14"
             onClick={onClose}
           >
             취소
