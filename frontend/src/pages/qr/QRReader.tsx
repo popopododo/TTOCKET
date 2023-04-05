@@ -32,7 +32,6 @@ function QRReader (){
     const authQRCode = async (qrCode : string) =>{
         let qr = JSON.parse(qrCode);
         
-        
         const { data } = await axiosApi.post('/performance/enter', qr);
         
         if(data.status_code === 200){
@@ -43,8 +42,6 @@ function QRReader (){
             enterList?.forEach((enter)=>{
                 list.push(enter);
             });
-
-            // list.push(...enterList);
             
             setEnterList(list);
 
