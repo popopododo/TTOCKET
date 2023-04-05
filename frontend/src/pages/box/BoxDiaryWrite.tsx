@@ -76,7 +76,7 @@ function BoxDiaryWrite() {
             <button id="ffd9d9" className='mx-2 bg-[#ffd9d9] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
             <button id="ffceb2" className='mx-2 bg-[#ffceb2] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
             <button id="fffa9e" className='mx-2 bg-[#fffa9e] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
-            <button id="cefd9f" className='mx-2 bg-[#cefd9f] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
+            <button id="d1fff7" className='mx-2 bg-[#d1fff7] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
             <button id="ffffff" className='mx-2 bg-[#ffffff] border-2 border-gray-200 rounded-full w-8 h-8' onClick={colorChangeHandler}></button>
             </div>
           </div>

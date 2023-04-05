@@ -45,9 +45,9 @@ function BoxDetail() {
           </Link>
         </div>
       </button>
-      <div className="mx-8 mt-8 bg-white shadow-lg TicketFlip" onClick={ticketClick}>
+      <div className="mx-8 mt-8 TicketFlip" onClick={ticketClick}>
         <div className={"relative TicketCard "+ (flipToggle ? "is-flipped" : "")}>
-          <div className='absolute bg-white border-2 rounded-lg TicketFront'>
+          <div className='absolute bg-white rounded-lg shadow-lg TicketFront'>
               <div className='absolute flex items-center justify-center w-8 h-full border-r-2 border-dashed'>
                   <p className='absolute text-xs text-center w-60 TicketTitleSmall'>
                       {location.state.title}
@@ -67,12 +67,12 @@ function BoxDetail() {
                 </div>
               </div>
           </div>
-          <div className="relative flex items-center justify-center border-2 rounded-lg TicketBack">
+          <div className="relative flex items-center justify-center rounded-lg shadow-md TicketBack">
               {diary !== undefined && diary.title !== "" && 
-                <div className={"relative w-full rounded-lg h-full bg-[#" + diary.color + "]"}>
-                <p className="absolute w-full text-2xl font-bold text-center top-6">{diary.title}</p>
-                <p className="absolute w-full pr-6 text-lg text-right top-20">{diary.subtitle}</p>
-                <div className="absolute h-64 w-72 left-2 top-32 notes2">
+                <div className={"w-full rounded-lg h-full bg-[#" + diary.color + "]"}>
+                  <p className="absolute w-full text-2xl font-bold text-center top-6">{diary.title}</p>
+                  <p className="absolute w-full pr-6 text-lg text-right top-20">{diary.subtitle}</p>
+                  <div className="absolute h-64 w-72 left-2 top-32 notes2">
                   <p className="px-6 TicketDiaryContent">{diary.content}</p>
                 </div>
               </div>
