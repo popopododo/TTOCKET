@@ -97,6 +97,8 @@ function SponsorPerformForm() {
       alert("장소를 입력해주세요");
     } else if (!isDes) {
       alert("공연 상세내용을 입력해주세요");
+    } else if (price < 0.00001) {
+      alert("공연 가격은 0.00001 이하는 불가능합니다");
     } else {
       try {
         const res = await ipfsCreate.add(images!);

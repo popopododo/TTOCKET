@@ -4,7 +4,7 @@ import LoginImg1 from '../../assets/loginImg1.png'
 import LoginImg2 from '../../assets/loginImg2.png'
 import LoginImg3 from '../../assets/loginImg3.png'
 import LoginImg4 from '../../assets/loginImg4.png'
-import LogoWhite from '../../assets/logoWhite.png'
+import LogoWhite from '../../assets/mainLogo.png'
 import Slider from 'react-slick'
 import "../../../node_modules/slick-carousel/slick/slick.css"; 
 import "../../../node_modules/slick-carousel/slick/slick-theme.css"; 
@@ -43,29 +43,31 @@ function LoginMain() {
   }
 
   return (
-    <div className='w-screen h-screen py-10 bg-ttokLightPink'>
-      <img src={LogoWhite} alt="" className='mx-auto mt-8'/>
+    <div className='w-screen h-screen py-10 bg-opacity-60 bg-ttokLightPink'>
+      <div className="flex items-center justify-center">
+        <img src={LogoWhite} alt="" className='mt-8'/>
+      </div>
       <Slider {...sliderSettings}>
           <div>
-            <img src={LoginImg1} alt="" className='object-contain w-48 h-64 mx-auto mt-10 mb-10 border-t-2 border-l-4 border-r-4 border-black shadow-md rounded-2xl' />
-            <p className='text-xl text-center text-white'>NFT 기반 스마트 티켓</p>
-            <p className='mt-8 text-center text-ttokGray'>신분증, 예약 내역 필요 없이 </p>
+            <img src={LoginImg1} alt="" className='object-contain w-48 h-64 mx-auto mt-10 mb-4 border-t-2 border-l-4 border-r-4 border-black shadow-md rounded-2xl' />
+            <p className='text-xl font-bold text-center'>NFT 기반 스마트 티켓</p>
+            <p className='mt-4 text-center text-ttokGray'>신분증, 예약 내역 필요 없이 </p>
             <p className='mt-2 mb-4 text-center text-ttokGray'>어플 하나로 편하게 입장하세요 </p>
           </div>
           <div>
-            <img src={LoginImg2} alt="" className='object-contain w-48 h-64 mx-auto mt-10 mb-10 border-t-2 border-l-4 border-r-4 border-black shadow-md rounded-2xl' />
-            <p className='text-xl text-center text-white'>나만의 티켓 보관함</p>
+            <img src={LoginImg2} alt="" className='object-contain w-48 h-64 mx-auto mt-10 mb-4 border-t-2 border-l-4 border-r-4 border-black shadow-md rounded-2xl' />
+            <p className='text-xl font-bold text-center'>나만의 티켓 보관함</p>
             <p className='mt-4 text-center text-ttokGray'>티켓도 하나의 기념품! </p>
             <p className='my-2 text-center text-ttokGray'>티켓 보관함을 통해 보관하세요 </p>
           </div>
           <div>
-            <div className="flex justify-center w-full mb-5 h-80">
+            <div className="flex justify-center w-full h-80">
               <div className='relative w-64'>
                 <img className="absolute top-0 object-cover mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 rounded-2xl" src={LoginImg4} alt="로그인 이미지4"/>
-                <img className="absolute object-cover mt-10 mb-5 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 top-4 left-20 rounded-2xl" src={LoginImg3} alt="로그인 이미지4" />
+                <img className="absolute object-cover mt-10 mb-4 border-t-2 border-l-4 border-r-4 border-black shadow-md w-44 h-60 top-4 left-20 rounded-2xl" src={LoginImg3} alt="로그인 이미지4" />
               </div>
             </div>
-            <p className='text-xl text-center text-white'>이더리움 기반 티켓팅</p>
+            <p className='text-xl font-bold text-center'>이더리움 기반 티켓팅</p>
             <p className='mt-4 text-center text-ttokGray'>MetaMask 지갑을 연결해서 </p>
             <p className='my-2 text-center text-ttokGray'>간편하게 결제해보세요!</p>
           </div>
