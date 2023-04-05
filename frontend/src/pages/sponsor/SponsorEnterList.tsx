@@ -64,7 +64,7 @@ function SponsorEnterList() {
               />
             </svg>
           </p>
-          <p className="text-lg font-bold ml-6">입장 확인</p>
+          <p className="text-lg font-bold">입장 확인</p>
           <p className="w-7"></p>
         </div>
         <div className="flex flex-col justify-center items-center">

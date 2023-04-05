@@ -65,7 +65,7 @@ function SponsorPerformList() {
             </svg>
           </p>
           <p className="text-lg font-bold ml-6">나의 공연 목록</p>
-          <Link to="add" className="text-gray-400 font-bold mr-3">
+          <Link to="add" className="text-gray-400 font-bold ml-4 w-10">
             등록
           </Link>
         </div>

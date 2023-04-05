@@ -59,10 +59,10 @@ function SponsorBehindList() {
               />
             </svg>
           </p>
-          <p className="text-lg font-bold ml-6">비하인드 목록</p>
+          <p className="text-lg font-bold ml-6">비하인드 목록 </p>
           <Link
             to="add"
-            className="text-gray-400 font-bold mr-3"
+            className="text-gray-400 font-bold ml-2 w-12"
             state={performId}
           >
             등록
