@@ -1,19 +1,18 @@
 package com.ssafy.ttocket.domain;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Performance {
 
     @Id
@@ -24,6 +23,10 @@ public class Performance {
     @NotNull
     @Column(name="performance_title")
     private String title;
+
+    @OneToOne(fetch = FetchType.EAGER)  // LAZY에서 EARGER로 변경: home에서 likelist를 가져올 때 필요
+    @JoinColumn(name="user_id")
+    private User user;
 
     @Column(name="performance_desc")
     private String description;
@@ -39,13 +42,13 @@ public class Performance {
     @Column(name="performance_price")
     private double price; // int 값 인지 물어봐야함
 
-    @NotNull
+   
     @Column(name="performance_start_time")
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
-    @NotNull
+
     @Column(name="performance_end_time")
-    private LocalDate endTime;
+    private LocalDateTime endTime;
 
     @NotNull
     @Column(name="performance_poster")
@@ -53,6 +56,5 @@ public class Performance {
 
     @Column(name="performance_etc")
     private String etc;
-
 
 }
