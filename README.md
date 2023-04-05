@@ -203,12 +203,12 @@
 ## :clipboard: 프로젝트 산출물
 - [기능명세서](./docs/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
 - [Jira](https://ssafy.atlassian.net/jira/software/c/projects/S08P22B210/boards/1754)
-- 미완 : [아키텍처]()
+- [아키텍처](./docs/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md)
 - [와이어프레임](https://www.figma.com/file/scgH6g471y2hUKrv7KoVeO/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0%3A1&t=zkg9ESqNb1mEXyr3-1)
 - [컨벤션](./docs/%EC%BB%A8%EB%B2%A4%EC%85%98.md)
 - [API 명세서](./docs/API%20%EB%AA%85%EC%84%B8%EC%84%9C.md)
-- [ERD](https://www.erdcloud.com/d/nWMfZTjtggAzFnETa)
-- 미완 : [개발설계서]()
+- [ERD](./docs/ERD.md)
+
 <br>
 
 ## :bar_chart: 프로젝트 결과물
