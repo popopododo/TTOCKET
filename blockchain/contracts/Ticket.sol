@@ -139,7 +139,7 @@ contract Ticket is ERC721Enumerable, TicketDTO {
 
         _ticketInfos[tokenId].status = 3;
         _ticketInfos[tokenId].userName = userName;
-        return tokenId;
+        return newTokenId;
     }
 
     function getNowRefundAmount(uint16 performId) public view returns(uint256){
