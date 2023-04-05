@@ -29,8 +29,6 @@ function SponsorBehindList() {
       if (solres !== undefined) {
         setBehindList(solres);
       }
-      // const data = solres;
-      // setBehindList((prevData) => [...prevData, ...data]);
     } catch (err) {
       console.log(err);
     }
