@@ -13,8 +13,13 @@ export default function HeaderNav() {
       setHeaderText("나의 티켓");
     } else if (path === "box") {
       setHeaderText("보관함");
-    } else if (path === "perform") {
+    } else if (path === "perform" || path === "reserve") {
       setHeaderText("공연 예매");
+      setHeaderClass(
+        "sticky top-0 z-10 flex justify-center w-screen overflow-hidden bg-white"
+      );
+    } else if (path === "sponsor"){
+      setHeaderText("관리자 페이지");
       setHeaderClass(
         "sticky top-0 z-10 flex justify-center w-screen overflow-hidden bg-white"
       );
