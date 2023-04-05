@@ -66,8 +66,8 @@ function PerformList() {
       <div
         className={
           scrollPosition < 50
-            ? "fixed mt-12 text-white h-12 top-0 flex items-center justify-between bg-ttokPink w-4/6 pr-1"
-            : "fixed mt-12 h-12 top-0 flex items-center justify-between bg-white w-4/6 pr-1"
+            ? "fixed mt-12 text-white h-12 top-0 flex items-center justify-between bg-ttokPink w-4/6 pr-3"
+            : "fixed mt-12 h-12 top-0 flex items-center justify-between bg-white w-4/6 pr-3"
         }
       >
         <p>
