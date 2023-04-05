@@ -13,8 +13,6 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     constructor() ERC721("TTOKET", "TKT") {
 
     }
-
-
     // NFT(티켓) 생성 시 마다 1씩 증가하는 ID
     Counters.Counter private _tokenIds;
     // NFT 메타데이터 URI 저장을 위한 mapping
@@ -42,22 +40,6 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     // performId  => tokenId[]
     mapping(uint16 => uint256[]) private _tokenIdByperformId;
 
-    function getTokenIds(uint16 _performId) public view returns (uint256[] memory){
-        return _tokenIdByperformId[_performId];
-    }
-    function resetRefundAmount(uint256 _tokenId, uint256 price) public returns (uint256){
-        _refundAmountByCanceledTicket[_tokenId] = price;
-        return _tokenId;
-    }
-    function ChangeTicketInfoStatusAndName(uint256 _tokenId, string memory _name) public returns (uint256){
-        _ticketInfos[_tokenId].status = 3;
-        _ticketInfos[_tokenId].userName = _name;
-        return _tokenId;
-    }
-    function ChangeTicketStatusCancel(uint256 _tokenId) public returns (uint256){
-        _ticketInfos[_tokenId].status = 2;
-        return _tokenId;
-    }
     function createPerform(uint16 _performId, string memory _title,
                         string memory _description, uint16 _maxSeat, string memory _location,
                         uint256 _price, uint256 _minute, string memory _poster,
@@ -155,11 +137,6 @@ contract Ticket is ERC721Enumerable, TicketDTO {
         payable(beforeOwner).transfer(_refundAmountByCanceledTicket[tokenId]); //다른애가 사주니까 수수료도 돌려주기
         _refundAmountByCanceledTicket[tokenId] = 0; // 없애기
 
-
-        // transferFrom(address(this), msg.sender, tokenId); // NFT티켓 소유권 바꾸기
-        // _setMinter(tokenId, msg.sender);   
-        // _setOwnersByPerform(p.id,msg.sender);
-        // _setTicketsByAccount(tokenId, msg.sender);
         _ticketInfos[tokenId].status = 3;
         _ticketInfos[tokenId].userName = userName;
         return tokenId;
@@ -182,8 +159,8 @@ contract Ticket is ERC721Enumerable, TicketDTO {
             return p.price * 80 / 100; 
         }
     }
-    function insertTicketDiary(uint256 tokenId, string memory title, string memory subtitle,string memory content) public returns(uint256){
-        _diarys[tokenId] = Diary(title,subtitle,content);
+    function insertTicketDiary(uint256 tokenId, string memory title, string memory subtitle,string memory content,string memory color) public returns(uint256){
+        _diarys[tokenId] = Diary(title,subtitle,content,color);
         return tokenId;
     }
     function getTicketDetails(uint256 tokenId, uint16 performId) public view returns (TicketDetailReturn memory){
@@ -261,7 +238,7 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setMinter(
             uint256 tokenId, 
             address minter
-        ) public {
+        ) private {
         _minters[tokenId] = minter;
     }
     function getMinter(uint256 tokenId) public view returns (address) {
@@ -270,13 +247,13 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setTicketsByAccount(
             uint256 tokenId, 
             address minter
-        ) public {
+        ) private {
         _ticketsByAccount[minter].push(tokenId);
     }
-    function getTicketsByAccount(address minter) public view returns (uint256[] memory) {
+    function getTicketsByAccount(address minter) private view returns (uint256[] memory) {
         return _ticketsByAccount[minter];
     }
-    function deleteOneTicketByAccount(address owner, uint256 tokenId) public {
+    function deleteOneTicketByAccount(address owner, uint256 tokenId) private {
         uint256 len = _ticketsByAccount[owner].length;
         for(uint256 i = 0 ; i < len ; i++){
             if(_ticketsByAccount[owner][i] == tokenId){
@@ -308,13 +285,13 @@ contract Ticket is ERC721Enumerable, TicketDTO {
     function _setOwnersByPerform(
             uint256 performId, 
             address minter
-        ) public {
+        ) private {
         _ownersByPerform[performId].push(minter);
     }
-    function getOwnersByPerform(uint16 performId) public view returns (address[] memory) {
+    function getOwnersByPerform(uint16 performId) private view returns (address[] memory) {
         return _ownersByPerform[performId];
     }
-    function deleteOneOwnersByPerform(address target, uint16 performId) public {
+    function deleteOneOwnersByPerform(address target, uint16 performId) private {
         uint256 len = _ownersByPerform[performId].length;
         for(uint256 i = 0 ; i < len ; i++){ // 해당 공연 티켓소유자 배열에서 없애기
             if(_ownersByPerform[performId][i] == target) {

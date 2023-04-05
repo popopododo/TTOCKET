@@ -47,5 +47,6 @@ interface TicketDTO {
         string title;
         string subtitle;
         string content;
+        string color;
     }
 } 
