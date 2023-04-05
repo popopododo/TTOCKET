@@ -74,12 +74,12 @@ function SponsorPerformList() {
             userPerformList.map((el, idx) => (
               <div
                 key={idx}
-                className="flex w-full p-5 border-solid border-t-2 border-b-2 border-gray-300"
+                className="flex w-full p-3 border-solid border-t-2 border-b-2 border-gray-300"
               >
                 <img
                   src={`https://ipfs.io/ipfs/${el.poster}`}
                   alt="포스터"
-                  className="h-28 mr-5"
+                  className="object-cover h-32 w-28 rounded mr-2"
                 />
                 <div>
                   <p className="font-bold text-lg w-56">{el.title}</p>

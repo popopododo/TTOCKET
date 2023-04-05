@@ -76,7 +76,7 @@ function SponsorBehindList() {
                   <img
                     src={`https://ipfs.io/ipfs/${el}`}
                     alt="비하인드사진"
-                    className="h-40 mb-5"
+                    className="h-40 w-32 mb-5"
                   />
                 </div>
               ))}
