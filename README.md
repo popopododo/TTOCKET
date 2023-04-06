@@ -232,7 +232,7 @@
 ## :bar_chart: 프로젝트 결과물
 - 미완 : [최종발표 PPT]()
 - [중간발표 PPT](./docs/%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.md) 
-- 미완 : [포팅메뉴얼](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
+- [포팅메뉴얼](https://gusty-snowflake-455.notion.site/652aca8352174016898a122641fca563)
 <br>  
 
 ## :sparkles: 서비스 화면 GIF
