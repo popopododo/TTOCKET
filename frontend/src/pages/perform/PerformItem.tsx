@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import axiosApi from "../../services/axiosApi";
-import formatDate from "../../components/date/formatDate";
-import checkEndDate from "../../components/date/checkEndDate";
 import useWeb3 from "../../services/web3/useWeb3";
 
 import { useLocation } from "react-router-dom";
@@ -35,9 +33,7 @@ function PerformItem() {
   const [isLike, setIsLike] = useState<boolean>(false);
   const [performData, setPerformData] = useState<performDataType>();
   const [isMyTicket, setIsMyTicket] = useState<boolean>(false);
-
-  //예매버튼 확인용
-  let todayTime = new Date();
+  const [isTicketOpen, setIsTicketOpen] = useState<boolean>(false);
 
   //페이지 뜰 때 데이터 받아오기
   const performDataHandler = useCallback(async () => {
@@ -45,6 +41,7 @@ function PerformItem() {
       const res = await axiosApi.get(`performance/${id}/${location.state}`, {});
       setIsLike(res.data.body.is_user_like);
       setPerformData(res.data.body.performance_dto);
+      setIsTicketOpen(res.data.body.canReserve);
       if (res !== undefined) {
         const performId = location.state;
         const checksol = await tokenContract?.methods
@@ -73,7 +70,7 @@ function PerformItem() {
 
   //버튼 보여주기
   const checkButton = useMemo(() => {
-    if (!isMyTicket) {
+    if (!isMyTicket && isTicketOpen) {
       return (
         <Link to="/reserve/wait" state={location.state}>
           <button className="bg-[#FB7185] text-white w-80 h-10 rounded font-bold">
@@ -81,13 +78,27 @@ function PerformItem() {
           </button>
         </Link>
       );
+    } else if (isMyTicket && isTicketOpen) {
+      return (
+        <button className="bg-gray-300 text-white w-80 h-10 rounded font-bold">
+          이미 구입한 티켓입니다
+        </button>
+      );
+    } else {
+      return (
+        <button className="h-10 font-bold text-white bg-gray-300 rounded w-80 disabled">
+          {performData?.start_time.slice(0, 10)}{" "}
+          {performData?.end_time.slice(11, 16)} 오픈 예정
+        </button>
+      );
     }
-    return (
-      <button className="bg-gray-300 text-white w-80 h-10 rounded font-bold">
-        이미 구입한 티켓입니다
-      </button>
-    );
-  }, [isMyTicket, location.state]);
+  }, [
+    isMyTicket,
+    location.state,
+    isTicketOpen,
+    performData?.end_time,
+    performData?.start_time,
+  ]);
 
   useEffect(() => {
     performDataHandler();
@@ -173,18 +184,7 @@ function PerformItem() {
             />
           </svg>
         )}
-        {performData &&
-        checkEndDate(
-          performData.start_time.slice(0, 10),
-          formatDate(todayTime)
-        ) ? (
-          <button className="h-10 font-bold text-white bg-gray-300 rounded w-80 disabled">
-            {performData.start_time.slice(0, 10)}{" "}
-            {performData?.end_time.slice(11, 16)} 오픈 예정
-          </button>
-        ) : (
-          checkButton
-        )}
+        {checkButton}
       </div>
     </div>
   );
