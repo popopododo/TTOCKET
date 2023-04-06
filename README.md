@@ -1,4 +1,4 @@
-# 🎪🎫 블록체인 NFT기반 티켓 서비스 <br>똑똑한 티켓, 똑켓(TTocket)🎫🎪
+# 🎪🎫 블록체인 NFT기반 티켓 서비스 똑똑한 티켓, 똑켓(TTocket)🎫🎪
 ### [링크 바로가기](https://j8b210.p.ssafy.io)
 ![메인페이지](https://user-images.githubusercontent.com/76838814/230253829-3fcb14d0-3f04-42dd-ab15-fa73cef2c200.png)
 
@@ -92,7 +92,7 @@
 <br>
 
 
-## 버전 정보
+## :art:버전 정보
 ### Ver 1.0 (~ 3/23)
   - `Client` 
     - 로그인, 티켓 목록, 공연 예매 디자인 구현
@@ -145,17 +145,14 @@
 <br>
 
 
-## :open_file_folder: 프로젝트 파일 구조
-
-### 아키텍처 
+## :open_file_folder: 시스템 아키텍처
 ![Architecture](https://user-images.githubusercontent.com/76838814/230253891-34cecbe3-3698-486a-98e6-78a0bb66397b.png)
 
-
+## :open_file_folder: 프로젝트 파일 구조
 ### BlockChain
 ```
 └─blockchain
     ├─contracts
-    │   ├─SangToken.sol  
     │   ├─Ticket.sol
     │   └─TicketDTO.sol
     ├─migrations
@@ -269,18 +266,18 @@
   - 서비스 기능 요약소개
   - MetaMask 로그인 버튼
   - 첫 로그인 시 닉네임 등록
-  ![로그인 화면](https://user-images.githubusercontent.com/110011732/230301883-9d1146da-1112-450b-bef7-76d45e9b35b5.gif)
-  ![Matamask 로그인](https://user-images.githubusercontent.com/110011732/230302499-4f388f9c-5648-433f-bdd0-5e777911cf86.gif)
+  - ![로그인닉네임](https://user-images.githubusercontent.com/110011732/230308766-3c697f43-7cc7-4a7a-bf42-fc7dcb2b0de1.gif)
+  - ![Matamask 로그인](https://user-images.githubusercontent.com/110011732/230302499-4f388f9c-5648-433f-bdd0-5e777911cf86.gif)
 
 2️⃣ 공연 목록
   - 티켓팅 오픈예정, 공연 예정, 관심목록 세 가지 구분
   - 공연 예정, 관심목록 각각 모두보기 기능
-  ![공연목록](https://user-images.githubusercontent.com/110011732/230303159-71f8678c-acb3-4d9a-afbd-fe3efa89c288.gif)
+  - ![공연목록](https://user-images.githubusercontent.com/110011732/230303159-71f8678c-acb3-4d9a-afbd-fe3efa89c288.gif)
 
 3️⃣티켓팅 대기열
   - 티켓팅 오픈시간에 예상되는 트래픽 처리를 위한 대기열 화면
   - 총 대기자 수, 사용자 몇 번째인지 확인 가능
-  ![대기열큐100](https://user-images.githubusercontent.com/110011732/230303570-2ac93bb1-eb80-4abb-b932-0f0b4d37101a.gif)
+  - ![대기열큐100](https://user-images.githubusercontent.com/110011732/230303570-2ac93bb1-eb80-4abb-b932-0f0b4d37101a.gif)
 
 4️⃣ 티켓 구매
   - 좌석 선택 및 규정 동의 후 결제 진행
