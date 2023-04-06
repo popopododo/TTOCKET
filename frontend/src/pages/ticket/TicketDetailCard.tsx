@@ -39,7 +39,7 @@ function TicketDetailCard() {
   }
 
   return (
-    <div className='h-full px-4 py-12'>
+    <div className='w-full h-full px-4 py-12'>
         <div className='overflow-hidden'>
             <p className='text-2xl font-bold text-center marqueeStyle'>{location.state.title}</p>
         </div>
