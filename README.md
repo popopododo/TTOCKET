@@ -227,7 +227,7 @@
 
 ## :clipboard: 프로젝트 산출물
 - [서비스기획서](./docs/md/%EC%84%9C%EB%B9%84%EC%8A%A4%EA%B8%B0%ED%9A%8D%EC%84%9C.md)
-- [기능명세서](./docs/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
+- [기능명세서](./docs/md/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
 - [회의록](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
 - [메뉴트리](./docs/md/%EB%A9%94%EB%89%B4%ED%8A%B8%EB%A6%AC.md)
 - [Jira](./docs/md/jira.md)
