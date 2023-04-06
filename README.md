@@ -1,6 +1,6 @@
 # 🎪🎫 똑똑한 티켓팅, 똑켓(Ttocket)🎫🎪
 ### [링크 바로가기](https://j8b210.p.ssafy.io)
-![메인 이미지](./docs/img/Main.png)
+![메인페이지](https://user-images.githubusercontent.com/76838814/230253829-3fcb14d0-3f04-42dd-ab15-fa73cef2c200.png)
 
 ---
 ## :clapper: 소개 영상
@@ -127,7 +127,7 @@
 ## :open_file_folder: 프로젝트 파일 구조
 
 ### 아키텍처 
-![아키텍처](./docs/img/Architecture.png)
+![Architecture](https://user-images.githubusercontent.com/76838814/230253891-34cecbe3-3698-486a-98e6-78a0bb66397b.png)
 
 
 ### BlockChain
@@ -226,7 +226,10 @@
 <br>
 
 ## :clipboard: 프로젝트 산출물
-- [기능명세서](./docs/md/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
+- [서비스기획서](./docs/md/%EC%84%9C%EB%B9%84%EC%8A%A4%EA%B8%B0%ED%9A%8D%EC%84%9C.md)
+- [기능명세서](./docs/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
+- [회의록](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
+- [메뉴트리](./docs/md/%EB%A9%94%EB%89%B4%ED%8A%B8%EB%A6%AC.md)
 - [Jira](https://ssafy.atlassian.net/jira/software/c/projects/S08P22B210/boards/1754)
 - [아키텍처](./docs/md/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md)
 - [와이어프레임](https://www.figma.com/file/scgH6g471y2hUKrv7KoVeO/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0%3A1&t=zkg9ESqNb1mEXyr3-1)
@@ -239,7 +242,7 @@
 
 ## :bar_chart: 프로젝트 결과물
 - 미완 : [최종발표 PPT]()
-- [중간발표 PPT](./docs/pdf/%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf) 
+- [중간발표 PPT](./docs/%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf) 
 - [포팅메뉴얼](https://gusty-snowflake-455.notion.site/652aca8352174016898a122641fca563)
 <br>  
 
