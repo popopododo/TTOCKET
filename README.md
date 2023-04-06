@@ -230,7 +230,7 @@
 - [기능명세서](./docs/%EA%B8%B0%EB%8A%A5%EB%AA%85%EC%84%B8%EC%84%9C.md)
 - [회의록](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
 - [메뉴트리](./docs/md/%EB%A9%94%EB%89%B4%ED%8A%B8%EB%A6%AC.md)
-- [Jira](https://ssafy.atlassian.net/jira/software/c/projects/S08P22B210/boards/1754)
+- [Jira](./docs/md/jira.md)
 - [아키텍처](./docs/md/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md)
 - [와이어프레임](https://www.figma.com/file/scgH6g471y2hUKrv7KoVeO/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?node-id=0%3A1&t=zkg9ESqNb1mEXyr3-1)
 - [컨벤션](./docs/md/%EC%BB%A8%EB%B2%A4%EC%85%98.md)
