@@ -33,8 +33,6 @@ function LoginLoading() {
     if (account !== undefined) {
         login();
     }
-    return () => {
-    }
   }, [account, login])
   
   return (

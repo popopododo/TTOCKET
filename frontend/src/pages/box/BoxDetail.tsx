@@ -67,7 +67,7 @@ function BoxDetail() {
                 </div>
               </div>
           </div>
-          <div className="relative flex items-center justify-center rounded-lg shadow-md TicketBack">
+          <div className="relative flex items-center justify-center bg-white rounded-lg shadow-md TicketBack">
               {diary !== undefined && diary.title !== "" && 
                 <div className={"w-full rounded-lg h-full bg-[#" + diary.color + "]"}>
                   <p className="absolute w-full text-2xl font-bold text-center top-6">{diary.title}</p>

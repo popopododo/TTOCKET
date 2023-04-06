@@ -66,8 +66,8 @@ function PerformList() {
       <div
         className={
           scrollPosition < 50
-            ? "fixed mt-12 text-white h-12 top-0 flex items-center justify-between bg-ttokPink w-4/6 pr-3"
-            : "fixed mt-12 h-12 top-0 flex items-center justify-between bg-white w-4/6 pr-3"
+            ? "fixed mt-10 text-white h-16 top-0 flex justify-between items-center bg-ttokPink w-full"
+            : "fixed mt-10 h-16 top-0 flex items-center justify-between bg-white w-full"
         }
       >
         <p>
@@ -88,6 +88,7 @@ function PerformList() {
           </svg>
         </p>
         <p className="text-lg font-bold">{location.state}</p>
+        <p className="w-8"></p>
       </div>
       <div className="">
         <div className="h-1 bg-ttokPink"></div>

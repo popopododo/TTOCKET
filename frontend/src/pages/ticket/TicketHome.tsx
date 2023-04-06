@@ -19,7 +19,6 @@ function TicketHome() {
       .getBeforeTicketList()
       .call({ from: address });
     if (result !== undefined) {
-      console.log(result)
       setTicketList(result[0]);
       setTicketSize(parseInt(result[1]));
     }

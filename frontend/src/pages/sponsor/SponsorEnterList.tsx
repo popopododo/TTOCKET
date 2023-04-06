@@ -64,7 +64,7 @@ function SponsorEnterList() {
               />
             </svg>
           </p>
-          <p className="text-lg font-bold ml-6">입장 확인</p>
+          <p className="text-lg font-bold">입장 확인</p>
           <p className="w-7"></p>
         </div>
         <div className="flex flex-col justify-center items-center">
@@ -77,7 +77,7 @@ function SponsorEnterList() {
                 <img
                   src={`https://ipfs.io/ipfs/${el.poster}`}
                   alt="포스터"
-                  className="h-28 mr-5"
+                  className="object-cover h-32 w-28 rounded mr-2"
                 />
                 <div>
                   <p className="font-bold text-lg w-56">{el.title}</p>

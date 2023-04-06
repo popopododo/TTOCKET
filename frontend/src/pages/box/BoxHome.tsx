@@ -15,6 +15,7 @@ function BoxHome() {
         async () => {
             const result = await tokenContract?.methods.getAfterTicketList().call({from : address});
             if (result !== undefined) {
+              console.log(result);
               setAfterTicketList(result[0]);
               setAfterTicketSize(parseInt(result[1]));
             }
@@ -41,10 +42,7 @@ function BoxHome() {
                   <div className="mb-1 ml-2">
                     <p className="mb-2 text-lg font-bold">{data.title}</p>
                     <p className="text-sm font-bold text-slate-500">
-                      {data.date}
-                    </p>
-                    <p className="text-sm font-bold text-slate-500">
-                      {data.seatNum}
+                      {data.performYear}.{data.performMonth.length === 1 ? "0"+data.performMonth : data.performMonth}.{data.performDay.length === 1 ? "0"+data.performDay : data.performDay}
                     </p>
                   </div>
                 </div>
