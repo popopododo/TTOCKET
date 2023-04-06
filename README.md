@@ -221,3 +221,12 @@
 ## :sparkles: 서비스 화면 GIF
 
 <br>
+
+
+
+### Metamask를 이용한 로그인
+![Metamask 로그인](./docs/metamask_login.gif)
+
+
+### 리스트 스크롤링
+![리스트 스크롤링](./docs/scrolling.gif)
