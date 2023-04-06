@@ -122,7 +122,7 @@
 
 ## :open_file_folder: 프로젝트 파일 구조
 
-### Solidity
+### BlockChain
 ```
 └─blockchain
     ├─contracts
@@ -163,7 +163,7 @@
             └─web3
 
 ```
-### BackEnd
+### BackEnd 1: 티켓팅
 ```
 └backend
     └─src
@@ -189,6 +189,22 @@
                     └─ssafy
                         └─ttocket
 ```
+### BackEnd 2: 좌석 예매 대기열 
+```
+└─tttocket
+    └─src
+        └─main
+          ├─java
+          │  └─com
+          │      └─ssafy
+          │          └─tttocket
+          │              ├─config
+          │              ├─controller
+          │              ├─dto
+          │              └─service
+          └─resources
+```
+
 <br>
 
 ## 🤝 협업 툴
@@ -209,24 +225,16 @@
 - [컨벤션](./docs/%EC%BB%A8%EB%B2%A4%EC%85%98.md)
 - [API 명세서](./docs/API%20%EB%AA%85%EC%84%B8%EC%84%9C.md)
 - [ERD](./docs/ERD.md)
+- [회의록](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
 
 <br>
 
 ## :bar_chart: 프로젝트 결과물
 - 미완 : [최종발표 PPT]()
-- [중간발표 PPT](https://www.canva.com/design/DAFcwQ7m_VM/vEkYiSUZlPwjDSJ-f5T0ow/view?utm_content=DAFcwQ7m_VM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) 
-- 미완 : [포팅메뉴얼]()
+- [중간발표 PPT](./docs/%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.md) 
+- 미완 : [포팅메뉴얼](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
 <br>  
 
 ## :sparkles: 서비스 화면 GIF
 
 <br>
-
-
-
-### Metamask를 이용한 로그인
-![Metamask 로그인](./docs/metamask_login.gif)
-
-
-### 리스트 스크롤링
-![리스트 스크롤링](./docs/scrolling.gif)
