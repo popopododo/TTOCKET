@@ -146,7 +146,8 @@
 
 
 ## :open_file_folder: 시스템 아키텍처
-![Architecture](https://user-images.githubusercontent.com/76838814/230253891-34cecbe3-3698-486a-98e6-78a0bb66397b.png)
+![똑켓아키텍쳐](https://user-images.githubusercontent.com/76838814/230514964-19be7961-dd27-44ee-95ee-c5b27ad28057.png)
+
 
 ## :open_file_folder: 프로젝트 파일 구조
 ### BlockChain
