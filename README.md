@@ -4,7 +4,7 @@
 
 ---
 ## :clapper: 소개 영상
-### 미완: [UCC 링크]()
+### [UCC 링크](https://www.youtube.com/watch?v=2Xvp1GhXbV4)
 <br>
 
 ## :date: 프로젝트 진행 기간
@@ -255,7 +255,7 @@
 - [API 명세서](./docs/md/API%20%EB%AA%85%EC%84%B8%EC%84%9C.md)
 - [ERD](./docs/md/ERD.md)
 - [회의록](https://gusty-snowflake-455.notion.site/f6ad1bd6378646f396c035a8657c5940)
-- [최종발표 PPT]()
+- [최종발표 PPT](./docs/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf)
 - [중간발표 PPT](./docs/%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf) 
 - [포팅메뉴얼](https://gusty-snowflake-455.notion.site/652aca8352174016898a122641fca563)
 
