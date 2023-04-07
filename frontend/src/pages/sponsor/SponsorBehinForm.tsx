@@ -73,18 +73,15 @@ function SponsorBehinForm() {
       const res = await ipfsCreate.add(imgUp!);
       if (res !== undefined) {
         const posterHash = res.path;
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const solres = await tokenContract?.methods
-            .insertPerformBehind(location.state, posterHash)
-            .send({
-              from: id,
-              gas: 8000000,
-            });
-          handleGoBack();
-        } catch (err) {
-          console.log(err);
-        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const solres = await tokenContract?.methods
+          .insertPerformBehind(location.state, posterHash)
+          .send({
+            from: id,
+            gas: 8000000,
+          });
+        handleGoBack();
       }
     } catch (err) {
       console.log(err);

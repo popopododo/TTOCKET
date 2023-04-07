@@ -104,51 +104,45 @@ function SponsorPerformForm() {
         const res = await ipfsCreate.add(images!);
         const posterHash = res.path;
         if (res !== undefined) {
-          try {
-            const res = await axiosApi.post("performance/create", {
-              title: title.value,
-              user_id: id,
-              start_time: start_time,
-              end_time: end_time,
-              location: location.value,
-              price: price,
-              max_seats: max_seats,
-              poster: posterHash,
-              desc: desText,
-              etc: "보냅니다...",
-            });
-            if (res !== undefined) {
-              const performId = res.data.body.performance_id;
-              const cal = res.data.body.left_minute_perform;
-              try {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const solres = await tokenContract?.methods
-                  .createPerform(
-                    performId,
-                    title.value,
-                    desText,
-                    max_seats,
-                    location.value,
-                    price * 10 ** 5,
-                    cal,
-                    posterHash,
-                    Number(end_time.slice(0, 4)),
-                    Number(end_time.slice(5, 7)),
-                    Number(end_time.slice(8, 10)),
-                    Number(end_time.slice(11, 13)),
-                    Number(end_time.slice(14, 16))
-                  )
-                  .send({
-                    from: id,
-                    gas: 8000000,
-                  });
-              } catch (err) {
-                console.log(err);
-              }
-              handleGoBack();
-            }
-          } catch (err) {
-            console.log(err);
+          const res = await axiosApi.post("performance/create", {
+            title: title.value,
+            user_id: id,
+            start_time: start_time,
+            end_time: end_time,
+            location: location.value,
+            price: price,
+            max_seats: max_seats,
+            poster: posterHash,
+            desc: desText,
+            etc: "보냅니다...",
+          });
+          if (res !== undefined) {
+            const performId = res.data.body.performance_id;
+            const cal = res.data.body.left_minute_perform;
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const solres = await tokenContract?.methods
+              .createPerform(
+                performId,
+                title.value,
+                desText,
+                max_seats,
+                location.value,
+                price * 10 ** 5,
+                cal,
+                posterHash,
+                Number(end_time.slice(0, 4)),
+                Number(end_time.slice(5, 7)),
+                Number(end_time.slice(8, 10)),
+                Number(end_time.slice(11, 13)),
+                Number(end_time.slice(14, 16))
+              )
+              .send({
+                from: id,
+                gas: 8000000,
+              });
+
+            handleGoBack();
           }
         }
       } catch (err) {
