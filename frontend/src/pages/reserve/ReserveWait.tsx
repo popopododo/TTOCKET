@@ -16,10 +16,6 @@ function ReserveWait (){
 
     useEffect(()=>{
         const userId = uuidv4();
-        // if(!location.state){
-        //     alert('잘못된 요청입니다.');
-        //     navigator('/');
-        // }
 
         setPerformId(location.state? location.state : 1);
 
@@ -27,18 +23,14 @@ function ReserveWait (){
             const sock = new SockJS("https://j8b210.p.ssafy.io/wait/ticket");
             return sock;
         });
-        console.log("소켓 연결");
         
         client.current.connect({},
             ()=>{
-                //브로드 캐스트
-                client.current?.subscribe(
+                client.current?.subscribe(     //브로드 캐스트
                     `/sub/chat/perform/${performId}`,
                     (message)=>{
-                        //메시지 받는거?
                         // 총 연결 요청 수
                         const data = JSON.parse(message.body);
-                        console.log(data);
                         
                         setTotalWait(data.que_size);
                         //메세지가 연결 종료 flag를 받으면 navigate
@@ -55,7 +47,6 @@ function ReserveWait (){
                     `/sub/id/${userId}`,
                     (message)=>{
                         const data = JSON.parse(message.body);
-                        console.log(data);
                         
                         if(data.isMyTurn){
                             //메세지가 연결 종료 flag를 받으면 navigate
@@ -64,8 +55,6 @@ function ReserveWait (){
                         }
                         setTotalWait(data.que_size);
                         setMyWait(data.myOrder);
-
-                        
                     }
                 )
                 //입장 후 메시지

@@ -31,7 +31,7 @@ textarea:focus{
 	background-image:
 	  linear-gradient(to right, rgba(255, 255, 255, 0) 10px, transparent 10px),
 	  linear-gradient(to left, rgba(255, 255, 255, 0) 10px, transparent 10px),
-	  repeating-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 31px, #000000 31px, #000000 32px, rgba(255, 255, 255, 0) 32px);
+	  repeating-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 31px, rgba(0,0,0,0.4) 31px, rgba(0,0,0,0.4) 32px);
 	line-height: 32px;
 	padding: 8px 5px;
   }

@@ -29,8 +29,6 @@ function SponsorBehindList() {
       if (solres !== undefined) {
         setBehindList(solres);
       }
-      // const data = solres;
-      // setBehindList((prevData) => [...prevData, ...data]);
     } catch (err) {
       console.log(err);
     }
@@ -61,10 +59,10 @@ function SponsorBehindList() {
               />
             </svg>
           </p>
-          <p className="text-lg font-bold ml-6">비하인드 목록</p>
+          <p className="text-lg font-bold ml-6">비하인드 목록 </p>
           <Link
             to="add"
-            className="text-gray-400 font-bold mr-3"
+            className="text-gray-400 font-bold ml-2 w-12"
             state={performId}
           >
             등록
@@ -78,7 +76,7 @@ function SponsorBehindList() {
                   <img
                     src={`https://ipfs.io/ipfs/${el}`}
                     alt="비하인드사진"
-                    className="h-40 mb-5"
+                    className="h-40 w-32 mb-5"
                   />
                 </div>
               ))}
