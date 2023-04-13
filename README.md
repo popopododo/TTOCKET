@@ -1,5 +1,5 @@
 # 🎪🎫 블록체인 NFT기반 티켓 서비스 똑똑한 티켓, 똑켓(TTocket)🎫🎪
-### [링크 바로가기](https://j8b210.p.ssafy.io)
+### [링크 바로가기](https://ttocket.site)
 ![메인페이지](https://user-images.githubusercontent.com/76838814/230253829-3fcb14d0-3f04-42dd-ab15-fa73cef2c200.png)
 
 ---
